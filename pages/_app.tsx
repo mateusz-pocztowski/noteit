@@ -2,6 +2,7 @@ import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Hydrate } from 'react-query/hydration'
+import { Provider } from 'next-auth/client'
 
 import styled from 'styled-components'
 import { AnimatePresence } from 'framer-motion'
@@ -29,24 +30,26 @@ const App = ({ Component, pageProps, router }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient())
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <ThemeProvider>
-          <ModalProvider>
-            <TooltipProvider>
-              <Wrapper>
-                <NProgress />
-                <AppLayout>
-                  <AnimatePresence exitBeforeEnter>
-                    <Component {...pageProps} key={router.route} />
-                  </AnimatePresence>
-                </AppLayout>
-              </Wrapper>
-            </TooltipProvider>
-          </ModalProvider>
-        </ThemeProvider>
-      </Hydrate>
-    </QueryClientProvider>
+    <Provider session={pageProps.session}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ThemeProvider>
+            <ModalProvider>
+              <TooltipProvider>
+                <Wrapper>
+                  <NProgress />
+                  <AppLayout>
+                    <AnimatePresence exitBeforeEnter>
+                      <Component {...pageProps} key={router.route} />
+                    </AnimatePresence>
+                  </AppLayout>
+                </Wrapper>
+              </TooltipProvider>
+            </ModalProvider>
+          </ThemeProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </Provider>
   )
 }
 

@@ -1,26 +1,45 @@
-import Link from 'next/link'
-import styled from 'styled-components'
+import React from 'react'
+import { signIn, signOut, useSession } from 'next-auth/client'
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  font-weight: 700;
-  font-size: 8rem;
-  a {
-    color: ${({ theme }) => theme.colors.text};
-    text-decoration: none;
+const IndexPage = () => {
+  const [session, loading] = useSession()
+  console.log(session, loading)
+  if (loading) {
+    return (
+      <div className="flex justify-center mt-8 text-center">
+        <div className="flex-auto">
+          <div className="text-lg mb-2">Loading...</div>
+        </div>
+      </div>
+    )
   }
-`
 
-const Home = () => {
-  return (
-    <Wrapper>
-      <Link href="/api/auth/login">Login</Link>
-    </Wrapper>
-  )
+  if (session) {
+    return (
+      <div className="flex justify-center mt-8 text-center">
+        <div className="flex-auto">
+          <div className="text-lg mb-2">
+            Hello, {session?.user?.email ?? session?.user?.name}
+          </div>
+          <div className="mb-2">gql test query: </div>
+          <button className="btn-green" onClick={() => signOut()}>
+            Sign out
+          </button>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="flex justify-center mt-8 text-center">
+        <div className="flex-auto">
+          <div className="text-lg mb-2">You are not logged in!</div>
+          <button className="btn-green" onClick={() => signIn()}>
+            Sign in
+          </button>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default Home
+export default IndexPage

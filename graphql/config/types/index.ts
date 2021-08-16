@@ -1,3 +1,2 @@
-export * from './Mutation'
-export * from './Query'
-export * from './Objects'
+export * from './User'
+export * from './Queries'
