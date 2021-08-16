@@ -1,0 +1,20 @@
+mutation createNote(
+  $userId: String!
+  $categoryId: String!
+  $title: String!
+  $content: String!
+) {
+  createOneNote(
+    data: {
+      userId: $userId
+      category: { connect: { id: $categoryId } }
+      title: $title
+      content: $content
+    }
+  ) {
+    id
+    title
+    content
+    updatedAt
+  }
+}

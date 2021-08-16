@@ -1,0 +1,12 @@
+mutation deleteUser($userId: String!) {
+  deleteManyNote(where: { userId: { equals: $userId } }) {
+    count
+  }
+  deleteManyCategory(where: { user: { id: { equals: $userId } } }) {
+    count
+  }
+  deleteOneUser(where: { id: $userId }) {
+    id
+    email
+  }
+}

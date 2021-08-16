@@ -1,0 +1,16 @@
+query GetUserData($userId: String!) {
+  user(where: { id: $userId }) {
+    categories {
+      id
+      label
+      color
+      primary
+      notes {
+        id
+        title
+        content
+        updatedAt
+      }
+    }
+  }
+}

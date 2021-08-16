@@ -1,0 +1,5 @@
+mutation deleteCategory($categoryId: String!) {
+  deleteOneCategory(where: { id: $categoryId }) {
+    id
+  }
+}

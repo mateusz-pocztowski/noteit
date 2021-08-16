@@ -1,0 +1,25 @@
+mutation createUser(
+  $email: String!
+  $password: String!
+  $defaultCategory: [CategoryCreateWithoutUserInput!]
+) {
+  createOneUser(
+    data: {
+      email: $email
+      password: $password
+      categories: { create: $defaultCategory }
+    }
+  ) {
+    id
+    email
+    categories {
+      id
+      label
+      color
+      primary
+      notes {
+        id
+      }
+    }
+  }
+}

@@ -1,15 +1,26 @@
 import Link from 'next/link'
-import Layout from '../components/Layout'
+import styled from 'styled-components'
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-)
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  font-weight: 700;
+  font-size: 8rem;
+  a {
+    color: ${({ theme }) => theme.colors.text};
+    text-decoration: none;
+  }
+`
 
-export default IndexPage
+const Home = () => {
+  return (
+    <Wrapper>
+      <Link href="/api/auth/login">Login</Link>
+    </Wrapper>
+  )
+}
+
+export default Home

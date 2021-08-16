@@ -1,0 +1,20 @@
+mutation createCategory(
+  $userId: String!
+  $label: String!
+  $primary: Boolean = false
+  $color: String!
+) {
+  category: createOneCategory(
+    data: {
+      user: { connect: { id: $userId } }
+      label: $label
+      primary: $primary
+      color: $color
+    }
+  ) {
+    id
+    label
+    primary
+    color
+  }
+}
