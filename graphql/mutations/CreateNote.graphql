@@ -1,12 +1,12 @@
 mutation createNote(
-  $userId: String!
+  $userId: Int!
   $categoryId: String!
   $title: String!
-  $content: String!
+  $content: String = ""
 ) {
   createOneNote(
     data: {
-      userId: $userId
+      user: { connect: { id: $userId } }
       category: { connect: { id: $categoryId } }
       title: $title
       content: $content
@@ -16,5 +16,10 @@ mutation createNote(
     title
     content
     updatedAt
+    category {
+      color
+      label
+      primary
+    }
   }
 }

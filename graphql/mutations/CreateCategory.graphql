@@ -1,5 +1,5 @@
 mutation createCategory(
-  $userId: String!
+  $userId: Int!
   $label: String!
   $primary: Boolean = false
   $color: String!

@@ -1,4 +1,4 @@
-query GetUserData($userId: String!) {
+query GetUserData($userId: Int!) {
   user(where: { id: $userId }) {
     categories {
       id
@@ -8,7 +8,6 @@ query GetUserData($userId: String!) {
       notes {
         id
         title
-        content
         updatedAt
       }
     }

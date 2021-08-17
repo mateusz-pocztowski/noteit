@@ -1,9 +1,11 @@
 import React from 'react'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
 
 const IndexPage = () => {
+  const router = useRouter()
   const [session, loading] = useSession()
-  console.log(session, loading)
+
   if (loading) {
     return (
       <div className="flex justify-center mt-8 text-center">
@@ -15,19 +17,7 @@ const IndexPage = () => {
   }
 
   if (session) {
-    return (
-      <div className="flex justify-center mt-8 text-center">
-        <div className="flex-auto">
-          <div className="text-lg mb-2">
-            Hello, {session?.user?.email ?? session?.user?.name}
-          </div>
-          <div className="mb-2">gql test query: </div>
-          <button className="btn-green" onClick={() => signOut()}>
-            Sign out
-          </button>
-        </div>
-      </div>
-    )
+    return router.push('/notes')
   } else {
     return (
       <div className="flex justify-center mt-8 text-center">

@@ -1,4 +1,4 @@
-import { objectType, extendType } from 'nexus'
+import { objectType } from 'nexus'
 
 export const User = objectType({
   name: 'User',
@@ -9,19 +9,6 @@ export const User = objectType({
     t.model.image()
     t.model.createdAt()
     t.model.updatedAt()
-  },
-})
-
-export const UserQueries = extendType({
-  type: 'Query',
-  definition: t => {
-    t.crud.user()
-  },
-})
-
-export const UserMutations = extendType({
-  type: 'Mutation',
-  definition: t => {
-    t.crud.createOneUser()
+    t.model.categories()
   },
 })
