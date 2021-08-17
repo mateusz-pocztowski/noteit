@@ -44,6 +44,7 @@ model User {
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  categories    Category[]
   @@map(name: "users")
 }
 
@@ -55,4 +56,25 @@ model VerificationRequest {
   createdAt  DateTime @default(now()) @map(name: "created_at")
   updatedAt  DateTime @default(now()) @map(name: "updated_at")
   @@map(name: "verification_requests")
+}
+
+model Category {
+  id      String  @id @default(uuid())
+  color   String
+  label   String
+  primary Boolean
+  notes   Note[]
+  user    User    @relation(fields: [userId], references: [id])
+  userId  Int
+}
+
+model Note {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  title      String
+  content    String?
+  category   Category @relation(fields: [categoryId], references: [id])
+  userId     String
+  categoryId String
 }

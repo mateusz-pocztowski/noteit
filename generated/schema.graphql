@@ -2,6 +2,42 @@
 ### Do not make changes to this file directly
 
 
+input CategoryCreateManyUserInput {
+  color: String!
+  id: String
+  label: String!
+  primary: Boolean!
+}
+
+input CategoryCreateManyUserInputEnvelope {
+  data: [CategoryCreateManyUserInput!]
+  skipDuplicates: Boolean
+}
+
+input CategoryCreateNestedManyWithoutUserInput {
+  connect: [CategoryWhereUniqueInput!]
+  connectOrCreate: [CategoryCreateOrConnectWithoutUserInput!]
+  create: [CategoryCreateWithoutUserInput!]
+  createMany: CategoryCreateManyUserInputEnvelope
+}
+
+input CategoryCreateOrConnectWithoutUserInput {
+  create: CategoryCreateWithoutUserInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryCreateWithoutUserInput {
+  color: String!
+  id: String
+  label: String!
+  notes: NoteCreateNestedManyWithoutCategoryInput
+  primary: Boolean!
+}
+
+input CategoryWhereUniqueInput {
+  id: String
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -13,6 +49,45 @@ type Example {
 
 type Mutation {
   createOneUser(data: UserCreateInput!): User!
+}
+
+input NoteCreateManyCategoryInput {
+  content: String
+  createdAt: DateTime
+  id: String
+  title: String!
+  updatedAt: DateTime
+  userId: String!
+}
+
+input NoteCreateManyCategoryInputEnvelope {
+  data: [NoteCreateManyCategoryInput!]
+  skipDuplicates: Boolean
+}
+
+input NoteCreateNestedManyWithoutCategoryInput {
+  connect: [NoteWhereUniqueInput!]
+  connectOrCreate: [NoteCreateOrConnectWithoutCategoryInput!]
+  create: [NoteCreateWithoutCategoryInput!]
+  createMany: NoteCreateManyCategoryInputEnvelope
+}
+
+input NoteCreateOrConnectWithoutCategoryInput {
+  create: NoteCreateWithoutCategoryInput!
+  where: NoteWhereUniqueInput!
+}
+
+input NoteCreateWithoutCategoryInput {
+  content: String
+  createdAt: DateTime
+  id: String
+  title: String!
+  updatedAt: DateTime
+  userId: String!
+}
+
+input NoteWhereUniqueInput {
+  id: String
 }
 
 type Query {
@@ -30,6 +105,7 @@ type User {
 }
 
 input UserCreateInput {
+  categories: CategoryCreateNestedManyWithoutUserInput
   createdAt: DateTime
   email: String
   emailVerified: DateTime

@@ -34,7 +34,71 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CategoryCreateManyUserInput: { // input type
+    color: string; // String!
+    id?: string | null; // String
+    label: string; // String!
+    primary: boolean; // Boolean!
+  }
+  CategoryCreateManyUserInputEnvelope: { // input type
+    data?: NexusGenInputs['CategoryCreateManyUserInput'][] | null; // [CategoryCreateManyUserInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  CategoryCreateNestedManyWithoutUserInput: { // input type
+    connect?: NexusGenInputs['CategoryWhereUniqueInput'][] | null; // [CategoryWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['CategoryCreateOrConnectWithoutUserInput'][] | null; // [CategoryCreateOrConnectWithoutUserInput!]
+    create?: NexusGenInputs['CategoryCreateWithoutUserInput'][] | null; // [CategoryCreateWithoutUserInput!]
+    createMany?: NexusGenInputs['CategoryCreateManyUserInputEnvelope'] | null; // CategoryCreateManyUserInputEnvelope
+  }
+  CategoryCreateOrConnectWithoutUserInput: { // input type
+    create: NexusGenInputs['CategoryCreateWithoutUserInput']; // CategoryCreateWithoutUserInput!
+    where: NexusGenInputs['CategoryWhereUniqueInput']; // CategoryWhereUniqueInput!
+  }
+  CategoryCreateWithoutUserInput: { // input type
+    color: string; // String!
+    id?: string | null; // String
+    label: string; // String!
+    notes?: NexusGenInputs['NoteCreateNestedManyWithoutCategoryInput'] | null; // NoteCreateNestedManyWithoutCategoryInput
+    primary: boolean; // Boolean!
+  }
+  CategoryWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
+  NoteCreateManyCategoryInput: { // input type
+    content?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    title: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    userId: string; // String!
+  }
+  NoteCreateManyCategoryInputEnvelope: { // input type
+    data?: NexusGenInputs['NoteCreateManyCategoryInput'][] | null; // [NoteCreateManyCategoryInput!]
+    skipDuplicates?: boolean | null; // Boolean
+  }
+  NoteCreateNestedManyWithoutCategoryInput: { // input type
+    connect?: NexusGenInputs['NoteWhereUniqueInput'][] | null; // [NoteWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['NoteCreateOrConnectWithoutCategoryInput'][] | null; // [NoteCreateOrConnectWithoutCategoryInput!]
+    create?: NexusGenInputs['NoteCreateWithoutCategoryInput'][] | null; // [NoteCreateWithoutCategoryInput!]
+    createMany?: NexusGenInputs['NoteCreateManyCategoryInputEnvelope'] | null; // NoteCreateManyCategoryInputEnvelope
+  }
+  NoteCreateOrConnectWithoutCategoryInput: { // input type
+    create: NexusGenInputs['NoteCreateWithoutCategoryInput']; // NoteCreateWithoutCategoryInput!
+    where: NexusGenInputs['NoteWhereUniqueInput']; // NoteWhereUniqueInput!
+  }
+  NoteCreateWithoutCategoryInput: { // input type
+    content?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    title: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    userId: string; // String!
+  }
+  NoteWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
   UserCreateInput: { // input type
+    categories?: NexusGenInputs['CategoryCreateNestedManyWithoutUserInput'] | null; // CategoryCreateNestedManyWithoutUserInput
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     emailVerified?: NexusGenScalars['DateTime'] | null; // DateTime
