@@ -20,7 +20,7 @@ const Wrapper = styled.div<{ active: boolean }>`
   left: 0;
   right: 0;
   height: 100vh;
-  background: ${({ theme }) => theme.colors.dark300};
+  background: ${({ theme }) => theme.colors.background};
   z-index: 9999;
   display: flex;
   justify-content: center;

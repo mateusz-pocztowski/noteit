@@ -50,10 +50,11 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     color: ${({ theme }) => theme.colors.text};
-    background: ${({ theme }) => theme.colors.background};
+    background: ${({ theme }) => theme.colors.backgroundGradient};
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: 1.6rem;
     line-height: normal;
+    min-height: 100vh;
   }
 
   .simplebar-scrollbar::before {

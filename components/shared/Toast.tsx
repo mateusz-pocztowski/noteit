@@ -6,7 +6,7 @@ import type { Colors } from 'types/theme'
 
 export declare type ToastType = 'info' | 'success' | 'error'
 
-interface Props {
+type Props = {
   message: string
   type: ToastType
 }

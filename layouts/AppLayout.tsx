@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   height: 100vh;
   padding-left: ${({ theme }) => theme.navSize.desktop};
   overflow: hidden;
+  background: ${({ theme }) => theme.colors.backgroundGradient};
 `
 
 const ContentWrapper = styled.main`
@@ -23,7 +24,6 @@ const ContentWrapper = styled.main`
   height: 100%;
   overflow: hidden;
   padding: 130px 40px 0 60px;
-  background-image: ${({ theme }) => theme.colors.backgroundGradient};
 `
 
 const AppLayout: React.FC = ({ children }) => {
@@ -37,13 +37,13 @@ const AppLayout: React.FC = ({ children }) => {
     }
   }, [])
 
-  const isLoginPage = router.route === '/login'
-  if (!loading && !session && !isLoginPage) router.push('/login')
+  const isHomepage = router.route === '/'
+  if (!loading && !session && !isHomepage) router.push('/')
 
   return (
     <>
       <LoadingScreen visible={loading} />
-      {isLoginPage ? (
+      {isHomepage ? (
         <>{children}</>
       ) : (
         <Wrapper>

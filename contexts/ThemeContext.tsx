@@ -6,7 +6,7 @@ import {
 import { lightTheme, darkTheme, baseTheme } from 'theme/mainTheme'
 import GlobalStyle from 'theme/GlobalStyle'
 
-interface ThemeContextProps {
+type ThemeContextProps = {
   isDarkTheme: boolean
   toggleTheme: () => void
 }
@@ -27,8 +27,8 @@ export const ThemeContext = createContext<ThemeContextProps>({
 })
 
 const ThemeProvider: React.FC = ({ children }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false)
-  const [appTheme, setAppTheme] = useState<DefaultTheme>(lightMode)
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(true)
+  const [appTheme, setAppTheme] = useState<DefaultTheme>(darkMode)
 
   const setTheme = (mode: DefaultTheme, isDark: boolean) => {
     localStorage.setItem('dark-theme', JSON.stringify(isDark))

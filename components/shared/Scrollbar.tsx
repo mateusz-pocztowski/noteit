@@ -3,15 +3,14 @@ import styled, { css } from 'styled-components'
 import { rgba } from 'polished'
 import ScrollBar from 'simplebar-react'
 
-interface ContainerProps {
+type ContainerProps = {
   activeTop: boolean
   activeBottom: boolean
   scrollbarOnLeft: boolean
   mainTrack: boolean
 }
 
-interface Props {
-  children?: JSX.Element | JSX.Element[]
+type Props = {
   styles?: React.CSSProperties
   scrollbarOnLeft?: boolean
   mainTrack?: boolean
@@ -87,12 +86,12 @@ const ScrollContainer = styled.div<ContainerProps>`
     `}
 `
 
-const Scrollbar = ({
+const Scrollbar: React.FC<Props> = ({
   children,
   styles,
   mainTrack = false,
   scrollbarOnLeft = false,
-}: Props) => {
+}) => {
   const ref = useRef<ScrollBar>(null)
   const [scrollGradient, setScrollGradient] = useState({
     top: false,

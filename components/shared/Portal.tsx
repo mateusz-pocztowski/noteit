@@ -1,9 +1,8 @@
 import ReactDOM from 'react-dom'
-import { ReactChild, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
-interface Props {
+type Props = {
   selector: string
-  children: ReactChild
 }
 
 const Portal: React.FC<Props> = ({ selector, children }) => {
