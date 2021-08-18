@@ -1,5 +1,4 @@
-import * as polished from 'polished';
-import { CSSObject } from 'styled-components';
+import { CSSObject } from 'styled-components'
 
 import type {
   Colors,
@@ -9,7 +8,7 @@ import type {
   NavSize,
   Shadows,
   Theme,
-} from 'types/theme';
+} from 'types/theme'
 
 export const breakpoints: Breakpoints = {
   xs: 440,
@@ -19,31 +18,31 @@ export const breakpoints: Breakpoints = {
   xl: 1200,
   xxl: 1440,
   xxxl: 1680,
-};
+}
 
 const fonts: Fonts = {
   primary: `Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
   secondary: `Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
-};
+}
 
 const navSize: NavSize = {
   desktop: '340px',
   mobile: '80px',
-};
+}
 
 const gradients: Gradients = {
   dark: `linear-gradient(147deg, #1e1f25 0%, #23242b 80%)`,
   light: `linear-gradient(147deg, #f5f6f8 0%, #f7faff 80%)`,
   bluePurple:
     'linear-gradient(to right top, #4b95ff, #5389fb, #5e7bf6, #6a6dee, #775de5)',
-};
+}
 
 const shadows: Shadows = {
   light: '0 7px 30px -10px rgba(150, 170, 180, 0.5)',
   light100: '0 7px 30px -10px rgba(150, 170, 180, 0.3)',
   dark: '0 7px 30px -10px rgba(33, 33, 33, 0.5)',
   dark100: '0 7px 30px -10px rgba(33, 33, 33, 0.3)',
-};
+}
 
 const colors: Colors = {
   white: '#ffffff',
@@ -74,7 +73,7 @@ const colors: Colors = {
   yellow: '#fee440',
   red: '#f04d6b',
   red100: '#fa7d94',
-};
+}
 
 export const lightTheme: Theme = {
   background: colors.gray300,
@@ -95,7 +94,7 @@ export const lightTheme: Theme = {
   cardShadow: shadows.light,
   cardShadow100: shadows.light100,
   backgroundGradient: gradients.light,
-};
+}
 
 export const darkTheme: Theme = {
   background: colors.dark300,
@@ -116,7 +115,7 @@ export const darkTheme: Theme = {
   cardShadow: shadows.dark,
   cardShadow100: shadows.dark100,
   backgroundGradient: gradients.dark,
-};
+}
 
 export const baseTheme = {
   fonts,
@@ -127,10 +126,9 @@ export const baseTheme = {
   mq: (Object.keys(breakpoints) as Array<keyof typeof breakpoints>).reduce(
     (acc, breakpoint) => {
       acc[breakpoint] =
-        `@media (min-width: ${breakpoints[breakpoint]}px)` as unknown as CSSObject;
-      return acc;
+        `@media (min-width: ${breakpoints[breakpoint]}px)` as unknown as CSSObject
+      return acc
     },
     {} as { [Property in keyof Breakpoints]: CSSObject }
   ),
-  ...polished,
-};
+}

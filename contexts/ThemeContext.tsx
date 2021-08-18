@@ -23,7 +23,7 @@ const lightMode: DefaultTheme = {
 
 export const ThemeContext = createContext<ThemeContextProps>({
   isDarkTheme: false,
-  toggleTheme: () => null,
+  toggleTheme: () => {},
 })
 
 const ThemeProvider: React.FC = ({ children }) => {

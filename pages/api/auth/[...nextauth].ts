@@ -32,6 +32,7 @@ const options = {
   adapter: Adapters.Prisma.Adapter({
     prisma,
   }),
-
-  // secret: process.env.AUTH_SECRET,
+  pages: {
+    signIn: '/login',
+  },
 }

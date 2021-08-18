@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1.089" y1="-0.387" x2="0" y2="1.154" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#775de5"/>
+      <stop offset="1" stop-color="#4b95ff"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_2" data-name="Group 2" transform="translate(-305 -210)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="192" height="192" rx="21" transform="translate(305 210)" fill="url(#linear-gradient)"/>
+    <g id="Group_1" data-name="Group 1">
+      <line id="Line_9" data-name="Line 9" y1="70" x2="57" transform="translate(402.5 293.5)" fill="rgba(0,0,0,0)" stroke="#fff" stroke-linecap="round" stroke-width="15"/>
+      <line id="Line_1" data-name="Line 1" y1="70" x2="55" transform="translate(341.5 247.5)" fill="rgba(0,0,0,0)" stroke="#fff" stroke-linecap="round" stroke-width="15"/>
+      <line id="Line_2" data-name="Line 2" x2="42" y2="30" transform="translate(396.5 247.5)" fill="rgba(0,0,0,0)" stroke="#fff" stroke-linecap="round" stroke-width="15"/>
+      <line id="Line_8" data-name="Line 8" y1="54" x2="44" transform="translate(394.5 277.5)" fill="rgba(0,0,0,0)" stroke="#fff" stroke-linecap="round" stroke-width="15"/>
+      <line id="Line_10" data-name="Line 10" x2="42" y2="30" transform="translate(360.5 333.5)" fill="rgba(0,0,0,0)" stroke="#fff" stroke-linecap="round" stroke-width="15"/>
+      <line id="Line_11" data-name="Line 11" y1="54" x2="44" transform="translate(360.5 279.5)" fill="rgba(0,0,0,0)" stroke="#fff" stroke-linecap="round" stroke-width="15"/>
+    </g>
+  </g>
+</svg>

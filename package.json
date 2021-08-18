@@ -18,6 +18,7 @@
     "graphql-shield": "7.5.0",
     "next": "latest",
     "next-auth": "3.27.1",
+    "next-images": "^1.8.1",
     "nexus": "1.1.0",
     "nexus-plugin-prisma": "0.35.0",
     "nprogress": "^0.2.0",
