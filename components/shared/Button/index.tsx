@@ -37,9 +37,10 @@ const Button = styled.button<ButtonProps>`
   width: 100%;
   max-width: ${({ width }) => width || 'max-content'};
   @media (hover: hover) {
-    &:hover {
-      color: ${({ theme }) => theme.colors.blue};
-      background: ${({ theme }) => theme.colors.element};
+    &:hover,
+    &:focus {
+      color: ${({ theme }) => theme.colors.white};
+      background: ${({ theme }) => rgba(String(theme.colors.blue), 0.5)};
     }
   }
   ${({ remove }) =>
@@ -48,7 +49,8 @@ const Button = styled.button<ButtonProps>`
       color: ${({ theme }) => theme.colors.white} !important;
       background: ${({ theme }) => theme.colors.red};
       border-color: ${({ theme }) => theme.colors.red};
-      &:hover {
+      &:hover,
+      &:focus {
         background: ${({ theme }) => theme.colors.red100};
         border-color: ${({ theme }) => theme.colors.red100};
       }
@@ -57,7 +59,8 @@ const Button = styled.button<ButtonProps>`
     secondary &&
     css`
       background: transparent;
-      &:hover {
+      &:hover,
+      &:focus {
         color: ${({ theme }) => theme.colors.white};
         background: ${({ theme }) => rgba(String(theme.colors.blue), 0.3)};
       }

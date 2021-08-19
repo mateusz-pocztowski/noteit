@@ -34,6 +34,30 @@ export const Text = styled.p<TextProps>`
   }
 `
 
+export const Heading = styled(Text).attrs({
+  as: 'h2',
+  size: 26,
+  weight: 600,
+  align: 'center',
+  margin: '2.5rem',
+  family: 'secondary',
+})`
+  position: relative;
+  padding-bottom: 15px;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50px;
+    display: block;
+    width: 70px;
+    height: 2px;
+    background: ${({ theme }) => theme.colors.blue};
+  }
+`
+
 export const Light = styled.span`
   font-weight: 300;
 `

@@ -37,13 +37,13 @@ const AppLayout: React.FC = ({ children }) => {
     }
   }, [])
 
-  const isHomepage = router.route === '/'
-  if (!loading && !session && !isHomepage) router.push('/')
+  const isAppRoute = !['/', '/verify'].includes(router.route)
+  if (!loading && !session && isAppRoute) router.push('/')
 
   return (
     <>
       <LoadingScreen visible={loading} />
-      {isHomepage ? (
+      {!isAppRoute ? (
         <>{children}</>
       ) : (
         <Wrapper>
