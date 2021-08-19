@@ -27,7 +27,7 @@ const IndexPage = ({
 
   return (
     <>
-      <SEO />
+      <SEO title="Sign in" />
       <Login providers={PROVIDERS} error={error as ErrorKey} />
     </>
   )

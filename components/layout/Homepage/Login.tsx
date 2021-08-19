@@ -7,7 +7,12 @@ import Icon from 'components/shared/Icon'
 import { Row, Col } from 'components/shared/Grid'
 import { Heading, Text } from 'components/shared/Typography'
 import Input from 'components/shared/Input'
-import { Wrapper, InnerWrapper } from 'components/layout/Homepage/shared'
+import {
+  Wrapper,
+  InnerWrapper,
+  Topbar,
+  BoxWrapper,
+} from 'components/layout/Homepage/shared'
 
 import { LOGIN_ERRORS, PROVIDERS_LOGOS } from 'config'
 
@@ -54,47 +59,50 @@ const Login: React.FC<Props> = ({ error, providers }) => {
   const [input, setInput] = useState('')
   return (
     <Wrapper>
+      <Topbar />
       <InnerWrapper>
-        <Row>
-          <Col xs={24}>
-            <Heading>Log into your account</Heading>
-          </Col>
-          {providers.map(({ id, name, signIn }) => (
-            <Col xs={24} key={name}>
-              {id === 'email' ? (
-                <>
-                  <Spacer>
-                    <Text size={14} family="secondary">
-                      OR
-                    </Text>
-                  </Spacer>
-                  <Input
-                    name="email"
-                    label="Your email"
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    icon={PROVIDERS_LOGOS.email}
-                  />
-                  <Button onClick={() => signIn(input)} width="100%">
+        <BoxWrapper>
+          <Row>
+            <Col xs={24}>
+              <Heading>Log into your account</Heading>
+            </Col>
+            {providers.map(({ id, name, signIn }) => (
+              <Col xs={24} key={name}>
+                {id === 'email' ? (
+                  <>
+                    <Spacer>
+                      <Text size={14} family="secondary">
+                        OR
+                      </Text>
+                    </Spacer>
+                    <Input
+                      name="email"
+                      label="Your email"
+                      value={input}
+                      onChange={e => setInput(e.target.value)}
+                      icon={PROVIDERS_LOGOS.email}
+                    />
+                    <Button onClick={() => signIn(input)} width="100%">
+                      <span>Sign in with {name}</span>
+                    </Button>
+                  </>
+                ) : (
+                  <Button onClick={() => signIn()} secondary width="100%">
+                    <Icon src={PROVIDERS_LOGOS[id]} excludeDarkMode />
                     <span>Sign in with {name}</span>
                   </Button>
-                </>
-              ) : (
-                <Button onClick={() => signIn()} secondary width="100%">
-                  <Icon src={PROVIDERS_LOGOS[id]} excludeDarkMode />
-                  <span>Sign in with {name}</span>
-                </Button>
-              )}
-            </Col>
-          ))}
-          {error && (
-            <Error>
-              <Text size={14} line={1.2} weight={500} family="secondary">
-                {LOGIN_ERRORS[error] ?? LOGIN_ERRORS.default}
-              </Text>
-            </Error>
-          )}
-        </Row>
+                )}
+              </Col>
+            ))}
+            {error && (
+              <Error>
+                <Text size={14} line={1.2} weight={500} family="secondary">
+                  {LOGIN_ERRORS[error] ?? LOGIN_ERRORS.default}
+                </Text>
+              </Error>
+            )}
+          </Row>
+        </BoxWrapper>
       </InnerWrapper>
     </Wrapper>
   )

@@ -4,7 +4,7 @@ import Verify from 'components/layout/Homepage/Verify'
 const VerifyPage = () => {
   return (
     <>
-      <SEO />
+      <SEO title="Check your email" />
       <Verify
         title="Check your email"
         text="A sign in link has been sent to your email address."
