@@ -4,7 +4,7 @@
  */
 
 
-import type { Context } from "./../src/graphql/config/context"
+import type { Context } from "./../graphql/config/context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
