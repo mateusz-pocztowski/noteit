@@ -24,7 +24,7 @@ const IconWrapper = styled.div<IconWrapperProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: ${({ iconSize, full }) => (full ? '100%' : `${iconSize}px`)};
+  min-width: ${({ iconSize, full }) => (full ? '100%' : `${iconSize}px`)};
   height: ${({ iconSize, full }) => (full ? '100%' : `${iconSize}px`)};
   cursor: ${({ onClick }) => (onClick ? 'pointer' : 'inherit')};
   margin: 0 auto;

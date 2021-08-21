@@ -52,7 +52,7 @@ const Logo = styled.a`
   }
 `
 
-export const Topbar = () => (
+export const Topbar: React.FC = () => (
   <Link href="/" passHref>
     <Logo>
       <Icon size={80} excludeDarkMode src={logoIcon} alt="noteit logo" />

@@ -1,8 +1,8 @@
 import styled, { CSSProperties } from 'styled-components'
-import type { Colors, Fonts } from 'types/theme'
+import type { Colors, Fonts, Theme } from 'types/theme'
 
 type TextColor = {
-  themecolor: keyof Colors
+  themecolor: keyof (Colors & Theme)
 }
 
 type TextProps = {
@@ -14,6 +14,7 @@ type TextProps = {
   transform?: CSSProperties['textTransform']
   decoration?: CSSProperties['textDecoration']
   family?: keyof Fonts
+  themecolor?: keyof (Colors & Theme)
 }
 
 export const Text = styled.p<TextProps>`
@@ -25,8 +26,9 @@ export const Text = styled.p<TextProps>`
   font-size: ${({ size }) => (size ? `${size / 10}rem` : '1.6rem')};
   text-align: ${({ align }) => align ?? 'left'};
   text-decoration: ${({ decoration }) => decoration ?? 'none'};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme, themecolor }) => theme.colors[themecolor || 'text']};
   margin-bottom: ${({ margin }) => margin ?? '0'};
+  transition: 250ms color;
 `
 
 export const Heading = styled(Text).attrs({

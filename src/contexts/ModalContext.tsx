@@ -1,4 +1,4 @@
-import React, { FC, createContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
 
 type StateProps = {
   visible?: boolean
@@ -27,7 +27,7 @@ export const ModalContext = createContext<ModalProps>({
   showModal: () => {},
 })
 
-const ModalProvider: FC = ({ children }) => {
+const ModalProvider: React.FC = ({ children }) => {
   const [state, setState] = useState<StateProps>(initialState)
 
   const showModal = (newState: StateProps) => {

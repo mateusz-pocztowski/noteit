@@ -98,26 +98,25 @@ const Scrollbar: React.FC<Props> = ({
     bottom: false,
   })
 
-  const handleScroll = (e: Event) => {
-    // const { scrollTop, scrollTopMax } = e.target as HTMLDivElement
-    // if (scrollTop === 0) setScrollGradient({ top: false, bottom: true })
-    // else if (scrollTop === scrollTopMax)
-    //   setScrollGradient({ top: true, bottom: false })
-    // else setScrollGradient({ top: true, bottom: true })
-  }
+  const handleScroll = (e: Event | HTMLElement) => {
+    const target = e instanceof HTMLElement ? e : (e.target as HTMLDivElement)
+    const { scrollTop, offsetHeight, scrollHeight } = target
 
-  useEffect(() => {
-    // if (ref && ref.current) {
-    //   setScrollGradient({ top: false, bottom: true });
-    // }
-  }, [children])
+    if (scrollHeight > offsetHeight) {
+      if (scrollTop === 0) setScrollGradient({ top: false, bottom: true })
+      else if (scrollTop + offsetHeight === scrollHeight)
+        setScrollGradient({ top: true, bottom: false })
+      else setScrollGradient({ top: true, bottom: true })
+    }
+  }
 
   useEffect(() => {
     const scrollElement = ref.current?.getScrollElement()
     scrollElement?.addEventListener('scroll', handleScroll)
+    if (scrollElement) handleScroll(scrollElement)
 
     return () => scrollElement?.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [children])
 
   return (
     <ScrollContainer

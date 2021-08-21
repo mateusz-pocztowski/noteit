@@ -3,12 +3,12 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div``
 
-const OverviewPage = () => {
+const TasksPage = () => {
   return (
     <Wrapper>
-      <SEO title="Overview" />
+      <SEO title="Tasks" />
     </Wrapper>
   )
 }
 
-export default OverviewPage
+export default TasksPage

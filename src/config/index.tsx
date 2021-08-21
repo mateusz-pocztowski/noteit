@@ -1,4 +1,5 @@
 import dashboardIcon from 'assets/icons/dashboard.svg'
+import tasksIcon from 'assets/icons/tasks.svg'
 import notesIcon from 'assets/icons/notes.svg'
 import videosIcon from 'assets/icons/videos.svg'
 import calendarIcon from 'assets/icons/calendar.svg'
@@ -15,6 +16,11 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: dashboardIcon,
     label: 'Dashboard',
     to: '/dashboard',
+  },
+  {
+    icon: tasksIcon,
+    label: 'Tasks',
+    to: '/tasks',
   },
   {
     icon: notesIcon,

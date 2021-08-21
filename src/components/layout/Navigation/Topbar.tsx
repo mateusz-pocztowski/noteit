@@ -1,7 +1,10 @@
 import React, { useState, useContext, useRef } from 'react'
 import styled from 'styled-components'
+import { useSession } from 'next-auth/client'
 import { ThemeContext } from 'contexts/ThemeContext'
+
 import Icon from 'components/shared/Icon'
+
 import searchIcon from 'assets/icons/search.svg'
 
 const Wrapper = styled.nav`
@@ -64,7 +67,7 @@ const SearchWrapper = styled.div<{ focus: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
-  border-radius: 15px;
+  border-radius: 30px;
   background: ${({ theme }) => theme.colors.element};
   transition: box-shadow 0.2s, border-color 0.4s, width 0.7s;
   border: 1px solid
@@ -73,7 +76,7 @@ const SearchWrapper = styled.div<{ focus: boolean }>`
   width: 50%;
   min-width: 260px;
   max-width: 500px;
-  height: 60px;
+  height: 55px;
   padding: 0 25px;
   cursor: text;
   &:hover {
@@ -86,18 +89,19 @@ const Input = styled.input`
   background: transparent;
   width: 100%;
   height: 100%;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: ${({ theme }) => theme.colors.text};
-  font-weight: 600;
+  font-weight: 500;
   padding: 5px 10px;
   border-radius: 4px;
-  ::placeholder {
+  &::placeholder {
     color: ${({ theme }) => theme.colors.textLight100};
     opacity: 1;
   }
 `
 
-const Navigation = () => {
+const Topbar: React.FC = () => {
+  const [session] = useSession()
   const [isFocused, setIsFocused] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const { toggleTheme } = useContext(ThemeContext)
@@ -127,15 +131,25 @@ const Navigation = () => {
             placeholder="Search..."
           />
         </SearchWrapper>
-        <ProfileWrapper>
-          <span>Hi, John Doe!</span>
-          <ProfilePicture onClick={toggleTheme}>
-            <span>JD</span>
-          </ProfilePicture>
-        </ProfileWrapper>
+        {session?.user && (
+          <ProfileWrapper>
+            <span>Hi, {session.user.name}!</span>
+            <ProfilePicture onClick={toggleTheme}>
+              {session.user.image && (
+                <img src={session.user.image} alt={'profile picture'} />
+              )}
+              <span>
+                {(session.user.name || '')
+                  .split(' ')
+                  .map(n => n[0])
+                  .join('')}
+              </span>
+            </ProfilePicture>
+          </ProfileWrapper>
+        )}
       </InnerWrapper>
     </Wrapper>
   )
 }
 
-export default Navigation
+export default Topbar

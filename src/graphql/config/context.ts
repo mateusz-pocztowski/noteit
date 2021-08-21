@@ -10,6 +10,6 @@ export interface Context {
   req: MicroRequest
 }
 
-export function createContext({ res, req }): Context {
+export function createContext({ res, req }: Context) {
   return { prisma, res, req }
 }

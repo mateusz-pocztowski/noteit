@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 
 import LoadingScreen from 'components/shared/LoadingScreen'
-import Navigation from 'components/layout/Navigation/Navigation'
+import Navigation from 'components/layout/Navigation'
 // import Topbar from 'components/Navigation/Topbar';
 // import Tooltip from 'components/Tooltip/Tooltip';
 // import { ToastContainer } from 'react-toastify';
@@ -38,12 +38,15 @@ const AppLayout: React.FC = ({ children }) => {
   }, [])
 
   const isAppRoute = !['/', '/verify'].includes(router.route)
-  if (!loading && !session && isAppRoute) router.push('/')
+  if (!loading && !session && isAppRoute) {
+    router.push('/')
+    return null
+  }
 
   return (
     <>
       <LoadingScreen visible={loading} />
-      {!isAppRoute ? (
+      {!isAppRoute || !session ? (
         <>{children}</>
       ) : (
         <Wrapper>
