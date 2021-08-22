@@ -6,6 +6,7 @@ import type {
   Breakpoints,
   Gradients,
   NavSize,
+  PanelSize,
   Shadows,
   Theme,
 } from 'types/theme'
@@ -27,6 +28,11 @@ const fonts: Fonts = {
 
 const navSize: NavSize = {
   desktop: '340px',
+  mobile: '80px',
+}
+
+const panelSize: PanelSize = {
+  desktop: '420px',
   mobile: '80px',
 }
 
@@ -123,6 +129,7 @@ export const baseTheme = {
   gradients,
   shadows,
   navSize,
+  panelSize,
   mq: (Object.keys(breakpoints) as Array<keyof typeof breakpoints>).reduce(
     (acc, breakpoint) => {
       acc[breakpoint] =

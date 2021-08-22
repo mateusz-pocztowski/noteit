@@ -5,7 +5,8 @@ import { useRouter } from 'next/router'
 
 import LoadingScreen from 'components/shared/LoadingScreen'
 import Navigation from 'components/layout/Navigation'
-// import Topbar from 'components/Navigation/Topbar';
+import AsidePanel from 'components/layout/AsidePanel'
+import Topbar from 'components/layout/Navigation/Topbar'
 // import Tooltip from 'components/Tooltip/Tooltip';
 // import { ToastContainer } from 'react-toastify';
 // import ConfirmModal from 'components/Modals/ConfirmModal';
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   padding-left: ${({ theme }) => theme.navSize.desktop};
+  padding-right: ${({ theme }) => theme.panelSize.desktop};
   overflow: hidden;
   background: ${({ theme }) => theme.colors.backgroundGradient};
 `
@@ -23,7 +25,7 @@ const ContentWrapper = styled.main`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: 130px 40px 0 60px;
+  padding: 30px 50px 0;
 `
 
 const AppLayout: React.FC = ({ children }) => {
@@ -51,7 +53,13 @@ const AppLayout: React.FC = ({ children }) => {
       ) : (
         <Wrapper>
           <Navigation />
-          {session && !loading && <ContentWrapper>{children}</ContentWrapper>}
+          <AsidePanel />
+          {session && !loading && (
+            <ContentWrapper>
+              <Topbar />
+              {children}
+            </ContentWrapper>
+          )}
         </Wrapper>
       )}
     </>

@@ -941,12 +941,21 @@ export type UpdateNoteMutationVariables = Exact<{
 
 export type UpdateNoteMutation = { __typename?: 'Mutation', updateOneNote?: Maybe<{ __typename?: 'Note', title: string, content?: Maybe<string>, updatedAt: any, noteID: string, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } }> };
 
+export type UpdateUserMutationVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  userId: Scalars['Int'];
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateOneUser?: Maybe<{ __typename?: 'User', id: number }> };
+
 export type GetUserDataQueryVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type GetUserDataQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, notes: Array<{ __typename?: 'Note', id: string, title: string, updatedAt: any }> }> }> };
+export type GetUserDataQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', name?: Maybe<string>, email?: Maybe<string>, image?: Maybe<string>, categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, notes: Array<{ __typename?: 'Note', id: string, title: string, updatedAt: any }> }> }> };
 
 
 export const CreateCategoryDocument = `
@@ -1085,9 +1094,33 @@ export const useUpdateNoteMutation = <
       (variables?: UpdateNoteMutationVariables) => fetcher<UpdateNoteMutation, UpdateNoteMutationVariables>(client, UpdateNoteDocument, variables)(),
       options
     );
+export const UpdateUserDocument = `
+    mutation updateUser($name: String, $image: String, $userId: Int!) {
+  updateOneUser(
+    data: {name: {set: $name}, image: {set: $image}}
+    where: {id: $userId}
+  ) {
+    id
+  }
+}
+    `;
+export const useUpdateUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient, 
+      options?: UseMutationOptions<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>
+    ) => 
+    useMutation<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>(
+      (variables?: UpdateUserMutationVariables) => fetcher<UpdateUserMutation, UpdateUserMutationVariables>(client, UpdateUserDocument, variables)(),
+      options
+    );
 export const GetUserDataDocument = `
     query GetUserData($userId: Int!) {
   user(where: {id: $userId}) {
+    name
+    email
+    image
     categories {
       id
       label

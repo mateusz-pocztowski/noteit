@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth'
+import NextAuth, { Session } from 'next-auth'
 import Providers from 'next-auth/providers'
 
 import { NextApiHandler } from 'next'
@@ -36,6 +36,11 @@ const options = {
       from: process.env.EMAIL_FROM,
     }),
   ],
+  callbacks: {
+    async session(session: Session, token: any) {
+      return { ...session, id: token.id }
+    },
+  },
   adapter: Adapters.Prisma.Adapter({
     prisma,
   }),

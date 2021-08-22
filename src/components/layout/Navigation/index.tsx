@@ -1,18 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { signOut } from 'next-auth/client'
 
 import Scrollbar from 'components/shared/Scrollbar'
 import Icon from 'components/shared/Icon'
 import { Text } from 'components/shared/Typography'
 
-import Topbar from 'components/layout/Navigation/Topbar'
 import Menu from 'components/layout/Navigation/Menu'
-import MenuItem from 'components/layout/Navigation/Menu/MenuItem'
 
 import noteitLogo from 'assets/icons/logotype.svg'
-import logoutIcon from 'assets/icons/logout.svg'
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -45,14 +41,9 @@ const LogoText = styled(Text)`
   margin-left: 14px;
 `
 
-const Logout = styled.div`
-  padding: 0 20px;
-`
-
 const Navigation: React.FC = () => {
   return (
     <>
-      <Topbar />
       <Wrapper>
         <Link href="/dashboard" passHref>
           <LogoWrapper>
@@ -77,9 +68,6 @@ const Navigation: React.FC = () => {
         >
           <Menu />
         </Scrollbar>
-        <Logout>
-          <MenuItem label="Logout" icon={logoutIcon} onClick={signOut} />
-        </Logout>
       </Wrapper>
     </>
   )

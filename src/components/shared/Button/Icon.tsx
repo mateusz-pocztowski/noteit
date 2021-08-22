@@ -2,6 +2,13 @@ import styled from 'styled-components'
 
 import Icon from 'components/shared/Icon'
 
+type IconButtonProps = {
+  as: React.ElementType
+  icon: string
+  active?: boolean
+  size?: number
+} & React.HTMLAttributes<HTMLButtonElement>
+
 const Button = styled.button<{ active: boolean }>`
   display: flex;
   justify-content: center;
@@ -22,12 +29,14 @@ const Button = styled.button<{ active: boolean }>`
   }
 `
 
-const IconButton: React.FC<{
-  icon: string
-  active?: boolean
-  size?: number
-}> = ({ icon, active, size, ...props }) => (
-  <Button active={!!active} {...props}>
+const IconButton: React.FC<IconButtonProps> = ({
+  as = 'button',
+  icon,
+  active,
+  size,
+  ...props
+}) => (
+  <Button as={as} active={!!active} {...props}>
     <Icon src={icon} size={size} />
   </Button>
 )

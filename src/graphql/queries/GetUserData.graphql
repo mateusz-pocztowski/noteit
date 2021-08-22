@@ -1,5 +1,8 @@
 query GetUserData($userId: Int!) {
   user(where: { id: $userId }) {
+    name
+    email
+    image
     categories {
       id
       label

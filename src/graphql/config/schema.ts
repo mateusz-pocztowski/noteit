@@ -18,8 +18,8 @@ const baseSchema = makeSchema({
   types: [User, Category, Note, Query, Mutation, GQLDate],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
-    typegen: path.join(process.cwd(), 'generated', 'nexus-typegen.ts'),
-    schema: path.join(process.cwd(), 'generated', 'schema.graphql'),
+    typegen: path.join(process.cwd(), 'src/generated', 'nexus-typegen.ts'),
+    schema: path.join(process.cwd(), 'src/generated', 'schema.graphql'),
   },
   contextType: {
     module: path.join(process.cwd(), 'src/graphql/config/context.ts'),

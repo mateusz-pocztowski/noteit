@@ -1,99 +1,49 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
-import { useSession } from 'next-auth/client'
-import { ThemeContext } from 'contexts/ThemeContext'
+import { useRouter } from 'next/router'
 
+import { MENU_ITEMS } from 'config'
+
+import { Text } from 'components/shared/Typography'
 import Icon from 'components/shared/Icon'
 
 import searchIcon from 'assets/icons/search.svg'
 
 const Wrapper = styled.nav`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  padding-left: ${({ theme }) => theme.navSize.desktop};
-  z-index: 1;
 `
 
 const InnerWrapper = styled.div`
-  padding: 30px 40px 30px 60px;
-  z-index: 99;
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
-
-const ProfileWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  max-width: 500px;
-  margin-left: 30px;
-  & > span {
-    border-radius: 50px;
-    margin-right: 15px;
-    white-space: nowrap;
-    font-weight: 700;
-  }
-`
-
-const ProfilePicture = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 700;
-  min-width: 52px;
-  max-width: 52px;
-  min-height: 52px;
-  max-height: 52px;
-  border-radius: 50%;
-  color: ${({ theme }) => theme.colors.blue};
-  background: ${({ theme }) => theme.colors.blue100};
-  box-shadow: ${({ theme }) => theme.colors.cardShadow};
-  cursor: pointer;
-  overflow: hidden;
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
 `
 
 const SearchWrapper = styled.div<{ focus: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
-  border-radius: 30px;
   background: ${({ theme }) => theme.colors.element};
-  transition: box-shadow 0.2s, border-color 0.4s, width 0.7s;
-  border: 1px solid
-    ${({ theme, focus }) =>
-      focus ? theme.colors.blue : theme.colors.cardBorder};
-  width: 50%;
-  min-width: 260px;
-  max-width: 500px;
-  height: 55px;
-  padding: 0 25px;
+  box-shadow: ${({ theme }) => theme.colors.cardShadow100};
+  border: 1px solid ${({ theme }) => theme.colors.elementLight};
+  border-radius: 30px;
+  transition: box-shadow 0.2s, border-color 0.3s, width 0.7s;
+  width: 100%;
+  max-width: 300px;
+  height: 50px;
+  padding: 0 15px 0 20px;
   cursor: text;
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.blue};
-  }
 `
 
 const Input = styled.input`
-  margin-left: 8px;
   background: transparent;
   width: 100%;
   height: 100%;
   font-size: 1.5rem;
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  font-weight: 400;
   color: ${({ theme }) => theme.colors.text};
-  font-weight: 500;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 5px 15px;
   &::placeholder {
     color: ${({ theme }) => theme.colors.textLight100};
     opacity: 1;
@@ -101,10 +51,8 @@ const Input = styled.input`
 `
 
 const Topbar: React.FC = () => {
-  const [session] = useSession()
   const [isFocused, setIsFocused] = useState(false)
   const [searchValue, setSearchValue] = useState('')
-  const { toggleTheme } = useContext(ThemeContext)
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -116,11 +64,21 @@ const Topbar: React.FC = () => {
     if (inputRef.current) inputRef.current?.focus()
   }
 
+  const { route } = useRouter()
+
   return (
     <Wrapper>
       <InnerWrapper>
+        <div>
+          <Text family="secondary" size={16} themecolor="textLight" line="1">
+            Hi, Mateusz!
+          </Text>
+          <Text family="secondary" size={30} weight={700}>
+            {MENU_ITEMS.find(({ to }) => to && route.includes(to))?.label}
+          </Text>
+        </div>
         <SearchWrapper onClick={handleSearchClick} focus={isFocused}>
-          <Icon src={searchIcon} alt="search" excludeDarkMode />
+          <Icon src={searchIcon} alt="search" size={20} />
           <Input
             ref={inputRef}
             autoComplete="off"
@@ -128,25 +86,9 @@ const Topbar: React.FC = () => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             value={searchValue}
-            placeholder="Search..."
+            placeholder="Search anything"
           />
         </SearchWrapper>
-        {session?.user && (
-          <ProfileWrapper>
-            <span>Hi, {session.user.name}!</span>
-            <ProfilePicture onClick={toggleTheme}>
-              {session.user.image && (
-                <img src={session.user.image} alt={'profile picture'} />
-              )}
-              <span>
-                {(session.user.name || '')
-                  .split(' ')
-                  .map(n => n[0])
-                  .join('')}
-              </span>
-            </ProfilePicture>
-          </ProfileWrapper>
-        )}
       </InnerWrapper>
     </Wrapper>
   )

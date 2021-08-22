@@ -1,0 +1,8 @@
+mutation updateUser($name: String, $image: String, $userId: Int!) {
+  updateOneUser(
+    data: { name: { set: $name }, image: { set: $image } }
+    where: { id: $userId }
+  ) {
+    id
+  }
+}

@@ -20,6 +20,11 @@ export type NavSize = {
   mobile: CSSProperties['width']
 }
 
+export type PanelSize = {
+  desktop: CSSProperties['width']
+  mobile: CSSProperties['width']
+}
+
 export type Colors = {
   white: CSSProperties['color']
   white100: CSSProperties['color']
@@ -92,6 +97,7 @@ declare module 'styled-components' {
     gradients: Gradients
     shadows: Shadows
     navSize: NavSize
+    panelSize: PanelSize
     mq: { [Property in keyof Breakpoints]: CSSObject }
   }
 }
