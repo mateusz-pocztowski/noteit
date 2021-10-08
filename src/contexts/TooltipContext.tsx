@@ -1,5 +1,6 @@
-import React, { FC, createContext, useState, useEffect } from 'react'
-import { TooltipProps, StateProps } from 'types/tooltip'
+import { createContext, useState, useEffect } from 'react'
+
+import type { TooltipProps, StateProps } from 'types/tooltip'
 
 const initialState: StateProps = {
   tooltipElement: null,
@@ -21,7 +22,7 @@ export const TooltipContext = createContext<TooltipProps>({
   showTooltip: () => null,
 })
 
-const TooltipProvider: FC = ({ children }) => {
+const TooltipProvider: React.FC = ({ children }) => {
   const [state, setState] = useState<StateProps>(initialState)
 
   const showTooltip = (newState: StateProps) => {
@@ -40,15 +41,11 @@ const TooltipProvider: FC = ({ children }) => {
   }
 
   useEffect(() => {
-    const listener = () => {
-      closeTooltip()
-    }
-
-    window.addEventListener('scroll', listener, true)
-    window.addEventListener('resize', listener)
+    window.addEventListener('scroll', closeTooltip)
+    window.addEventListener('resize', closeTooltip)
     return () => {
-      window.removeEventListener('scroll', listener)
-      window.removeEventListener('resize', listener)
+      window.removeEventListener('scroll', closeTooltip)
+      window.removeEventListener('resize', closeTooltip)
     }
   }, [])
 

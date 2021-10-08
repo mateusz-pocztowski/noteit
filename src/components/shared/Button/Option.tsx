@@ -11,15 +11,17 @@ const OptionBtn = styled.button`
   background: transparent;
   cursor: pointer;
   transition: 0.3s;
-  opacity: 0;
   &:hover,
   &.active {
-    opacity: 1;
     background: ${({ theme }) => theme.colors.hover100};
   }
 `
 
-const OptionButton: React.FC = ({ ...props }) => (
+type Props = {
+  [x: string]: any
+}
+
+const OptionButton: React.FC<Props> = ({ ...props }) => (
   <OptionBtn {...props}>
     <Icon src={threeDotsIcon} size={22} />
   </OptionBtn>

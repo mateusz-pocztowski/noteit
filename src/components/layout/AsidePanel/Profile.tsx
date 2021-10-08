@@ -10,22 +10,17 @@ import { toBase64 } from 'utils/toBase64'
 import { resizeImageFixed } from 'utils/resizeImage'
 
 import { Text } from 'components/shared/Typography'
+import { Row, Col } from 'components/shared/Grid'
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin: 20px 0;
-  & > p {
-    margin-left: 15px;
-    white-space: nowrap;
-  }
 `
 
 const PlusButton = styled.div`
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 0;
+  right: 0;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -47,8 +42,8 @@ const PictureInner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   background: ${({ theme }) => theme.colors.blue100};
   border: 2px solid transparent;
   border-radius: 50%;
@@ -61,7 +56,7 @@ const Picture = styled.button`
   background: transparent;
   cursor: pointer;
   padding: 0;
-  margin: 0 0 15px;
+  margin: 0 12px 0 0;
   &:hover {
     ${PlusButton} {
       opacity: 1;
@@ -84,6 +79,13 @@ const Image = styled.img`
 
 const FileInput = styled.input`
   display: none;
+`
+
+const NameRow = styled(Row)`
+  & > ${Col} {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 `
 
 const Profile: React.FC = () => {
@@ -156,17 +158,23 @@ const Profile: React.FC = () => {
               </Text>
             </PlusButton>
           </Picture>
-          <Text size={18} weight={600}>
-            {data.user.name}
-          </Text>
-          <Text
-            size={14}
-            weight={500}
-            themecolor="textLight"
-            family="secondary"
-          >
-            Free user
-          </Text>
+          <NameRow>
+            <Col xs={24}>
+              <Text size={16} weight={600}>
+                {data.user.name}
+              </Text>
+            </Col>
+            <Col xs={24}>
+              <Text
+                size={13}
+                weight={500}
+                themecolor="textLight"
+                family="secondary"
+              >
+                Free user
+              </Text>
+            </Col>
+          </NameRow>
         </Wrapper>
       )}
     </>

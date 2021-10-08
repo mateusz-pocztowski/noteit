@@ -1,0 +1,22 @@
+query GetNotes($userId: Int!) {
+  user(where: { id: $userId }) {
+    categories {
+      id
+      label
+      color
+      primary
+      notes {
+        id
+        title
+        createdAt
+        updatedAt
+        category {
+          id
+          label
+          primary
+          color
+        }
+      }
+    }
+  }
+}

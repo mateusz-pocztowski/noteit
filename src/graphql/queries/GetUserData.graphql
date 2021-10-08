@@ -3,16 +3,5 @@ query GetUserData($userId: Int!) {
     name
     email
     image
-    categories {
-      id
-      label
-      color
-      primary
-      notes {
-        id
-        title
-        updatedAt
-      }
-    }
   }
 }

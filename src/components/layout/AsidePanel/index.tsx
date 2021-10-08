@@ -6,7 +6,6 @@ import IconButton from 'components/shared/Button/Icon'
 import Profile from 'components/layout/AsidePanel/Profile'
 
 import logoutIcon from 'assets/icons/logout.svg'
-import { Text } from 'components/shared/Typography'
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -21,36 +20,22 @@ const Wrapper = styled.nav`
   padding: 30px 25px;
 `
 
-const Flex = styled.button`
+const UserMenu = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: transparent;
-  cursor: pointer;
-  transition: 0.2s;
-  padding: 0 0 0 10px;
-  border-radius: 8px;
-  & > div {
-    border: none;
-    height: 45px;
-    pointer-events: none;
-  }
-  &:hover {
-    background: ${({ theme }) => theme.colors.hover100};
-  }
 `
 
 const AsidePanel: React.FC = () => {
   return (
     <Wrapper>
-      <Flex onClick={() => signOut()}>
-        <Text family="secondary" weight={500} themecolor="text">
-          Logout
-        </Text>
-        <IconButton as="div" icon={logoutIcon} />
-      </Flex>
-      <Profile />
+      <UserMenu>
+        <Profile />
+        <IconButton
+          icon={logoutIcon}
+          onClick={() => signOut()}
+          tooltip="Logout"
+        />
+      </UserMenu>
     </Wrapper>
   )
 }

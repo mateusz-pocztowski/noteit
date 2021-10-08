@@ -10,6 +10,13 @@ import emailIcon from 'assets/icons/email.svg'
 
 import type { ErrorKey, ProviderID } from 'types/login'
 import type { MenuItem } from 'types/navigation'
+import type { Category } from 'generated/graphql'
+
+export const DEFAULT_CATEGORY: Pick<Category, 'color' | 'label' | 'primary'> = {
+  color: '#5d7ef4',
+  label: 'General',
+  primary: true,
+}
 
 export const MENU_ITEMS: MenuItem[] = [
   {

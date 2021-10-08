@@ -74,20 +74,6 @@ const GlobalStyle = createGlobalStyle`
   .simplebar-content {
     height: 100%;
   }
-  .Toastify__toast {
-    color: ${({ theme }) => theme.colors.text};
-    background: ${({ theme }) => theme.colors.hover200};
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
-    border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  }
-  .Toastify__close-button {
-    color: ${({ theme }) => theme.colors.text};
-    opacity: 0.7;
-  }
-  .toast-progress {
-    background: ${({ theme }) => theme.gradients.bluePurple};
-    height: 3px;
-  }
   #nprogress .bar {
     background: ${({ theme }) => theme.colors.blue};
     height: 3px;

@@ -924,6 +924,13 @@ export type DeleteCategoryMutationVariables = Exact<{
 
 export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteOneCategory?: Maybe<{ __typename?: 'Category', id: string }> };
 
+export type DeleteNoteMutationVariables = Exact<{
+  noteId: Scalars['String'];
+}>;
+
+
+export type DeleteNoteMutation = { __typename?: 'Mutation', deleteOneNote?: Maybe<{ __typename?: 'Note', id: string }> };
+
 export type DeleteUserMutationVariables = Exact<{
   userId: Scalars['Int'];
 }>;
@@ -931,15 +938,24 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteManyNote: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyCategory: { __typename?: 'AffectedRowsOutput', count: number }, deleteManySession: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyAccount: { __typename?: 'AffectedRowsOutput', count: number }, deleteOneUser?: Maybe<{ __typename?: 'User', id: number, email?: Maybe<string> }> };
 
-export type UpdateNoteMutationVariables = Exact<{
+export type UpdateNoteWithContentMutationVariables = Exact<{
   noteId: Scalars['String'];
   categoryId: Scalars['String'];
   title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
+  content: Scalars['String'];
 }>;
 
 
-export type UpdateNoteMutation = { __typename?: 'Mutation', updateOneNote?: Maybe<{ __typename?: 'Note', title: string, content?: Maybe<string>, updatedAt: any, noteID: string, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } }> };
+export type UpdateNoteWithContentMutation = { __typename?: 'Mutation', updateOneNote?: Maybe<{ __typename?: 'Note', id: string, title: string, content?: Maybe<string>, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } }> };
+
+export type UpdateNoteWithoutContentMutationVariables = Exact<{
+  noteId: Scalars['String'];
+  categoryId: Scalars['String'];
+  title: Scalars['String'];
+}>;
+
+
+export type UpdateNoteWithoutContentMutation = { __typename?: 'Mutation', updateOneNote?: Maybe<{ __typename?: 'Note', id: string, title: string, content?: Maybe<string>, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } }> };
 
 export type UpdateUserMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -950,12 +966,19 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateOneUser?: Maybe<{ __typename?: 'User', id: number }> };
 
+export type GetNotesQueryVariables = Exact<{
+  userId: Scalars['Int'];
+}>;
+
+
+export type GetNotesQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, notes: Array<{ __typename?: 'Note', id: string, title: string, createdAt: any, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, primary: boolean, color: string } }> }> }> };
+
 export type GetUserDataQueryVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type GetUserDataQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', name?: Maybe<string>, email?: Maybe<string>, image?: Maybe<string>, categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, notes: Array<{ __typename?: 'Note', id: string, title: string, updatedAt: any }> }> }> };
+export type GetUserDataQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', name?: Maybe<string>, email?: Maybe<string>, image?: Maybe<string> }> };
 
 
 export const CreateCategoryDocument = `
@@ -1027,6 +1050,24 @@ export const useDeleteCategoryMutation = <
       (variables?: DeleteCategoryMutationVariables) => fetcher<DeleteCategoryMutation, DeleteCategoryMutationVariables>(client, DeleteCategoryDocument, variables)(),
       options
     );
+export const DeleteNoteDocument = `
+    mutation deleteNote($noteId: String!) {
+  deleteOneNote(where: {id: $noteId}) {
+    id
+  }
+}
+    `;
+export const useDeleteNoteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient, 
+      options?: UseMutationOptions<DeleteNoteMutation, TError, DeleteNoteMutationVariables, TContext>
+    ) => 
+    useMutation<DeleteNoteMutation, TError, DeleteNoteMutationVariables, TContext>(
+      (variables?: DeleteNoteMutationVariables) => fetcher<DeleteNoteMutation, DeleteNoteMutationVariables>(client, DeleteNoteDocument, variables)(),
+      options
+    );
 export const DeleteUserDocument = `
     mutation deleteUser($userId: Int!) {
   deleteManyNote(where: {userId: {equals: $userId}}) {
@@ -1064,13 +1105,13 @@ export const useDeleteUserMutation = <
       (variables?: DeleteUserMutationVariables) => fetcher<DeleteUserMutation, DeleteUserMutationVariables>(client, DeleteUserDocument, variables)(),
       options
     );
-export const UpdateNoteDocument = `
-    mutation updateNote($noteId: String!, $categoryId: String!, $title: String!, $content: String) {
+export const UpdateNoteWithContentDocument = `
+    mutation updateNoteWithContent($noteId: String!, $categoryId: String!, $title: String!, $content: String!) {
   updateOneNote(
     data: {category: {connect: {id: $categoryId}}, title: {set: $title}, content: {set: $content}}
     where: {id: $noteId}
   ) {
-    noteID: id
+    id
     title
     content
     updatedAt
@@ -1083,15 +1124,45 @@ export const UpdateNoteDocument = `
   }
 }
     `;
-export const useUpdateNoteMutation = <
+export const useUpdateNoteWithContentMutation = <
       TError = unknown,
       TContext = unknown
     >(
       client: GraphQLClient, 
-      options?: UseMutationOptions<UpdateNoteMutation, TError, UpdateNoteMutationVariables, TContext>
+      options?: UseMutationOptions<UpdateNoteWithContentMutation, TError, UpdateNoteWithContentMutationVariables, TContext>
     ) => 
-    useMutation<UpdateNoteMutation, TError, UpdateNoteMutationVariables, TContext>(
-      (variables?: UpdateNoteMutationVariables) => fetcher<UpdateNoteMutation, UpdateNoteMutationVariables>(client, UpdateNoteDocument, variables)(),
+    useMutation<UpdateNoteWithContentMutation, TError, UpdateNoteWithContentMutationVariables, TContext>(
+      (variables?: UpdateNoteWithContentMutationVariables) => fetcher<UpdateNoteWithContentMutation, UpdateNoteWithContentMutationVariables>(client, UpdateNoteWithContentDocument, variables)(),
+      options
+    );
+export const UpdateNoteWithoutContentDocument = `
+    mutation updateNoteWithoutContent($noteId: String!, $categoryId: String!, $title: String!) {
+  updateOneNote(
+    data: {category: {connect: {id: $categoryId}}, title: {set: $title}}
+    where: {id: $noteId}
+  ) {
+    id
+    title
+    content
+    updatedAt
+    category {
+      id
+      label
+      color
+      primary
+    }
+  }
+}
+    `;
+export const useUpdateNoteWithoutContentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient, 
+      options?: UseMutationOptions<UpdateNoteWithoutContentMutation, TError, UpdateNoteWithoutContentMutationVariables, TContext>
+    ) => 
+    useMutation<UpdateNoteWithoutContentMutation, TError, UpdateNoteWithoutContentMutationVariables, TContext>(
+      (variables?: UpdateNoteWithoutContentMutationVariables) => fetcher<UpdateNoteWithoutContentMutation, UpdateNoteWithoutContentMutationVariables>(client, UpdateNoteWithoutContentDocument, variables)(),
       options
     );
 export const UpdateUserDocument = `
@@ -1115,12 +1186,9 @@ export const useUpdateUserMutation = <
       (variables?: UpdateUserMutationVariables) => fetcher<UpdateUserMutation, UpdateUserMutationVariables>(client, UpdateUserDocument, variables)(),
       options
     );
-export const GetUserDataDocument = `
-    query GetUserData($userId: Int!) {
+export const GetNotesDocument = `
+    query GetNotes($userId: Int!) {
   user(where: {id: $userId}) {
-    name
-    email
-    image
     categories {
       id
       label
@@ -1129,9 +1197,38 @@ export const GetUserDataDocument = `
       notes {
         id
         title
+        createdAt
         updatedAt
+        category {
+          id
+          label
+          primary
+          color
+        }
       }
     }
+  }
+}
+    `;
+export const useGetNotesQuery = <
+      TData = GetNotesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient, 
+      variables: GetNotesQueryVariables, 
+      options?: UseQueryOptions<GetNotesQuery, TError, TData>
+    ) => 
+    useQuery<GetNotesQuery, TError, TData>(
+      ['GetNotes', variables],
+      fetcher<GetNotesQuery, GetNotesQueryVariables>(client, GetNotesDocument, variables),
+      options
+    );
+export const GetUserDataDocument = `
+    query GetUserData($userId: Int!) {
+  user(where: {id: $userId}) {
+    name
+    email
+    image
   }
 }
     `;

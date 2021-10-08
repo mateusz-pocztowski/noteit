@@ -102,9 +102,9 @@ const Scrollbar: React.FC<Props> = ({
     const target = e instanceof HTMLElement ? e : (e.target as HTMLDivElement)
     const { scrollTop, offsetHeight, scrollHeight } = target
 
-    if (scrollHeight > offsetHeight) {
-      if (scrollTop === 0) setScrollGradient({ top: false, bottom: true })
-      else if (scrollTop + offsetHeight === scrollHeight)
+    if (scrollTop === 0) setScrollGradient({ top: false, bottom: true })
+    else if (scrollHeight > offsetHeight) {
+      if (scrollTop + offsetHeight === scrollHeight)
         setScrollGradient({ top: true, bottom: false })
       else setScrollGradient({ top: true, bottom: true })
     }

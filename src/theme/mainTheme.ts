@@ -32,7 +32,7 @@ const navSize: NavSize = {
 }
 
 const panelSize: PanelSize = {
-  desktop: '420px',
+  desktop: '380px',
   mobile: '80px',
 }
 

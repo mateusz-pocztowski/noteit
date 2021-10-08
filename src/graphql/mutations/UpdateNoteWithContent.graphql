@@ -1,0 +1,26 @@
+mutation updateNoteWithContent(
+  $noteId: String!
+  $categoryId: String!
+  $title: String!
+  $content: String!
+) {
+  updateOneNote(
+    data: {
+      category: { connect: { id: $categoryId } }
+      title: { set: $title }
+      content: { set: $content }
+    }
+    where: { id: $noteId }
+  ) {
+    id
+    title
+    content
+    updatedAt
+    category {
+      id
+      label
+      color
+      primary
+    }
+  }
+}

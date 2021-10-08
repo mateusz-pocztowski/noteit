@@ -1,18 +1,21 @@
 import { MutableRefObject } from 'react'
 
+import type { ThemeColors } from 'types/theme'
+
 export type HandlerLayerProps = {
   label: string
-  color: string
-  colorBlock: string
+  color?: keyof ThemeColors
+  colorBlock?: string
   handler: Function
   active: boolean
 }
 
 export type TooltipOption = {
-  handler: Function | HandlerLayerProps[]
+  handler?: () => void
+  layers?: HandlerLayerProps[]
   label: string
-  color?: string
-  icon: string
+  color?: keyof ThemeColors
+  icon?: string
   active?: boolean
 }
 
@@ -32,7 +35,7 @@ export type TooltipProps = StateProps & {
 }
 
 export type StateProps = {
-  tooltipElement: MutableRefObject<HTMLDivElement> | null
+  tooltipElement: MutableRefObject<HTMLDivElement | null> | null
   visible?: boolean
   options: TooltipOption[]
   direction: Direction

@@ -90,6 +90,8 @@ export type Theme = {
   backgroundGradient: CSSProperties['background'] | keyof Gradients
 }
 
+export type ThemeColors = Colors & Theme
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     fonts: Fonts

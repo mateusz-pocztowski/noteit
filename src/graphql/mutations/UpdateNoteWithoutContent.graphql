@@ -1,18 +1,13 @@
-mutation updateNote(
+mutation updateNoteWithoutContent(
   $noteId: String!
   $categoryId: String!
   $title: String!
-  $content: String
 ) {
   updateOneNote(
-    data: {
-      category: { connect: { id: $categoryId } }
-      title: { set: $title }
-      content: { set: $content }
-    }
+    data: { category: { connect: { id: $categoryId } }, title: { set: $title } }
     where: { id: $noteId }
   ) {
-    noteID: id
+    id
     title
     content
     updatedAt

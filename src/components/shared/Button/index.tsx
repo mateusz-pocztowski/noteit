@@ -1,5 +1,7 @@
 import styled, { css, CSSProperties, keyframes } from 'styled-components'
-import { rgba } from 'polished'
+import { lighten, rgba } from 'polished'
+
+import type { ThemeColors } from 'types/theme'
 
 const spin = keyframes`
   from {
@@ -15,6 +17,10 @@ type ButtonProps = {
   secondary?: boolean
   remove?: boolean
   disabled?: boolean
+  muffled?: boolean
+  active?: boolean
+  color?: CSSProperties['color']
+  themecolor?: keyof ThemeColors
   width?: CSSProperties['width']
 }
 
@@ -23,7 +29,7 @@ const Button = styled.button<ButtonProps>`
   justify-content: center;
   align-items: center;
   padding: 1.5rem 2.5rem;
-  background: ${({ theme }) => theme.colors.blue};
+  background: ${({ theme, themecolor }) => theme.colors[themecolor!]};
   color: ${({ theme }) => theme.colors.white};
   font-family: ${({ theme }) => theme.fonts.primary};
   font-size: 1.6rem;
@@ -33,14 +39,15 @@ const Button = styled.button<ButtonProps>`
   text-decoration: none;
   transition: 0.3s;
   text-align: center;
-  border: 1px solid ${({ theme }) => theme.colors.blue};
+  border: 1px solid
+    ${({ theme, color, themecolor }) => color || theme.colors[themecolor!]};
   width: 100%;
   max-width: ${({ width }) => width || 'max-content'};
   @media (hover: hover) {
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${({ theme }) => theme.colors.white};
-      background: ${({ theme }) => rgba(String(theme.colors.blue), 0.5)};
+      background: ${({ theme, themecolor, color }) =>
+        rgba(String(color || theme.colors[themecolor!]), 0.5)};
     }
   }
   ${({ remove }) =>
@@ -49,21 +56,40 @@ const Button = styled.button<ButtonProps>`
       color: ${({ theme }) => theme.colors.white} !important;
       background: ${({ theme }) => theme.colors.red};
       border-color: ${({ theme }) => theme.colors.red};
-      &:hover,
-      &:focus {
+      &:hover {
         background: ${({ theme }) => theme.colors.red100};
         border-color: ${({ theme }) => theme.colors.red100};
       }
     `}
-  ${({ secondary }) =>
+  ${({ secondary, themecolor, color }) =>
     secondary &&
     css`
       background: transparent;
       color: ${({ theme }) => theme.colors.text};
-      &:hover,
-      &:focus {
+      &:hover {
         color: ${({ theme }) => theme.colors.text};
-        background: ${({ theme }) => rgba(String(theme.colors.blue), 0.3)};
+        background: ${({ theme }) =>
+          rgba(String(color || theme.colors[themecolor!]), 0.3)};
+      }
+    `}
+  ${({ muffled, active, themecolor, color }) =>
+    muffled &&
+    css`
+      background: ${({ theme }) =>
+        active
+          ? rgba(String(color || theme.colors[themecolor!]), 0.5)
+          : rgba(String(color || theme.colors[themecolor!]), 0.2)};
+      color: ${({ theme }) =>
+        lighten(0.3, String(color || theme.colors[themecolor!]))};
+      border-color: transparent;
+      padding: 1rem 2.5rem;
+      min-width: 80px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      &:hover {
+        color: ${({ theme }) => theme.colors.text};
+        background: ${({ theme }) =>
+          rgba(String(color || theme.colors[themecolor!]), 0.5)};
       }
     `}
   ${({ submit, disabled }) =>
@@ -86,6 +112,21 @@ const Button = styled.button<ButtonProps>`
         animation: ${spin} 1s ease infinite;
       }
     `}
+  div {
+    display: flex;
+    align-items: center;
+  }
+  svg {
+    width: 24px;
+    height: 26px;
+    margin-right: 10px;
+    fill: #fff;
+    transition: 0.3s;
+  }
 `
+
+Button.defaultProps = {
+  themecolor: 'blue',
+}
 
 export default Button
