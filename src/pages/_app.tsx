@@ -5,7 +5,6 @@ import { Hydrate } from 'react-query/hydration'
 import { Provider } from 'next-auth/client'
 
 import styled from 'styled-components'
-import { AnimatePresence } from 'framer-motion'
 
 import ThemeProvider from 'contexts/ThemeContext'
 import ModalProvider from 'contexts/ModalContext'
@@ -39,9 +38,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
                 <Wrapper>
                   <NProgress />
                   <AppLayout>
-                    <AnimatePresence exitBeforeEnter>
-                      <Component {...pageProps} key={router.route} />
-                    </AnimatePresence>
+                    <Component {...pageProps} key={router.route} />
                   </AppLayout>
                 </Wrapper>
               </TooltipProvider>

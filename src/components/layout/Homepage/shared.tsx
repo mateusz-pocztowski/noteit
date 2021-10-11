@@ -34,7 +34,7 @@ export const BoxWrapper = styled.div`
 
 const Logo = styled.a`
   display: none;
-  ${({ theme }) => theme.mq.xl} {
+  ${({ theme }) => theme.mq.min.xl} {
     position: absolute;
     top: 3rem;
     left: 3rem;

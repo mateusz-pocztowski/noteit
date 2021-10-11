@@ -100,6 +100,9 @@ declare module 'styled-components' {
     shadows: Shadows
     navSize: NavSize
     panelSize: PanelSize
-    mq: { [Property in keyof Breakpoints]: CSSObject }
+    mq: {
+      min: { [Property in keyof Breakpoints]: CSSObject }
+      max: { [Property in keyof Breakpoints]: CSSObject }
+    }
   }
 }

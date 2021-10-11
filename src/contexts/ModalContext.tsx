@@ -1,22 +1,24 @@
 import React, { createContext, useState } from 'react'
 
 type StateProps = {
-  visible?: boolean
-  isRemoval?: boolean
-  confirmText?: string
-  confirmBtnText?: string
+  visible: boolean
+  isRemoval: boolean
+  confirmHeading: string
+  confirmDescription: string
+  confirmBtnText: string
   confirmFn: () => void
 }
 
 type ModalProps = StateProps & {
   closeModal: () => void
-  showModal: (state: StateProps) => void
+  showModal: (state: Partial<StateProps>) => void
 }
 
 const initialState: StateProps = {
   visible: false,
   isRemoval: false,
-  confirmText: 'Are you sure?',
+  confirmHeading: 'Are you sure?',
+  confirmDescription: '',
   confirmBtnText: 'OK',
   confirmFn: () => {},
 }
@@ -30,7 +32,7 @@ export const ModalContext = createContext<ModalProps>({
 const ModalProvider: React.FC = ({ children }) => {
   const [state, setState] = useState<StateProps>(initialState)
 
-  const showModal = (newState: StateProps) => {
+  const showModal = (newState: Partial<StateProps>) => {
     setState({
       ...state,
       ...newState,

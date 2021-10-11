@@ -130,12 +130,23 @@ export const baseTheme = {
   shadows,
   navSize,
   panelSize,
-  mq: (Object.keys(breakpoints) as Array<keyof typeof breakpoints>).reduce(
-    (acc, breakpoint) => {
-      acc[breakpoint] =
-        `@media (min-width: ${breakpoints[breakpoint]}px)` as unknown as CSSObject
-      return acc
-    },
-    {} as { [Property in keyof Breakpoints]: CSSObject }
-  ),
+  mq: {
+    min: (Object.keys(breakpoints) as Array<keyof typeof breakpoints>).reduce(
+      (acc, breakpoint) => {
+        acc[breakpoint] =
+          `@media (min-width: ${breakpoints[breakpoint]}px)` as unknown as CSSObject
+        return acc
+      },
+      {} as { [Property in keyof Breakpoints]: CSSObject }
+    ),
+    max: (Object.keys(breakpoints) as Array<keyof typeof breakpoints>).reduce(
+      (acc, breakpoint) => {
+        acc[breakpoint] = `@media (max-width: ${
+          breakpoints[breakpoint] - 1
+        }px)` as unknown as CSSObject
+        return acc
+      },
+      {} as { [Property in keyof Breakpoints]: CSSObject }
+    ),
+  },
 }

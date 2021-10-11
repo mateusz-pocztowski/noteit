@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react'
+import { useMemo, useEffect, useState, useContext } from 'react'
 import { GetServerSideProps } from 'next'
 
 import { AnimatePresence, motion } from 'framer-motion'
@@ -10,6 +10,8 @@ import { Session } from 'next-auth'
 import { getSession } from 'next-auth/client'
 import { useQueryClient } from 'react-query'
 import graphqlRequestClient from 'lib/client'
+
+import { ModalContext } from 'contexts/ModalContext'
 
 import SEO from 'components/shared/SEO'
 import EmptyView from 'components/layout/EmptyView'
@@ -99,6 +101,8 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
     return activeCategories.length === 0 || activeCategories.includes(id)
   }
 
+  const { showModal } = useContext(ModalContext)
+
   return (
     <>
       <SEO title="Notes" />
@@ -157,11 +161,16 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
                       title: note.title,
                     })
                   }}
-                  remove={() => removeNote({ noteId: note.id })}
+                  remove={() =>
+                    showModal({
+                      isRemoval: true,
+                      confirmFn: () => removeNote({ noteId: note.id }),
+                    })
+                  }
                 />
               </motion.div>
             ))}
-          {notes.length === 0 && (
+          {isFetched && notes.length === 0 && (
             <EmptyView
               button={{
                 text: `Create your first note!`,

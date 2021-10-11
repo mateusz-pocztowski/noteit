@@ -18,10 +18,10 @@ const InnerWrapper = styled.div<{ columns: number | null }>`
   grid-template-columns: repeat(1, 1fr);
   margin: 0 20px 30px;
   min-width: 300px;
-  ${({ theme }) => theme.mq.lg} {
+  ${({ theme }) => theme.mq.min.lg} {
     grid-template-columns: repeat(2, 1fr);
   }
-  ${({ theme }) => theme.mq.xxxl} {
+  ${({ theme }) => theme.mq.min.xxxl} {
     grid-template-columns: repeat(3, 1fr);
   }
   ${({ columns }) =>
