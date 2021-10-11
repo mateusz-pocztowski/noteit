@@ -5,5 +5,6 @@ export const Query = queryType({
     t.crud.user()
     t.crud.notes()
     t.crud.categories()
+    t.crud.note()
   },
 })

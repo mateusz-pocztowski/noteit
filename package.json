@@ -8,10 +8,14 @@
     "reinstall": "brew services stop postgresql && brew uninstall --force postgres && rm -rf /usr/local/var/postgres && rm -rf .psql_history .psqlrc .psql.local .pgpass .psqlrc.local && brew cleanup && brew install postgresql && brew services start postgresql && npx prisma migrate dev && npx prisma generate && npm run dev"
   },
   "dependencies": {
+    "@draft-js-plugins/editor": "^4.1.0",
+    "@draft-js-plugins/hashtag": "^4.2.1",
+    "@draft-js-plugins/linkify": "^4.1.1",
     "@prisma/client": "2.26.0",
     "@types/react-color": "^3.0.5",
     "apollo-server-micro": "2.25.2",
     "dateformat": "^4.6.3",
+    "draft-js": "^0.11.7",
     "framer-motion": "^4.1.17",
     "graphql": "15.5.1",
     "graphql-middleware": "6.0.10",
@@ -43,6 +47,7 @@
     "@graphql-codegen/typescript-operations": "^2.0.1",
     "@graphql-codegen/typescript-react-query": "^2.0.0",
     "@types/dateformat": "^3.0.1",
+    "@types/draft-js": "^0.11.5",
     "@types/node": "^14.14.9",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^17.0.0",

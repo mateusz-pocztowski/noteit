@@ -10,5 +10,6 @@ export const User = objectType({
     t.model.createdAt()
     t.model.updatedAt()
     t.model.categories()
+    t.model.notes()
   },
 })
