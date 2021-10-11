@@ -78,6 +78,10 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.colors.blue};
     height: 3px;
   }
+  #nprogress .spinner-icon {
+    border-top-color: ${({ theme }) => theme.colors.blue};
+    border-left-color: ${({ theme }) => theme.colors.blue};
+  }
 `
 
 export default GlobalStyle

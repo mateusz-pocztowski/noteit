@@ -1,0 +1,13 @@
+query GetSingleNote($noteId: String!, $userId: Int!) {
+  note(id: $noteId, userId: $userId) {
+    id
+    title
+    content
+    category {
+      id
+      color
+      label
+      primary
+    }
+  }
+}

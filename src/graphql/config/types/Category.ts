@@ -8,7 +8,5 @@ export const Category = objectType({
     t.model.label()
     t.model.primary()
     t.model.notes()
-    t.model.user()
-    t.model.userId()
   },
 })

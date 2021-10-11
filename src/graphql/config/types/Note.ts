@@ -4,7 +4,6 @@ export const Note = objectType({
   name: 'Note',
   definition(t) {
     t.model.id()
-    t.model.userId()
     t.model.title()
     t.model.content()
     t.model.category()

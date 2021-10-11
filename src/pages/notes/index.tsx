@@ -1,5 +1,4 @@
 import { useMemo, useEffect, useState, useContext } from 'react'
-import { GetServerSideProps } from 'next'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { cardVariants } from 'theme/variants'
@@ -7,9 +6,9 @@ import { cardVariants } from 'theme/variants'
 import { DEFAULT_CATEGORY } from 'config'
 
 import { Session } from 'next-auth'
-import { getSession } from 'next-auth/client'
 import { useQueryClient } from 'react-query'
 import graphqlRequestClient from 'lib/client'
+import nextAuthGetServerSideProps from 'lib/auth/getServerSideProps'
 
 import { ModalContext } from 'contexts/ModalContext'
 
@@ -34,7 +33,7 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const queryClient = useQueryClient()
 
   const { data, isFetched } = useGetNotesQuery(graphqlRequestClient, {
-    userId: session!.id,
+    userId: session.id,
   })
 
   const categories = useMemo(() => data?.user?.categories || [], [data])
@@ -186,24 +185,6 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const session = await getSession(ctx)
-
-  if (!session) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-      props: {},
-    }
-  }
-
-  return {
-    props: {
-      session,
-    },
-  }
-}
+export const getServerSideProps = nextAuthGetServerSideProps
 
 export default NotesPage

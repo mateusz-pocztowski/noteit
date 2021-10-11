@@ -1,0 +1,8 @@
+query GetNotesCategories($userId: Int!) {
+  categories(where: { userId: { equals: $userId } }) {
+    id
+    color
+    label
+    primary
+  }
+}

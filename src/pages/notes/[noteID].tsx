@@ -1,56 +1,75 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Editor from 'components/Editor/Editor';
-import { NotesContext, Note } from 'contexts/NotesContext';
-import { AnimatePresence, motion } from 'framer-motion';
-import { editorVariants } from 'theme/transitions';
-import { useRouter } from 'next/router';
+import React from 'react'
 
-const SingleNote = () => {
-  const [currentNote, setCurrentNote] = useState<Note>({ slug: null });
-  const { notes, categories } = useContext(NotesContext);
-  const router = useRouter();
+import { AnimatePresence, motion } from 'framer-motion'
+import { editorVariants } from 'theme/variants'
+import { useRouter } from 'next/router'
 
-  const foundNote = router.query.noteID
-    ? notes.find(({ id }) => router.query.noteID.includes(id))
-    : null;
+import { Session } from 'next-auth'
+import graphqlRequestClient from 'lib/client'
+import nextAuthGetServerSideProps from 'lib/auth/getServerSideProps'
 
-  useEffect(() => {
-    if (notes.length !== 0 && router.query.noteID) {
-      if (!foundNote) {
-        router.push(`/notes`);
-      } else setCurrentNote(foundNote);
+import Editor from 'components/layout/Editor'
+
+import {
+  useGetNotesCategoriesQuery,
+  useGetSingleNoteQuery,
+} from 'generated/graphql'
+
+const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
+  const router = useRouter()
+
+  const { data } = useGetSingleNoteQuery(
+    graphqlRequestClient,
+    {
+      userId: session.id,
+      noteId: router.query.noteID as string,
+    },
+    {
+      onError: e => {
+        console.log(e)
+        router.push('/notes')
+      },
+      retry: false,
     }
-  }, [foundNote, notes]);
+  )
 
-  useEffect(() => {
-    if (currentNote.slug && `/notes/${currentNote.slug}` !== router.pathname) {
-      router.push(`/notes/${currentNote.slug}`);
+  const { data: categoriesData } = useGetNotesCategoriesQuery(
+    graphqlRequestClient,
+    {
+      userId: session.id,
+    },
+    {
+      onError: e => {
+        console.log(e)
+        router.push('/notes')
+      },
+      retry: false,
     }
-  }, [currentNote]);
+  )
 
   return (
-    <motion.div
-      initial="enter"
-      animate="on"
-      exit="exit"
-      variants={editorVariants}
-      style={{ height: '100%', paddingBottom: '30px' }}
-    >
-      <AnimatePresence>
-        {currentNote.slug && (
-          <motion.div style={{ height: '100%' }}>
-            <Editor
-              title={currentNote.title}
-              savedState={currentNote.content}
-              noteID={currentNote.id}
-              categories={categories}
-              activeCategory={currentNote.category}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-};
+    <AnimatePresence>
+      {data?.note && categoriesData?.categories && (
+        <motion.div
+          initial="enter"
+          animate="on"
+          exit="exit"
+          variants={editorVariants}
+          style={{ height: '100%' }}
+        >
+          <Editor
+            title={data.note.title}
+            savedState={data.note.content}
+            noteID={data.note.id}
+            categories={categoriesData.categories}
+            activeCategory={data.note.category}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
 
-export default SingleNote;
+export const getServerSideProps = nextAuthGetServerSideProps
+
+export default SingleNote

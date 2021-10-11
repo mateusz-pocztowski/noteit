@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 
-import { appVariants } from 'theme/variants'
+import getMotionVariants from 'utils/getMotionVariants'
 
 import LoadingScreen from 'components/shared/LoadingScreen'
 import Navigation from 'components/layout/Navigation'
@@ -69,7 +69,7 @@ const AppLayout: React.FC = ({ children }) => {
                   initial="enter"
                   animate="on"
                   exit="exit"
-                  variants={appVariants}
+                  variants={getMotionVariants(router.route)}
                   style={{
                     width: '100%',
                     height: '100%',
