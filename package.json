@@ -10,6 +10,7 @@
   "dependencies": {
     "@draft-js-plugins/editor": "^4.1.0",
     "@draft-js-plugins/hashtag": "^4.2.1",
+    "@draft-js-plugins/inline-toolbar": "^4.1.2",
     "@draft-js-plugins/linkify": "^4.1.1",
     "@prisma/client": "2.26.0",
     "@types/react-color": "^3.0.5",
