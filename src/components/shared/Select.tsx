@@ -5,18 +5,18 @@ import Icon from 'components/shared/Icon'
 import dropIcon from 'assets/icons/arrow-down.svg'
 import checkIcon from 'assets/icons/checkmark.svg'
 
-type OptionType = {
-  id: number | string
+type OptionType<T extends number | string> = {
+  id: T
   label: string
   style?: string
   color?: string
 }
 
-type Props = {
-  active: OptionType['id']
+type Props<T extends number | string> = {
+  active: OptionType<T>['id']
   placeholder?: string
-  options: OptionType[]
-  onToggle: (id: OptionType['id']) => void
+  options: OptionType<T>[]
+  onToggle: (id: OptionType<T>['id']) => void
 }
 
 const Wrapper = styled.div`
@@ -111,12 +111,14 @@ const StyledCheckmark = styled(Checkmark)`
   left: 10px;
 `
 
-const Select: React.FC<Props> = ({
+const Arrow = styled.div``
+
+const Select = <T extends string | number>({
   placeholder = 'Select...',
   active,
   options,
   onToggle,
-}) => {
+}: Props<T>) => {
   const [visible, setOptionsVisibility] = useState(false)
 
   const selectRef = useRef(null)
@@ -133,7 +135,10 @@ const Select: React.FC<Props> = ({
     parentRef: selectRef,
   })
 
-  const handleChange = (e: MouseEvent<HTMLLIElement>, option: OptionType) => {
+  const handleChange = (
+    e: MouseEvent<HTMLLIElement>,
+    option: OptionType<T>
+  ) => {
     e.preventDefault()
     onToggle(option.id)
   }
@@ -148,7 +153,9 @@ const Select: React.FC<Props> = ({
         <Name>
           {options.find(option => option.id === active)?.label || placeholder}
         </Name>
-        <Icon size={15} src={dropIcon} />
+        <Arrow>
+          <Icon size={15} src={dropIcon} />
+        </Arrow>
       </Dropdown>
       <Options ref={optionsRef} active={visible}>
         {options.map(item => (

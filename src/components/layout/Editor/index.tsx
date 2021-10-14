@@ -2,42 +2,32 @@ import { useState, useRef, useEffect } from 'react'
 import ScrollBar from 'simplebar-react'
 
 import DraftEditor from '@draft-js-plugins/editor'
-import { EditorState } from 'draft-js'
+import {
+  AtomicBlockUtils,
+  EditorState,
+  getDefaultKeyBinding,
+  Modifier,
+  RichUtils,
+} from 'draft-js'
 
-import Toolbar from 'components/layout/Editor/Toolbar'
+import Toolbar from 'components/layout/Editor/layout/Toolbar'
 import {
   Wrapper,
   InnerWrapper,
   Header,
-  ButtonsWrapper,
+  ToolbarWrapper,
   TitleWrapper,
   TitleInput,
   EditorWrapper,
-} from 'components/layout/Editor/components'
+} from 'components/layout/Editor/layout'
 
-import createHashtagPlugin from '@draft-js-plugins/hashtag'
-import createLinkifyPlugin from '@draft-js-plugins/linkify'
-import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
+import { toBase64 } from 'utils/toBase64'
+import { styleSelectedBlock } from './utils'
 
-import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
-import { Category } from 'generated/graphql'
+import { ALIGN_TYPES, KEY_BINDINGS, PLUGINS } from './config'
 
-const TOOLBAR_PLUGIN = createInlineToolbarPlugin()
-const HASHTAG_PLUGIN = createHashtagPlugin()
-const LINKIFY_PLUGIN = createLinkifyPlugin({
-  component: props => {
-    return (
-      <a
-        {...props}
-        onClick={() => {
-          window.open(props.href, '_blank')
-        }}
-      />
-    )
-  },
-})
-
-const PLUGINS = [TOOLBAR_PLUGIN, LINKIFY_PLUGIN, HASHTAG_PLUGIN]
+import type { Category } from 'generated/graphql'
+import type { AlignType } from 'types/editor'
 
 type Props = {
   title?: string
@@ -50,10 +40,119 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
 
   const [tempTitle, setTempTitle] = useState(title ?? '')
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [currentAlignment, setCurrentAlignment] = useState<AlignType>('left')
+
+  const insertImage = (base64: string) => {
+    const contentState = editorState.getCurrentContent()
+    const contentStateWithEntity = contentState.createEntity(
+      'IMAGE',
+      'IMMUTABLE',
+      { src: base64 }
+    )
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity,
+    })
+
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
+  }
+
+  const handlePastedFiles = async (files: Blob[]) => {
+    const base64File = await toBase64(files[0])
+
+    const newEditorState = insertImage(base64File)
+    handleChange(newEditorState)
+  }
 
   const handleChange = (newState: EditorState) => {
-    console.log(newState)
     setEditorState(newState)
+  }
+
+  const keyBindingFn = (evt: React.KeyboardEvent<{}>) => {
+    // keyCharsHistory = trackCharacters(keyCharsHistory, evt)
+
+    const command = KEY_BINDINGS.find(keyBinding =>
+      keyBinding.bind.every(code => {
+        // TODO: add two last letters of chars history
+        if (code instanceof RegExp) code.test('')
+        if (typeof code === 'number') return evt.keyCode === code
+        if (typeof code === 'string') return evt[code]
+
+        return false
+      })
+    )?.command
+
+    return command ?? getDefaultKeyBinding(evt)
+  }
+
+  const toggleAlignment = (option: AlignType) => {
+    const [newState, alignment] = styleSelectedBlock(
+      editorState,
+      currentAlignment,
+      ALIGN_TYPES.filter(alignment => alignment !== option)
+    )
+    handleChange(newState)
+    setCurrentAlignment(alignment)
+  }
+
+  const handleTab = (e: React.KeyboardEvent<{}>) => {
+    e.preventDefault()
+    const newEditorState = Modifier.replaceText(
+      editorState.getCurrentContent(),
+      editorState.getSelection(),
+      '      '
+    )
+    handleChange(
+      EditorState.push(editorState, newEditorState, 'insert-characters')
+    )
+  }
+
+  const handleSave = () => {}
+
+  const handleKeyCommand = (command: string) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command)
+
+    // handleListCommands(command, editorState, setEditorState)
+
+    switch (command) {
+      case 'save-editor':
+        return handleSave()
+      case 'align-left':
+        toggleAlignment('left')
+        return 'handled'
+      case 'align-center':
+        toggleAlignment('center')
+        return 'handled'
+      case 'align-right':
+        toggleAlignment('right')
+        return 'handled'
+      case 'undo':
+        handleChange(EditorState.undo(editorState))
+        return 'handled'
+      case 'redo':
+        handleChange(EditorState.redo(editorState))
+        return 'handled'
+      case 'BOLD':
+      case 'ITALIC':
+      case 'UNDERLINE':
+        handleChange(RichUtils.toggleInlineStyle(editorState, command))
+        return 'handled'
+      case 'ordered-list-item':
+      case 'unordered-list-item':
+      case 'blockquote':
+      case 'code-block':
+        handleChange(RichUtils.toggleBlockType(editorState, command))
+        return 'handled'
+      default:
+        break
+    }
+
+    if (newState) {
+      handleChange(newState)
+      return 'handled'
+    }
+
+    return 'not-handled'
   }
 
   const focusEditor = () => {
@@ -72,14 +171,15 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
     <Wrapper>
       <InnerWrapper color={activeCategory.color}>
         <Header>
-          <ButtonsWrapper>
+          <ToolbarWrapper>
             <Toolbar
               editorState={editorState}
               handleChange={handleChange}
-              alignment="left"
-              onSave={() => null}
+              currentAlignment={currentAlignment}
+              toggleAlignment={toggleAlignment}
+              onSave={handleSave}
             />
-          </ButtonsWrapper>
+          </ToolbarWrapper>
           <TitleWrapper>
             <TitleInput
               placeholder="Enter title..."
@@ -105,16 +205,18 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
               editorState={editorState}
               plugins={PLUGINS}
               onChange={handleChange}
-              // handleKeyCommand={handleKeyCommand}
-              // handlePastedFiles={handlePastedFiles}
+              handlePastedFiles={files => {
+                handlePastedFiles(files)
+                return 'handled'
+              }}
+              keyBindingFn={keyBindingFn}
+              handleKeyCommand={handleKeyCommand}
               // handlePastedText={handlePastedText}
               // handleReturn={handleReturn}
-              // keyBindingFn={handleCustomKeyBindings}
               // blockStyleFn={getBlockStyle}
-              // onTab={handleTab}
+              onTab={handleTab}
               // onEscape={handleEscape}
             />
-            <TOOLBAR_PLUGIN.InlineToolbar />
           </EditorWrapper>
         </ScrollBar>
       </InnerWrapper>

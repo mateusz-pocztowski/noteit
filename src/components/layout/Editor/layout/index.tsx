@@ -28,7 +28,7 @@ export const Header = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.colors.hover};
 `
 
-export const ButtonsWrapper = styled.div`
+export const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0 2rem 2rem;
@@ -144,5 +144,29 @@ export const EditorWrapper = styled.div`
     height: auto;
     max-width: 100%;
     max-height: 100%;
+  }
+
+  .alignment--left .public-DraftStyleDefault-block {
+    text-align: left;
+  }
+  .alignment--left img {
+    display: block;
+    margin: 0 auto 0 0;
+  }
+
+  .alignment--center .public-DraftStyleDefault-block {
+    text-align: center;
+  }
+  .alignment--center img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .alignment--right .public-DraftStyleDefault-block {
+    text-align: right;
+  }
+  .alignment--right img {
+    display: block;
+    margin: 0 0 0 auto;
   }
 `
