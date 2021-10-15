@@ -77,10 +77,10 @@ const Button = styled.button<ButtonProps>`
     css`
       background: ${({ theme }) =>
         active
-          ? rgba(String(color || theme.colors[themecolor!]), 0.5)
-          : rgba(String(color || theme.colors[themecolor!]), 0.2)};
+          ? rgba(String(color || theme.colors[themecolor!]), 0.8)
+          : rgba(String(color || theme.colors[themecolor!]), 0.4)};
       color: ${({ theme }) =>
-        lighten(0.3, String(color || theme.colors[themecolor!]))};
+        lighten(0.25, String(color || theme.colors[themecolor!]))};
       border-color: transparent;
       padding: 1rem 2.5rem;
       min-width: 80px;
@@ -89,7 +89,7 @@ const Button = styled.button<ButtonProps>`
       &:hover {
         color: ${({ theme }) => theme.colors.text};
         background: ${({ theme }) =>
-          rgba(String(color || theme.colors[themecolor!]), 0.5)};
+          rgba(String(color || theme.colors[themecolor!]), 0.8)};
       }
     `}
   ${({ submit, disabled }) =>

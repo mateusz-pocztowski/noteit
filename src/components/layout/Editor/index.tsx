@@ -116,7 +116,8 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
 
     switch (command) {
       case 'save-editor':
-        return handleSave()
+        handleSave()
+        return 'handled'
       case 'align-left':
         toggleAlignment('left')
         return 'handled'
