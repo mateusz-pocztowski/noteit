@@ -12,7 +12,7 @@ const characterShiftMapping: { [x: number]: string } = {
   190: '.',
 }
 
-const trackCharacters = (
+export const trackCharacters = (
   history: string[] = [],
   e: React.KeyboardEvent<{}>
 ) => {
@@ -33,5 +33,3 @@ const trackCharacters = (
   history.push(character)
   return history
 }
-
-export default trackCharacters

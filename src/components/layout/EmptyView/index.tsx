@@ -13,7 +13,7 @@ type Props = {
   icon?: any
   text: string
   subtext?: string
-  button: {
+  button?: {
     text: string
     callback: () => void | Promise<void>
   }
@@ -61,7 +61,7 @@ const EmptyView: React.FC<Props> = ({
       <ReactSVG src={icon} />
       <Text>{text}</Text>
       {subtext && <SubText>{subtext}</SubText>}
-      <Button onMouseDown={button.callback}>{button.text}</Button>
+      {button && <Button onMouseDown={button.callback}>{button.text}</Button>}
     </div>
   </Wrapper>
 )

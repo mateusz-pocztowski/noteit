@@ -1,1 +1,5 @@
 export * from './styleSelectedBlock'
+export * from './getBlockAlignment'
+export * from './getCurrentContentLength'
+export * from './trackCharacters'
+export * from './handleListsCommand'

@@ -21,10 +21,16 @@ const LINKIFY_PLUGIN = createLinkifyPlugin({
 
 export const PLUGINS = [IMAGE_PLUGIN, LINKIFY_PLUGIN, HASHTAG_PLUGIN]
 
-const UL_FULL_REGEX = /^(\*|\-)\s$/
-const OL_FULL_REGEX = /^\d+\.\s$/
+export const UL_FULL_REGEX = /^(\*|\-)\s$/
+export const OL_FULL_REGEX = /^\d+\.\s$/
 
 export const ALIGN_TYPES = ['left', 'center', 'right'] as const
+export const BASIC_BLOCKS = [
+  'unstyled',
+  'header-one',
+  'header-two',
+  'header-three',
+] as string[]
 
 export const COMMANDS = [
   'BOLD',
@@ -58,6 +64,6 @@ export const KEY_BINDINGS: KeyBinding[] = [
   { bind: ['metaKey', 'shiftKey', 56], command: 'unordered-list-item' },
   { bind: ['metaKey', 'ctrlKey', 81], command: 'blockquote' },
   { bind: ['metaKey', 'ctrlKey', 192], command: 'code-block' },
-  { bind: [UL_FULL_REGEX, 32], command: 'autolist-unordered' },
-  { bind: [OL_FULL_REGEX, 32], command: 'autolist-ordered' },
+  { bind: [UL_FULL_REGEX], regexChars: 2, command: 'autolist-unordered' },
+  { bind: [OL_FULL_REGEX], command: 'autolist-ordered' },
 ]

@@ -11,4 +11,5 @@ export type Command = typeof COMMANDS[number]
 export type KeyBinding = {
   bind: Bind
   command: Command
+  regexChars?: 2 | 3
 }

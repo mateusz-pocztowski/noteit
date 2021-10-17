@@ -4,6 +4,7 @@ import ScrollBar from 'simplebar-react'
 import DraftEditor from '@draft-js-plugins/editor'
 import {
   AtomicBlockUtils,
+  ContentBlock,
   EditorState,
   getDefaultKeyBinding,
   Modifier,
@@ -22,9 +23,15 @@ import {
 } from 'components/layout/Editor/layout'
 
 import { toBase64 } from 'utils/toBase64'
-import { styleSelectedBlock } from './utils'
+import {
+  styleSelectedBlock,
+  getCurrentContentLength,
+  getBlockAlignment,
+  trackCharacters,
+  handleListsCommand,
+} from './utils'
 
-import { ALIGN_TYPES, KEY_BINDINGS, PLUGINS } from './config'
+import { ALIGN_TYPES, BASIC_BLOCKS, KEY_BINDINGS, PLUGINS } from './config'
 
 import type { Category } from 'generated/graphql'
 import type { AlignType } from 'types/editor'
@@ -40,6 +47,7 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
 
   const [tempTitle, setTempTitle] = useState(title ?? '')
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [keyCharsHistory, setKeyCharsHistory] = useState<string[]>([])
   const [currentAlignment, setCurrentAlignment] = useState<AlignType>('left')
 
   const insertImage = (base64: string) => {
@@ -69,12 +77,17 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
   }
 
   const keyBindingFn = (evt: React.KeyboardEvent<{}>) => {
-    // keyCharsHistory = trackCharacters(keyCharsHistory, evt)
+    let updatedKeyCharsHistory = trackCharacters(keyCharsHistory, evt)
+    setKeyCharsHistory(updatedKeyCharsHistory)
 
     const command = KEY_BINDINGS.find(keyBinding =>
       keyBinding.bind.every(code => {
-        // TODO: add two last letters of chars history
-        if (code instanceof RegExp) code.test('')
+        if (code instanceof RegExp) {
+          if (keyBinding.regexChars === 2) {
+            return code.test(updatedKeyCharsHistory.slice(-2).join(''))
+          }
+          return code.test(updatedKeyCharsHistory.join(''))
+        }
         if (typeof code === 'number') return evt.keyCode === code
         if (typeof code === 'string') return evt[code]
 
@@ -88,7 +101,7 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
   const toggleAlignment = (option: AlignType) => {
     const [newState, alignment] = styleSelectedBlock(
       editorState,
-      currentAlignment,
+      option,
       ALIGN_TYPES.filter(alignment => alignment !== option)
     )
     handleChange(newState)
@@ -110,11 +123,10 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
   const handleSave = () => {}
 
   const handleKeyCommand = (command: string) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command)
-
-    // handleListCommands(command, editorState, setEditorState)
-
     switch (command) {
+      case 'autolist-ordered':
+      case 'autolist-unordered':
+        handleListsCommand(command, editorState, setEditorState)
       case 'save-editor':
         handleSave()
         return 'handled'
@@ -145,15 +157,31 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
         handleChange(RichUtils.toggleBlockType(editorState, command))
         return 'handled'
       default:
-        break
+        return 'not-handled'
+    }
+  }
+
+  const getBlockStyle = (block: ContentBlock) => {
+    let alignment = getBlockAlignment(block)
+    const blockType = RichUtils.getCurrentBlockType(editorState)
+    if (!block.getText()) {
+      const previousBlock = editorState
+        .getCurrentContent()
+        .getBlockBefore(block.getKey())
+      if (previousBlock) {
+        alignment = getBlockAlignment(previousBlock)
+      }
+    }
+    if (
+      BASIC_BLOCKS.includes(blockType) &&
+      getCurrentContentLength(editorState) > 0
+    ) {
+      setCurrentAlignment(alignment)
+    } else {
+      setCurrentAlignment('left')
     }
 
-    if (newState) {
-      handleChange(newState)
-      return 'handled'
-    }
-
-    return 'not-handled'
+    return `alignment--${alignment}`
   }
 
   const focusEditor = () => {
@@ -161,7 +189,7 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
   }
 
   useEffect(() => {
-    editor.current?.focus()
+    focusEditor()
   }, [])
 
   useEffect(() => {
@@ -214,7 +242,7 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
               handleKeyCommand={handleKeyCommand}
               // handlePastedText={handlePastedText}
               // handleReturn={handleReturn}
-              // blockStyleFn={getBlockStyle}
+              blockStyleFn={getBlockStyle}
               onTab={handleTab}
               // onEscape={handleEscape}
             />
