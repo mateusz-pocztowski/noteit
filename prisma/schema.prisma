@@ -8,7 +8,7 @@ generator client {
 }
 
 model Account {
-  id                 Int       @default(autoincrement()) @id
+  id                 Int       @id @default(autoincrement())
   compoundId         String    @unique @map(name: "compound_id")
   userId             Int       @map(name: "user_id")
   providerType       String    @map(name: "provider_type")
@@ -19,6 +19,7 @@ model Account {
   accessTokenExpires DateTime? @map(name: "access_token_expires")
   createdAt          DateTime  @default(now()) @map(name: "created_at")
   updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
   @@index([providerAccountId], name: "providerAccountId")
   @@index([providerId], name: "providerId")
   @@index([userId], name: "userId")
@@ -26,47 +27,51 @@ model Account {
 }
 
 model Session {
-  id           Int      @default(autoincrement()) @id
+  id           Int      @id @default(autoincrement())
   userId       Int      @map(name: "user_id")
   expires      DateTime
   sessionToken String   @unique @map(name: "session_token")
   accessToken  String   @unique @map(name: "access_token")
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
   @@map(name: "sessions")
 }
 
 model User {
-  id            Int       @default(autoincrement()) @id
+  id            Int        @id @default(autoincrement())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map(name: "email_verified")
+  email         String?    @unique
+  emailVerified DateTime?  @map(name: "email_verified")
   image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  createdAt     DateTime   @default(now()) @map(name: "created_at")
+  updatedAt     DateTime   @default(now()) @map(name: "updated_at")
   categories    Category[]
   notes         Note[]
+
   @@map(name: "users")
 }
 
 model VerificationRequest {
-  id         Int      @default(autoincrement()) @id
+  id         Int      @id @default(autoincrement())
   identifier String
   token      String   @unique
   expires    DateTime
   createdAt  DateTime @default(now()) @map(name: "created_at")
   updatedAt  DateTime @default(now()) @map(name: "updated_at")
+
   @@map(name: "verification_requests")
 }
 
 model Category {
-  id      String  @id @default(uuid())
-  color   String
-  label   String
-  primary Boolean
-  notes   Note[]
-  user    User    @relation(fields: [userId], references: [id])
-  userId  Int
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  color     String
+  label     String
+  primary   Boolean
+  notes     Note[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 model Note {
@@ -76,7 +81,7 @@ model Note {
   title      String
   content    String?
   category   Category @relation(fields: [categoryId], references: [id])
-  user       User @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
   userId     Int
   categoryId String
 }

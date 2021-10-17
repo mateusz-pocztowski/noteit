@@ -25,7 +25,7 @@ const SearchWrapper = styled.div<{ focus: boolean }>`
   align-items: center;
   background: ${({ theme }) => theme.colors.element};
   box-shadow: ${({ theme }) => theme.colors.cardShadow100};
-  border: 1px solid ${({ theme }) => theme.colors.elementLight};
+  border: 1px solid ${({ theme }) => theme.colors.element200};
   border-radius: 30px;
   transition: box-shadow 0.2s, border-color 0.3s, width 0.7s;
   width: 100%;

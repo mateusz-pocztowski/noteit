@@ -59,6 +59,7 @@ export interface NexusGenInputs {
   }
   CategoryCreateInput: { // input type
     color: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     label: string; // String!
     notes?: NexusGenInputs['NoteCreateNestedManyWithoutCategoryInput'] | null; // NoteCreateNestedManyWithoutCategoryInput
@@ -67,6 +68,7 @@ export interface NexusGenInputs {
   }
   CategoryCreateManyUserInput: { // input type
     color: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     label: string; // String!
     primary: boolean; // Boolean!
@@ -96,6 +98,7 @@ export interface NexusGenInputs {
   }
   CategoryCreateWithoutNotesInput: { // input type
     color: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     label: string; // String!
     primary: boolean; // Boolean!
@@ -103,6 +106,7 @@ export interface NexusGenInputs {
   }
   CategoryCreateWithoutUserInput: { // input type
     color: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     label: string; // String!
     notes?: NexusGenInputs['NoteCreateNestedManyWithoutCategoryInput'] | null; // NoteCreateNestedManyWithoutCategoryInput
@@ -118,6 +122,7 @@ export interface NexusGenInputs {
     NOT?: NexusGenInputs['CategoryScalarWhereInput'][] | null; // [CategoryScalarWhereInput!]
     OR?: NexusGenInputs['CategoryScalarWhereInput'][] | null; // [CategoryScalarWhereInput!]
     color?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     label?: NexusGenInputs['StringFilter'] | null; // StringFilter
     primary?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
@@ -125,6 +130,7 @@ export interface NexusGenInputs {
   }
   CategoryUpdateInput: { // input type
     color?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     notes?: NexusGenInputs['NoteUpdateManyWithoutCategoryInput'] | null; // NoteUpdateManyWithoutCategoryInput
@@ -133,6 +139,7 @@ export interface NexusGenInputs {
   }
   CategoryUpdateManyMutationInput: { // input type
     color?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     primary?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
@@ -167,6 +174,7 @@ export interface NexusGenInputs {
   }
   CategoryUpdateWithoutNotesInput: { // input type
     color?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     primary?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
@@ -174,6 +182,7 @@ export interface NexusGenInputs {
   }
   CategoryUpdateWithoutUserInput: { // input type
     color?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     notes?: NexusGenInputs['NoteUpdateManyWithoutCategoryInput'] | null; // NoteUpdateManyWithoutCategoryInput
@@ -193,6 +202,7 @@ export interface NexusGenInputs {
     NOT?: NexusGenInputs['CategoryWhereInput'][] | null; // [CategoryWhereInput!]
     OR?: NexusGenInputs['CategoryWhereInput'][] | null; // [CategoryWhereInput!]
     color?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     label?: NexusGenInputs['StringFilter'] | null; // StringFilter
     notes?: NexusGenInputs['NoteListRelationFilter'] | null; // NoteListRelationFilter
@@ -667,6 +677,7 @@ export interface NexusGenObjects {
   }
   Category: { // root type
     color: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     label: string; // String!
     primary: boolean; // Boolean!
@@ -707,6 +718,7 @@ export interface NexusGenFieldTypes {
   }
   Category: { // field return type
     color: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     label: string; // String!
     notes: NexusGenRootTypes['Note'][]; // [Note!]!
@@ -761,6 +773,7 @@ export interface NexusGenFieldTypeNames {
   }
   Category: { // field return type name
     color: 'String'
+    createdAt: 'DateTime'
     id: 'String'
     label: 'String'
     notes: 'Note'

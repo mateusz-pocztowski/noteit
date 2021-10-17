@@ -1,17 +1,11 @@
-import React from 'react'
-import styled, { css, CSSProperties } from 'styled-components'
+import styled from 'styled-components'
 import { signOut } from 'next-auth/client'
 
-import { Text } from 'components/shared/Typography'
-import Button from 'components/shared/Button'
-import Icon from 'components/shared/Icon'
 import IconButton from 'components/shared/Button/Icon'
 import Profile from 'components/layout/AsidePanel/Profile'
 import Scrollbar from 'components/shared/Scrollbar'
-import { Col, Row } from 'components/shared/Grid'
 
 import logoutIcon from 'assets/icons/logout.svg'
-import checkIcon from 'assets/icons/checkmark.svg'
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -36,53 +30,6 @@ const UserMenu = styled.div`
   height: 60px;
 `
 
-const MockShape = styled.figure<{ height: CSSProperties['height'] }>`
-  background: ${({ theme }) => theme.colors.hover};
-  border-radius: 8px;
-  margin: 10px 0;
-  height: ${({ height }) => height};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const CheckIcon = styled.div<{ active: boolean }>`
-  position: absolute;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-  width: 22px;
-  height: 22px;
-  border: 2px solid transparent;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  transition: 0.2s;
-  pointer-events: none;
-  & > div {
-    opacity: 0;
-    transition: 0.2s;
-  }
-  ${({ active }) =>
-    active &&
-    css`
-      border-color: ${({ theme }) => theme.colors.green} !important;
-      background: ${({ theme }) => theme.colors.green};
-      & > div {
-        opacity: 1;
-      }
-    `}
-`
-
-const Category = styled.div`
-  position: relative;
-  &:hover > ${CheckIcon} {
-    border-color: ${({ theme }) => theme.colors.white300};
-  }
-`
-
 const AsidePanel: React.FC = () => {
   return (
     <Wrapper>
@@ -103,50 +50,7 @@ const AsidePanel: React.FC = () => {
           padding: '5px 0',
         }}
       >
-        <InnerWrapper>
-          <Text size={20} weight={600} family="secondary" margin="1.5rem">
-            Calendar
-          </Text>
-          <MockShape height="320px">
-            <Text>Calendar</Text>
-          </MockShape>
-          <MockShape height="0px"></MockShape>
-          <Text size={20} weight={600} family="secondary" margin="1.5rem">
-            Categories
-          </Text>
-          <Row>
-            <Col xs={24}>
-              <Category>
-                <CheckIcon active={false}>
-                  <Icon src={checkIcon} excludeDarkMode size={12} />
-                </CheckIcon>
-                <Button muffled width="100%">
-                  General
-                </Button>
-              </Category>
-            </Col>
-            <Col xs={24}>
-              <Category>
-                <CheckIcon active={false}>
-                  <Icon src={checkIcon} excludeDarkMode size={12} />
-                </CheckIcon>
-                <Button muffled color="#7fc241" width="100%">
-                  WSEI
-                </Button>
-              </Category>
-            </Col>
-            <Col xs={24}>
-              <Category>
-                <CheckIcon active={false}>
-                  <Icon src={checkIcon} excludeDarkMode size={12} />
-                </CheckIcon>
-                <Button muffled color="#dc4363" width="100%">
-                  Development
-                </Button>
-              </Category>
-            </Col>
-          </Row>
-        </InnerWrapper>
+        <InnerWrapper id="aside-panel-content" />
       </Scrollbar>
     </Wrapper>
   )

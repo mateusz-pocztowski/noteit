@@ -53,6 +53,7 @@ export type BoolFilter = {
 export type Category = {
   __typename?: 'Category';
   id: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   color: Scalars['String'];
   label: Scalars['String'];
   primary: Scalars['Boolean'];
@@ -69,6 +70,7 @@ export type CategoryNotesArgs = {
 
 export type CategoryCreateInput = {
   id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
   label: Scalars['String'];
   primary: Scalars['Boolean'];
@@ -78,6 +80,7 @@ export type CategoryCreateInput = {
 
 export type CategoryCreateManyUserInput = {
   id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
   label: Scalars['String'];
   primary: Scalars['Boolean'];
@@ -113,6 +116,7 @@ export type CategoryCreateOrConnectWithoutUserInput = {
 
 export type CategoryCreateWithoutNotesInput = {
   id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
   label: Scalars['String'];
   primary: Scalars['Boolean'];
@@ -121,6 +125,7 @@ export type CategoryCreateWithoutNotesInput = {
 
 export type CategoryCreateWithoutUserInput = {
   id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
   label: Scalars['String'];
   primary: Scalars['Boolean'];
@@ -138,6 +143,7 @@ export type CategoryScalarWhereInput = {
   OR?: Maybe<Array<CategoryScalarWhereInput>>;
   NOT?: Maybe<Array<CategoryScalarWhereInput>>;
   id?: Maybe<StringFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
   color?: Maybe<StringFilter>;
   label?: Maybe<StringFilter>;
   primary?: Maybe<BoolFilter>;
@@ -146,6 +152,7 @@ export type CategoryScalarWhereInput = {
 
 export type CategoryUpdateInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   color?: Maybe<StringFieldUpdateOperationsInput>;
   label?: Maybe<StringFieldUpdateOperationsInput>;
   primary?: Maybe<BoolFieldUpdateOperationsInput>;
@@ -155,6 +162,7 @@ export type CategoryUpdateInput = {
 
 export type CategoryUpdateManyMutationInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   color?: Maybe<StringFieldUpdateOperationsInput>;
   label?: Maybe<StringFieldUpdateOperationsInput>;
   primary?: Maybe<BoolFieldUpdateOperationsInput>;
@@ -194,6 +202,7 @@ export type CategoryUpdateWithWhereUniqueWithoutUserInput = {
 
 export type CategoryUpdateWithoutNotesInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   color?: Maybe<StringFieldUpdateOperationsInput>;
   label?: Maybe<StringFieldUpdateOperationsInput>;
   primary?: Maybe<BoolFieldUpdateOperationsInput>;
@@ -202,6 +211,7 @@ export type CategoryUpdateWithoutNotesInput = {
 
 export type CategoryUpdateWithoutUserInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   color?: Maybe<StringFieldUpdateOperationsInput>;
   label?: Maybe<StringFieldUpdateOperationsInput>;
   primary?: Maybe<BoolFieldUpdateOperationsInput>;
@@ -224,6 +234,7 @@ export type CategoryWhereInput = {
   OR?: Maybe<Array<CategoryWhereInput>>;
   NOT?: Maybe<Array<CategoryWhereInput>>;
   id?: Maybe<StringFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
   color?: Maybe<StringFilter>;
   label?: Maybe<StringFilter>;
   primary?: Maybe<BoolFilter>;
@@ -952,6 +963,15 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteManyNote: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyCategory: { __typename?: 'AffectedRowsOutput', count: number }, deleteManySession: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyAccount: { __typename?: 'AffectedRowsOutput', count: number }, deleteOneUser?: Maybe<{ __typename?: 'User', id: number, email?: Maybe<string> }> };
 
+export type UpdateCategoryMutationVariables = Exact<{
+  categoryId: Scalars['String'];
+  label: Scalars['String'];
+  color: Scalars['String'];
+}>;
+
+
+export type UpdateCategoryMutation = { __typename?: 'Mutation', updateOneCategory?: Maybe<{ __typename?: 'Category', id: string, color: string, label: string, primary: boolean }> };
+
 export type UpdateNoteWithContentMutationVariables = Exact<{
   noteId: Scalars['String'];
   categoryId: Scalars['String'];
@@ -985,7 +1005,7 @@ export type GetNotesQueryVariables = Exact<{
 }>;
 
 
-export type GetNotesQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, notes: Array<{ __typename?: 'Note', id: string, title: string, createdAt: any, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, primary: boolean, color: string } }> }> }> };
+export type GetNotesQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, createdAt: any, notes: Array<{ __typename?: 'Note', id: string, title: string, createdAt: any, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, primary: boolean, color: string } }> }> }> };
 
 export type GetNotesCategoriesQueryVariables = Exact<{
   userId: Scalars['Int'];
@@ -1134,6 +1154,30 @@ export const useDeleteUserMutation = <
       (variables?: DeleteUserMutationVariables) => fetcher<DeleteUserMutation, DeleteUserMutationVariables>(client, DeleteUserDocument, variables)(),
       options
     );
+export const UpdateCategoryDocument = `
+    mutation updateCategory($categoryId: String!, $label: String!, $color: String!) {
+  updateOneCategory(
+    data: {color: {set: $color}, label: {set: $label}}
+    where: {id: $categoryId}
+  ) {
+    id
+    color
+    label
+    primary
+  }
+}
+    `;
+export const useUpdateCategoryMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient, 
+      options?: UseMutationOptions<UpdateCategoryMutation, TError, UpdateCategoryMutationVariables, TContext>
+    ) => 
+    useMutation<UpdateCategoryMutation, TError, UpdateCategoryMutationVariables, TContext>(
+      (variables?: UpdateCategoryMutationVariables) => fetcher<UpdateCategoryMutation, UpdateCategoryMutationVariables>(client, UpdateCategoryDocument, variables)(),
+      options
+    );
 export const UpdateNoteWithContentDocument = `
     mutation updateNoteWithContent($noteId: String!, $categoryId: String!, $title: String!, $content: String!) {
   updateOneNote(
@@ -1223,6 +1267,7 @@ export const GetNotesDocument = `
       label
       color
       primary
+      createdAt
       notes {
         id
         title

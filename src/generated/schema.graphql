@@ -34,6 +34,7 @@ input BoolFilter {
 
 type Category {
   color: String!
+  createdAt: DateTime!
   id: String!
   label: String!
   notes(after: NoteWhereUniqueInput, before: NoteWhereUniqueInput, first: Int, last: Int): [Note!]!
@@ -42,6 +43,7 @@ type Category {
 
 input CategoryCreateInput {
   color: String!
+  createdAt: DateTime
   id: String
   label: String!
   notes: NoteCreateNestedManyWithoutCategoryInput
@@ -51,6 +53,7 @@ input CategoryCreateInput {
 
 input CategoryCreateManyUserInput {
   color: String!
+  createdAt: DateTime
   id: String
   label: String!
   primary: Boolean!
@@ -86,6 +89,7 @@ input CategoryCreateOrConnectWithoutUserInput {
 
 input CategoryCreateWithoutNotesInput {
   color: String!
+  createdAt: DateTime
   id: String
   label: String!
   primary: Boolean!
@@ -94,6 +98,7 @@ input CategoryCreateWithoutNotesInput {
 
 input CategoryCreateWithoutUserInput {
   color: String!
+  createdAt: DateTime
   id: String
   label: String!
   notes: NoteCreateNestedManyWithoutCategoryInput
@@ -111,6 +116,7 @@ input CategoryScalarWhereInput {
   NOT: [CategoryScalarWhereInput!]
   OR: [CategoryScalarWhereInput!]
   color: StringFilter
+  createdAt: DateTimeFilter
   id: StringFilter
   label: StringFilter
   primary: BoolFilter
@@ -119,6 +125,7 @@ input CategoryScalarWhereInput {
 
 input CategoryUpdateInput {
   color: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   label: StringFieldUpdateOperationsInput
   notes: NoteUpdateManyWithoutCategoryInput
@@ -128,6 +135,7 @@ input CategoryUpdateInput {
 
 input CategoryUpdateManyMutationInput {
   color: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   label: StringFieldUpdateOperationsInput
   primary: BoolFieldUpdateOperationsInput
@@ -167,6 +175,7 @@ input CategoryUpdateWithWhereUniqueWithoutUserInput {
 
 input CategoryUpdateWithoutNotesInput {
   color: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   label: StringFieldUpdateOperationsInput
   primary: BoolFieldUpdateOperationsInput
@@ -175,6 +184,7 @@ input CategoryUpdateWithoutNotesInput {
 
 input CategoryUpdateWithoutUserInput {
   color: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   label: StringFieldUpdateOperationsInput
   notes: NoteUpdateManyWithoutCategoryInput
@@ -197,6 +207,7 @@ input CategoryWhereInput {
   NOT: [CategoryWhereInput!]
   OR: [CategoryWhereInput!]
   color: StringFilter
+  createdAt: DateTimeFilter
   id: StringFilter
   label: StringFilter
   notes: NoteListRelationFilter

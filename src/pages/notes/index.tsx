@@ -16,6 +16,9 @@ import SEO from 'components/shared/SEO'
 import EmptyView from 'components/layout/EmptyView'
 import FiltersTopbar from 'components/shared/FiltersTopbar'
 import NoteCard from 'components/layout/Notes/NoteCard'
+import Portal from 'components/shared/Portal'
+import Calendar from 'components/layout/AsidePanel/Widgets/Calendar'
+import Categories from 'components/layout/AsidePanel/Widgets/Categories'
 
 import {
   useGetNotesQuery,
@@ -23,6 +26,9 @@ import {
   useCreateNoteMutation,
   useDeleteNoteMutation,
   useUpdateNoteWithoutContentMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+  Category,
 } from 'generated/graphql'
 
 import CardLayout from 'layouts/CardLayout'
@@ -36,7 +42,14 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
     userId: session.id,
   })
 
-  const categories = useMemo(() => data?.user?.categories || [], [data])
+  const categories = useMemo(
+    () =>
+      data?.user?.categories.sort((a, b) =>
+        sortBy(a.createdAt, b.createdAt, 1)
+      ) || [],
+    [data]
+  )
+
   const notes = useMemo(
     () =>
       categories
@@ -46,14 +59,15 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
     [categories]
   )
 
-  const [temporaryNoteID, setTemporaryNoteID] = useState<string | null>(null)
+  const [tempCategoryID, setTempCategoryID] = useState<string | null>(null)
+  const [tempNoteID, setTempNoteID] = useState<string | null>(null)
   const [activeCategories, setActiveCategories] = useState<string[]>([])
 
   const { mutate: createNote } = useCreateNoteMutation(graphqlRequestClient, {
     onError: e => console.log(e),
     onSuccess: data => {
       const noteID = data.createOneNote.id
-      setTemporaryNoteID(noteID)
+      setTempNoteID(noteID)
       queryClient.invalidateQueries('GetNotes')
     },
   })
@@ -75,15 +89,35 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
     graphqlRequestClient,
     {
       onError: e => console.log(e),
+      onSuccess: data => {
+        const categoryID = data.category.id
+        setTempCategoryID(categoryID)
+        queryClient.invalidateQueries('GetNotes')
+      },
+    }
+  )
+
+  const { mutate: updateCategory } = useUpdateCategoryMutation(
+    graphqlRequestClient,
+    {
+      onError: e => console.log(e),
       onSuccess: () => queryClient.invalidateQueries('GetNotes'),
     }
   )
 
-  useEffect(() => {
-    if (categories.length === 0 && isFetched) {
-      createCategory({ ...DEFAULT_CATEGORY, userId: session.id })
+  const { mutate: removeCategory } = useDeleteCategoryMutation(
+    graphqlRequestClient,
+    {
+      onError: e => console.log(e),
+      onSuccess: data => {
+        const categoryID = data.deleteOneCategory?.id
+        setActiveCategories(
+          activeCategories.filter(item => item !== categoryID)
+        )
+        queryClient.invalidateQueries('GetNotes')
+      },
     }
-  }, [isFetched])
+  )
 
   const handleCreateNote = () => {
     if (categories[0]) {
@@ -95,6 +129,18 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
     }
   }
 
+  const handleCreateCategory = (
+    category: Pick<Category, 'color' | 'label' | 'primary'>
+  ) => {
+    createCategory({ ...category, userId: session.id })
+  }
+
+  const createDefaultCategoryIfNeeded = () => {
+    if (categories.length === 0 && isFetched) {
+      handleCreateCategory(DEFAULT_CATEGORY)
+    }
+  }
+
   const checkIsActiveCategory = (id: string, needsLength?: boolean) => {
     if (needsLength && activeCategories.length === 0) return false
     return activeCategories.length === 0 || activeCategories.includes(id)
@@ -102,22 +148,46 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
 
   const { showModal } = useContext(ModalContext)
 
+  useEffect(createDefaultCategoryIfNeeded, [isFetched])
+
   return (
     <>
       <SEO title="Notes" />
       <FiltersTopbar
         createButton={{ text: 'Create new note', callback: handleCreateNote }}
-        categories={categories.map(({ id, label, color }) => ({
-          text: label,
-          callback: () => {
-            if (activeCategories.includes(id))
-              setActiveCategories(activeCategories.filter(el => el !== id))
-            else setActiveCategories([...activeCategories, id])
-          },
-          active: checkIsActiveCategory(id, true),
-          color,
-        }))}
       />
+      <Portal selector="#aside-panel-content">
+        <Calendar />
+        <Categories
+          tempCategoryID={tempCategoryID}
+          setTempCategoryID={setTempCategoryID}
+          createCategory={category =>
+            createCategory({ ...category, userId: session.id })
+          }
+          updateCategory={category => {
+            updateCategory({
+              categoryId: category.id,
+              color: category.color,
+              label: category.label,
+            })
+          }}
+          removeCategory={categoryID => {
+            removeCategory({ categoryId: categoryID })
+          }}
+          categories={categories.map(({ id, label, primary, color }) => ({
+            id,
+            label,
+            onClick: () => {
+              if (activeCategories.includes(id))
+                setActiveCategories(activeCategories.filter(el => el !== id))
+              else setActiveCategories([...activeCategories, id])
+            },
+            active: checkIsActiveCategory(id, true),
+            primary,
+            color,
+          }))}
+        />
+      </Portal>
       <CardLayout>
         <AnimatePresence>
           {notes
@@ -138,19 +208,19 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
                   selected={false}
                   isSelecting={false}
                   dragging={false}
-                  editable={temporaryNoteID === note.id}
+                  editable={tempNoteID === note.id}
                   onSave={note => {
                     updateNote({
                       noteId: note.id,
                       categoryId: note.category.id,
                       title: note.title,
                     })
-                    setTemporaryNoteID(null)
+                    setTempNoteID(null)
                   }}
                   onCancel={note => {
-                    if (note.id === temporaryNoteID) {
+                    if (note.id === tempNoteID) {
                       removeNote({ noteId: note.id })
-                      setTemporaryNoteID(null)
+                      setTempNoteID(null)
                     }
                   }}
                   updateCategory={(note, categoryID) => {

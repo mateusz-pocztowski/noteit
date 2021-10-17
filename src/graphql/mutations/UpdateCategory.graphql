@@ -1,0 +1,15 @@
+mutation updateCategory(
+  $categoryId: String!
+  $label: String!
+  $color: String!
+) {
+  updateOneCategory(
+    data: { color: { set: $color }, label: { set: $label } }
+    where: { id: $categoryId }
+  ) {
+    id
+    color
+    label
+    primary
+  }
+}

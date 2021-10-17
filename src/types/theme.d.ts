@@ -72,7 +72,8 @@ export type Shadows = {
 export type Theme = {
   background: CSSProperties['color'] | keyof Colors
   element: CSSProperties['color'] | keyof Colors
-  elementLight: CSSProperties['color'] | keyof Colors
+  element100: CSSProperties['color'] | keyof Colors
+  element200: CSSProperties['color'] | keyof Colors
   hover: CSSProperties['color'] | keyof Colors
   hover100: CSSProperties['color'] | keyof Colors
   hover200: CSSProperties['color'] | keyof Colors

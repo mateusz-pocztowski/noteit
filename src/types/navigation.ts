@@ -1,5 +1,5 @@
 export type MenuItem = {
-  icon: any
+  icon?: any
   label: string
   to?: string
   onClick?: () => void

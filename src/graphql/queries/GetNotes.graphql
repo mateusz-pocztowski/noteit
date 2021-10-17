@@ -5,6 +5,7 @@ query GetNotes($userId: Int!) {
       label
       color
       primary
+      createdAt
       notes {
         id
         title

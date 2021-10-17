@@ -31,8 +31,7 @@ const ListItem = styled.li<{ active?: boolean }>`
   ${({ active }) =>
     active &&
     css`
-      transition: none;
-      background: ${({ theme }) => theme.colors.hover100};
+      background: ${({ theme }) => theme.colors.hover100} !important;
       svg {
         fill: ${({ theme }) => theme.colors.blue};
       }
@@ -57,9 +56,11 @@ const MenuItem: React.FC<MenuItemType> = ({
 }) => {
   const linkDOM = (
     <LinkItem as={to ? 'a' : 'button'} onClick={() => onClick && onClick()}>
-      <IconWrapper>
-        <ReactSVG src={icon} />
-      </IconWrapper>
+      {icon && (
+        <IconWrapper>
+          <ReactSVG src={icon} />
+        </IconWrapper>
+      )}
       <Text themecolor={isActive ? 'text' : 'textLight'} family="secondary">
         {label}
       </Text>

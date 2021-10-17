@@ -62,7 +62,7 @@ const colors: Colors = {
   dark300: '#1e1f25',
   dark400: '#272830',
   dark500: '#3c3e4d',
-  dark600: '#34343b',
+  dark600: '#343542',
   dark700: '#3c3e4d',
   gray: '#778397',
   gray100: '#707070',
@@ -84,7 +84,8 @@ const colors: Colors = {
 export const lightTheme: Theme = {
   background: colors.gray300,
   element: colors.white,
-  elementLight: colors.white200,
+  element100: colors.white200,
+  element200: colors.white200,
   hover: colors.gray200,
   hover100: colors.gray500,
   hover200: colors.gray200,
@@ -105,7 +106,8 @@ export const lightTheme: Theme = {
 export const darkTheme: Theme = {
   background: colors.dark300,
   element: colors.dark400,
-  elementLight: colors.dark500,
+  element100: colors.dark600,
+  element200: colors.dark500,
   hover: colors.dark500,
   hover100: colors.dark700,
   hover200: colors.dark700,

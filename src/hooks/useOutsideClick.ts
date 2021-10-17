@@ -1,14 +1,14 @@
 import { useEffect, MutableRefObject } from 'react'
 
 type Props<T> = {
-  handler: (bool: boolean) => void
+  handler: () => void
   condition?: boolean
   ref: MutableRefObject<T | null>
   parentRef?: MutableRefObject<T | null> | null
   preventClass?: string
 }
 
-const useOutsideClick = <T extends Element>({
+const useOutsideClick = <T extends Element | EventTarget>({
   ref,
   handler,
   condition = true,
@@ -29,13 +29,13 @@ const useOutsideClick = <T extends Element>({
         shouldReturn ||
         !ref ||
         !ref.current ||
-        (e.target && ref.current.contains(e.target as Node)) ||
+        (e.target && (ref.current as Element).contains(e.target as Node)) ||
         (parentRef &&
           parentRef.current &&
-          parentRef.current.contains(e.target as Node))
+          (parentRef.current as Element).contains(e.target as Node))
       )
         return
-      handler(false)
+      handler()
     }
 
     if (condition) document.addEventListener('mousedown', listener)

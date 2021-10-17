@@ -8,7 +8,10 @@ import { Session } from 'next-auth'
 import graphqlRequestClient from 'lib/client'
 import nextAuthGetServerSideProps from 'lib/auth/getServerSideProps'
 
+import SEO from 'components/shared/SEO'
 import Editor from 'components/layout/Editor'
+import Portal from 'components/shared/Portal'
+import Calendar from 'components/layout/AsidePanel/Widgets/Calendar'
 
 import {
   useGetNotesCategoriesQuery,
@@ -49,6 +52,10 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
 
   return (
     <AnimatePresence>
+      <SEO title={data?.note?.title ?? 'Notes'} />
+      <Portal selector="#aside-panel-content">
+        <Calendar />
+      </Portal>
       {data?.note && categoriesData?.categories && (
         <motion.div
           initial="enter"

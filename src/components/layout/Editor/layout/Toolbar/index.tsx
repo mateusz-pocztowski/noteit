@@ -79,10 +79,10 @@ const Toolbar: React.FC<Props> = ({
     <>
       <Select
         options={[
-          { id: 'unstyled', label: 'Paragraph' },
           { id: 'header-one', label: 'Title' },
           { id: 'header-two', label: 'Subtitle' },
           { id: 'header-three', label: 'Heading' },
+          { id: 'unstyled', label: 'Paragraph' },
         ]}
         active={blockType}
         onToggle={toggleTypography}

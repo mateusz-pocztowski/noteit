@@ -26,7 +26,8 @@ export const Text = styled.p<TextProps>`
   font-size: ${({ size }) => (size ? `${size / 10}rem` : '1.6rem')};
   text-align: ${({ align }) => align ?? 'left'};
   text-decoration: ${({ decoration }) => decoration ?? 'none'};
-  color: ${({ theme, themecolor }) => theme.colors[themecolor || 'text']};
+  color: ${({ theme, themecolor, color }) =>
+    color || theme.colors[themecolor || 'text']};
   margin-bottom: ${({ margin }) => margin ?? '0'};
   transition: 250ms color;
 `
