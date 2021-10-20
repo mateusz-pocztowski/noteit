@@ -71,7 +71,7 @@ const useEditState = <T extends HTMLInputElement | HTMLTextAreaElement>({
     return () => {
       document.removeEventListener('keydown', handleKeyDowns)
     }
-  }, [isEditable])
+  }, [isEditable, editText])
 
   return {
     editState: { text: editText, editable: isEditable },

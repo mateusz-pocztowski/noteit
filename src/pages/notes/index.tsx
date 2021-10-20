@@ -172,7 +172,14 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
             })
           }}
           removeCategory={categoryID => {
-            removeCategory({ categoryId: categoryID, userId: session.id })
+            showModal({
+              isRemoval: true,
+              confirmFn: () =>
+                removeCategory({
+                  categoryId: categoryID,
+                  userId: session.id,
+                }),
+            })
           }}
           categories={categories.map(({ id, label, primary, color }) => ({
             id,

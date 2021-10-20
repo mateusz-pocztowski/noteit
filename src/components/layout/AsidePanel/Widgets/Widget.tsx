@@ -5,7 +5,7 @@ import { cardVariants } from 'theme/variants'
 
 import { Text } from 'components/shared/Typography'
 
-const Wrapper = styled(motion.section).attrs({
+const Wrapper = styled(motion.div).attrs({
   initial: 'exit',
   animate: 'enter',
   exit: 'exit',
