@@ -17,6 +17,7 @@ export type TooltipOption = {
   color?: keyof ThemeColors
   icon?: string
   active?: boolean
+  colorBlock?: string
 }
 
 export type Direction = {

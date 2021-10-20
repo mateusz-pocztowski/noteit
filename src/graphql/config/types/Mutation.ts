@@ -1,4 +1,4 @@
-import { mutationType } from 'nexus'
+import { mutationType, nonNull, intArg, stringArg } from 'nexus'
 
 export const Mutation = mutationType({
   definition: t => {
@@ -12,20 +12,27 @@ export const Mutation = mutationType({
 
     t.crud.createOneCategory()
     t.crud.updateOneCategory()
-    t.crud.deleteOneCategory({
-      async resolve(root, args, ctx, info, originalResolve) {
+    t.field('deleteOneCategory', {
+      type: 'Mutation',
+      args: {
+        userId: nonNull(intArg()),
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_root, args, ctx) => {
         const primaryCategory = await ctx.prisma.category.findFirst({
-          where: { primary: true },
+          where: { primary: true, userId: args.userId! },
         })
-        if (args.where.id === primaryCategory?.id) return null
+        if (args.id === primaryCategory?.id) return null
 
         await ctx.prisma.note.updateMany({
           data: { categoryId: primaryCategory?.id },
-          where: { categoryId: args.where.id! },
+          where: { categoryId: args.id! },
         })
-        const res = await originalResolve(root, args, ctx, info)
+        const response = await ctx.prisma.category.delete({
+          where: { id: args.id! },
+        })
 
-        return res
+        return response
       },
     })
 

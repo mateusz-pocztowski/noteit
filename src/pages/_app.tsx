@@ -4,8 +4,6 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Hydrate } from 'react-query/hydration'
 import { Provider } from 'next-auth/client'
 
-import styled from 'styled-components'
-
 import ThemeProvider from 'contexts/ThemeContext'
 import ModalProvider from 'contexts/ModalContext'
 import TooltipProvider from 'contexts/TooltipContext'
@@ -18,13 +16,6 @@ const NProgress = dynamic(() => import('components/shared/NProgress'), {
   ssr: false,
 })
 
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-`
-
 const App = ({ Component, pageProps, router }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient())
 
@@ -35,12 +26,10 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           <ThemeProvider>
             <ModalProvider>
               <TooltipProvider>
-                <Wrapper>
-                  <NProgress />
-                  <AppLayout>
-                    <Component {...pageProps} key={router.route} />
-                  </AppLayout>
-                </Wrapper>
+                <NProgress />
+                <AppLayout>
+                  <Component {...pageProps} key={router.route} />
+                </AppLayout>
               </TooltipProvider>
             </ModalProvider>
           </ThemeProvider>

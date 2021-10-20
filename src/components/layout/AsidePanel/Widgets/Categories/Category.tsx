@@ -7,6 +7,7 @@ import useEditState from 'hooks/useEditState'
 
 import checkIcon from 'assets/icons/checkmark.svg'
 import removeIcon from 'assets/icons/remove.svg'
+import editIcon from 'assets/icons/notes.svg'
 
 import type { TooltipOption } from 'types/tooltip'
 import OptionButton from 'components/shared/Button/Option'
@@ -83,7 +84,7 @@ const Main = styled.div<{ active: boolean }>`
     `}
 `
 
-const Color = styled.button`
+const Color = styled.button<{ clickable: boolean }>`
   position: absolute;
   top: 50%;
   left: 15px;
@@ -96,6 +97,7 @@ const Color = styled.button`
   border-radius: 4px;
   transition: 0.3s;
   cursor: pointer;
+  pointer-events: ${({ clickable }) => (clickable ? 'all' : 'none')};
 `
 
 const Input = styled.input<{ editable: boolean }>`
@@ -157,10 +159,11 @@ const Category: React.FC<Props> = ({
 
   const tooltipOptions = useMemo(() => {
     const options: TooltipOption[] = [
-      { label: 'Edit title', handler: handleEditOption },
+      { label: 'Edit name', handler: handleEditOption, icon: editIcon },
       {
         label: 'Change color',
         handler: handleColorClick,
+        colorBlock: color,
       },
     ]
 
@@ -177,10 +180,11 @@ const Category: React.FC<Props> = ({
   }, [])
 
   return (
-    <Wrapper data-category={index}>
+    <Wrapper onClick={() => !editable && onClick()} data-category={index}>
       <Color
         color={color}
         aria-label={`change color of ${label} category`}
+        clickable={!editable}
         onClick={(e: React.MouseEvent) => {
           e.stopPropagation()
           handleColorClick()
@@ -206,7 +210,7 @@ const Category: React.FC<Props> = ({
             e.stopPropagation()
           }}
         />
-        <CheckIcon onClick={onClick} active={active}>
+        <CheckIcon active={active}>
           <Icon src={checkIcon} excludeDarkMode size={12} />
         </CheckIcon>
       </Options>

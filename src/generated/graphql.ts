@@ -58,6 +58,7 @@ export type Category = {
   label: Scalars['String'];
   primary: Scalars['Boolean'];
   notes: Array<Note>;
+  userId: Scalars['Int'];
 };
 
 
@@ -295,7 +296,7 @@ export type Mutation = {
   deleteOneNote?: Maybe<Note>;
   createOneCategory: Category;
   updateOneCategory?: Maybe<Category>;
-  deleteOneCategory?: Maybe<Category>;
+  deleteOneCategory?: Maybe<Mutation>;
   updateManyNote: AffectedRowsOutput;
   deleteManyNote: AffectedRowsOutput;
   deleteManyCategory: AffectedRowsOutput;
@@ -348,7 +349,8 @@ export type MutationUpdateOneCategoryArgs = {
 
 
 export type MutationDeleteOneCategoryArgs = {
-  where: CategoryWhereUniqueInput;
+  userId: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 
@@ -944,10 +946,11 @@ export type CreateNoteMutation = { __typename?: 'Mutation', createOneNote: { __t
 
 export type DeleteCategoryMutationVariables = Exact<{
   categoryId: Scalars['String'];
+  userId: Scalars['Int'];
 }>;
 
 
-export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteOneCategory?: Maybe<{ __typename?: 'Category', id: string }> };
+export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteOneCategory?: Maybe<{ __typename: 'Mutation' }> };
 
 export type DeleteNoteMutationVariables = Exact<{
   noteId: Scalars['String'];
@@ -1082,9 +1085,9 @@ export const useCreateNoteMutation = <
       options
     );
 export const DeleteCategoryDocument = `
-    mutation deleteCategory($categoryId: String!) {
-  deleteOneCategory(where: {id: $categoryId}) {
-    id
+    mutation deleteCategory($categoryId: String!, $userId: Int!) {
+  deleteOneCategory(id: $categoryId, userId: $userId) {
+    __typename
   }
 }
     `;

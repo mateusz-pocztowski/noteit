@@ -681,6 +681,7 @@ export interface NexusGenObjects {
     id: string; // String!
     label: string; // String!
     primary: boolean; // Boolean!
+    userId: number; // Int!
   }
   Mutation: {};
   Note: { // root type
@@ -723,6 +724,7 @@ export interface NexusGenFieldTypes {
     label: string; // String!
     notes: NexusGenRootTypes['Note'][]; // [Note!]!
     primary: boolean; // Boolean!
+    userId: number; // Int!
   }
   Mutation: { // field return type
     createOneCategory: NexusGenRootTypes['Category']; // Category!
@@ -732,7 +734,7 @@ export interface NexusGenFieldTypes {
     deleteManyCategory: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     deleteManyNote: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     deleteManySession: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
-    deleteOneCategory: NexusGenRootTypes['Category'] | null; // Category
+    deleteOneCategory: NexusGenRootTypes['Mutation'] | null; // Mutation
     deleteOneNote: NexusGenRootTypes['Note'] | null; // Note
     deleteOneUser: NexusGenRootTypes['User'] | null; // User
     updateManyNote: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
@@ -778,6 +780,7 @@ export interface NexusGenFieldTypeNames {
     label: 'String'
     notes: 'Note'
     primary: 'Boolean'
+    userId: 'Int'
   }
   Mutation: { // field return type name
     createOneCategory: 'Category'
@@ -787,7 +790,7 @@ export interface NexusGenFieldTypeNames {
     deleteManyCategory: 'AffectedRowsOutput'
     deleteManyNote: 'AffectedRowsOutput'
     deleteManySession: 'AffectedRowsOutput'
-    deleteOneCategory: 'Category'
+    deleteOneCategory: 'Mutation'
     deleteOneNote: 'Note'
     deleteOneUser: 'User'
     updateManyNote: 'AffectedRowsOutput'
@@ -854,7 +857,8 @@ export interface NexusGenArgTypes {
       where?: NexusGenInputs['SessionWhereInput'] | null; // SessionWhereInput
     }
     deleteOneCategory: { // args
-      where: NexusGenInputs['CategoryWhereUniqueInput']; // CategoryWhereUniqueInput!
+      id: string; // String!
+      userId: number; // Int!
     }
     deleteOneNote: { // args
       where: NexusGenInputs['NoteWhereUniqueInput']; // NoteWhereUniqueInput!

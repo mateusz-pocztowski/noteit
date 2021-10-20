@@ -7,7 +7,6 @@ import { TooltipContext } from 'contexts/TooltipContext'
 import useOutsideClick from 'hooks/useOutsideClick'
 
 import arrowDown from 'assets/icons/arrow-down.svg'
-// import { Checkmark } from 'components/Editor/blockStyles/Select';
 
 import type { TooltipProps } from 'types/tooltip'
 import type { ThemeColors } from 'types/theme'
@@ -71,7 +70,7 @@ const Option = styled.li<OptionProps>`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 20px 8px 15px;
+  padding: 8px 15px 8px 10px;
   height: 45px;
   cursor: pointer;
   transition: 0.2s;
@@ -82,7 +81,6 @@ const Option = styled.li<OptionProps>`
     width: 22px;
     height: 22px;
     fill: ${({ theme, color }) => theme.colors[color ?? 'text']};
-    margin-right: 8px;
   }
   &:not(:last-child) {
     border-bottom: 1px solid ${({ theme }) => theme.colors.hover};
@@ -119,7 +117,6 @@ const ColorBlock = styled.figure`
   min-width: 14px;
   max-height: 14px;
   min-height: 14px;
-  margin-right: 10px;
   border-radius: 50%;
 `
 
@@ -127,6 +124,14 @@ const CheckmarkWrapper = styled.div`
   margin-left: auto;
   padding-left: 15px;
   margin-right: -10px;
+`
+
+const TooltipIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  margin-right: 8px;
 `
 
 const Tooltip = () => {
@@ -164,13 +169,21 @@ const Tooltip = () => {
       visible={!!visible}
     >
       <Wrapper>
-        {options.map(({ handler, layers, label, color, icon }) => (
+        {options.map(({ handler, layers, label, color, icon, colorBlock }) => (
           <Option
             color={color ?? 'text'}
             onClick={e => handler && handleOptionClick(e, handler)}
             key={label}
           >
-            {icon && <ReactSVG src={icon} />}
+            {(icon || colorBlock) && (
+              <TooltipIcon>
+                {icon ? (
+                  <ReactSVG src={icon} />
+                ) : (
+                  <ColorBlock color={colorBlock} />
+                )}
+              </TooltipIcon>
+            )}
             <span>{label}</span>
             {layers && (
               <>
@@ -185,7 +198,9 @@ const Tooltip = () => {
                       onClick={e => handleOptionClick(e, option.handler)}
                     >
                       {option.colorBlock && (
-                        <ColorBlock color={option.colorBlock} />
+                        <TooltipIcon>
+                          <ColorBlock color={option.colorBlock} />
+                        </TooltipIcon>
                       )}
                       <span>{option.label}</span>
                       <CheckmarkWrapper>

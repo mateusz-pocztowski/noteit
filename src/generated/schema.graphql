@@ -39,6 +39,7 @@ type Category {
   label: String!
   notes(after: NoteWhereUniqueInput, before: NoteWhereUniqueInput, first: Int, last: Int): [Note!]!
   primary: Boolean!
+  userId: Int!
 }
 
 input CategoryCreateInput {
@@ -270,7 +271,7 @@ type Mutation {
   deleteManyCategory(where: CategoryWhereInput): AffectedRowsOutput!
   deleteManyNote(where: NoteWhereInput): AffectedRowsOutput!
   deleteManySession(where: SessionWhereInput): AffectedRowsOutput!
-  deleteOneCategory(where: CategoryWhereUniqueInput!): Category
+  deleteOneCategory(id: String!, userId: Int!): Mutation
   deleteOneNote(where: NoteWhereUniqueInput!): Note
   deleteOneUser(where: UserWhereUniqueInput!): User
   updateManyNote(data: NoteUpdateManyMutationInput!, where: NoteWhereInput): AffectedRowsOutput!

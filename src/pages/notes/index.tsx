@@ -109,10 +109,10 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
     graphqlRequestClient,
     {
       onError: e => console.log(e),
-      onSuccess: data => {
-        const categoryID = data.deleteOneCategory?.id
+      onSuccess: (_, variables) => {
+        const { categoryId } = variables
         setActiveCategories(
-          activeCategories.filter(item => item !== categoryID)
+          activeCategories.filter(item => item !== categoryId)
         )
         queryClient.invalidateQueries('GetNotes')
       },
@@ -172,7 +172,7 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
             })
           }}
           removeCategory={categoryID => {
-            removeCategory({ categoryId: categoryID })
+            removeCategory({ categoryId: categoryID, userId: session.id })
           }}
           categories={categories.map(({ id, label, primary, color }) => ({
             id,

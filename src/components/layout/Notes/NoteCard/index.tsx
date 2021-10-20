@@ -8,6 +8,7 @@ import Icon from 'components/shared/Icon'
 import TooltipElement from 'components/shared/Tooltip/TooltipElement'
 
 import removeIcon from 'assets/icons/remove.svg'
+import editIcon from 'assets/icons/notes.svg'
 import checkIcon from 'assets/icons/checkmark.svg'
 
 import useEditState from 'hooks/useEditState'
@@ -78,7 +79,7 @@ const NoteCard: React.FC<Props> = ({
 
   const tooltipOptions = useMemo(() => {
     const options: TooltipOption[] = [
-      { label: 'Edit title', handler: handleEditOption },
+      { label: 'Edit title', handler: handleEditOption, icon: editIcon },
       {
         label: 'Remove',
         handler: remove,
@@ -90,6 +91,7 @@ const NoteCard: React.FC<Props> = ({
     if (categories.length > 1) {
       options.splice(1, 0, {
         label: 'Change category',
+        colorBlock: note.category.color,
         layers: categories.map(item => ({
           label: item.label,
           handler: () => updateCategory(note, item.id),

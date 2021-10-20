@@ -7,42 +7,38 @@ interface Props {
   maxLength?: number
 }
 
-type InputType = HTMLInputElement | HTMLTextAreaElement
-
-const useEditState = <T extends InputType>({
+const useEditState = <T extends HTMLInputElement | HTMLTextAreaElement>({
   initState,
   onSave,
   onCancel,
   maxLength,
 }: Props) => {
   const inputRef = useRef<T | null>(null)
-  const [editState, setEditState] = useState(initState)
+  const [isEditable, setIsEditable] = useState(initState.editable)
+  const [editText, setEditText] = useState(initState.text)
 
   const handleEditOption = () => {
-    setEditState({ ...editState, editable: !editState.editable })
+    setIsEditable(true)
   }
 
   const handleTextInput = (e: React.ChangeEvent<T>) => {
     if (maxLength && e.target.value.length > maxLength) return
 
-    setEditState({
-      ...editState,
-      text: e.target.value,
-    })
+    setEditText(e.target.value)
   }
 
   const handleSave = () => {
-    onSave(editState.text)
-    setEditState({ ...editState, editable: false })
+    onSave(editText)
+    setIsEditable(false)
   }
 
   const handleCancel = () => {
     onCancel()
-    setEditState({ text: initState.text, editable: false })
+    setIsEditable(false)
   }
 
   const handleBlur = () => {
-    if (editState.text !== initState.text) {
+    if (editText !== initState.text) {
       handleSave()
       return
     }
@@ -60,7 +56,11 @@ const useEditState = <T extends InputType>({
   }
 
   useEffect(() => {
-    if (editState.editable && inputRef.current) {
+    setIsEditable(initState.editable)
+  }, [initState.editable])
+
+  useEffect(() => {
+    if (isEditable && inputRef.current) {
       inputRef.current.focus()
       inputRef.current.selectionStart = 10000
       inputRef.current.selectionEnd = 10000
@@ -71,10 +71,11 @@ const useEditState = <T extends InputType>({
     return () => {
       document.removeEventListener('keydown', handleKeyDowns)
     }
-  }, [editState.editable, editState.text])
+  }, [isEditable])
 
   return {
-    editState,
+    editState: { text: editText, editable: isEditable },
+    editText,
     inputRef,
     handleEditOption,
     handleTextInput,
