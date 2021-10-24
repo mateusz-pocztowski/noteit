@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { ToastContainer } from 'react-toastify'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useSession } from 'next-auth/client'

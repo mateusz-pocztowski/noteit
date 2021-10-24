@@ -17,7 +17,7 @@ import toast from 'components/shared/Toast'
 import {
   useGetNotesCategoriesQuery,
   useGetSingleNoteQuery,
-  useUpdateCategoryMutation,
+  // useUpdateCategoryMutation,
   useUpdateNoteWithContentMutation,
 } from 'generated/graphql'
 import type { RawDraftContentState } from 'draft-js'
@@ -59,13 +59,13 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
     }
   )
 
-  const { mutate: updateCategory } = useUpdateCategoryMutation(
-    graphqlRequestClient,
-    {
-      onError: e => handleUpdateError(e),
-      onSuccess: () => queryClient.invalidateQueries('GetNotesCategories'),
-    }
-  )
+  // const { mutate: updateCategory } = useUpdateCategoryMutation(
+  //   graphqlRequestClient,
+  //   {
+  //     onError: e => handleUpdateError(e),
+  //     onSuccess: () => queryClient.invalidateQueries('GetNotesCategories'),
+  //   }
+  // )
 
   const handleSave = (title: string, content: RawDraftContentState) => {
     if (!data?.note) return

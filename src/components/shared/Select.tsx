@@ -131,7 +131,7 @@ const Select = <T extends string | number>({
 
   useOutsideClick({
     ref: optionsRef,
-    handler: setOptionsVisibility,
+    handler: () => setOptionsVisibility(false),
     parentRef: selectRef,
   })
 

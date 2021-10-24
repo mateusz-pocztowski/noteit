@@ -7,8 +7,8 @@ import * as Note from 'graphql/config/types/Note'
 import * as Mutation from 'graphql/config/types/Mutation'
 import * as Query from 'graphql/config/types/Query'
 
-import { applyMiddleware } from 'graphql-middleware'
-import { permissions } from 'graphql/config/permissions'
+// import { applyMiddleware } from 'graphql-middleware'
+// import { permissions } from 'graphql/config/permissions'
 
 import path from 'path'
 

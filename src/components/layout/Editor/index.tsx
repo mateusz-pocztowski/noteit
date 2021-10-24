@@ -51,7 +51,7 @@ const Editor: React.FC<EditorProps> = ({
   title,
   initialState,
   activeCategory,
-  categories,
+  // categories,
   onSave,
 }) => {
   const editor = useRef<DraftEditor | null>(null)
