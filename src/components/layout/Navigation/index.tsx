@@ -54,6 +54,7 @@ const Navigation: React.FC = () => {
         pauseOnFocusLoss={false}
         progressClassName="toast-progress"
         transition={toastTransition}
+        closeButton={false}
       />
       <Wrapper>
         <Link href="/dashboard" passHref>

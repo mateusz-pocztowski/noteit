@@ -117,7 +117,7 @@ const NoteCard: React.FC<Props> = ({
             as={TooltipElement}
             options={tooltipOptions}
             aria-label="show options"
-            disabled={dragging}
+            disabled={dragging || editState.editable}
           />
         </ButtonInnerWrapper>
       </ButtonWrapper>

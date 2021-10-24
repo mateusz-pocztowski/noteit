@@ -52,6 +52,4 @@ export const handleListsCommand = (
     content.getSelectionAfter()
   )
   setEditorState(editorState)
-
-  return 'handled'
 }

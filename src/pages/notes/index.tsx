@@ -64,11 +64,13 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const [tempNoteID, setTempNoteID] = useState<string | null>(null)
   const [activeCategories, setActiveCategories] = useState<string[]>([])
 
+  const handleError = (e: any, heading?: string, message?: string) => {
+    console.log(e)
+    toast({ type: 'error', heading, message })
+  }
+
   const { mutate: createNote } = useCreateNoteMutation(graphqlRequestClient, {
-    onError: e => {
-      console.log(e)
-      toast({ type: 'error' })
-    },
+    onError: e => handleError(e),
     onSuccess: data => {
       const noteID = data.createOneNote.id
       setTempNoteID(noteID)
@@ -79,10 +81,7 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: updateNote } = useUpdateNoteWithoutContentMutation(
     graphqlRequestClient,
     {
-      onError: e => {
-        console.log(e)
-        toast({ type: 'error' })
-      },
+      onError: e => handleError(e),
       onSuccess: () => queryClient.invalidateQueries('GetNotes'),
     }
   )
@@ -98,10 +97,7 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: createCategory } = useCreateCategoryMutation(
     graphqlRequestClient,
     {
-      onError: e => {
-        console.log(e)
-        toast({ type: 'error' })
-      },
+      onError: e => handleError(e),
       onSuccess: data => {
         const categoryID = data.category.id
         setTempCategoryID(categoryID)
@@ -113,10 +109,7 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: updateCategory } = useUpdateCategoryMutation(
     graphqlRequestClient,
     {
-      onError: e => {
-        console.log(e)
-        toast({ type: 'error' })
-      },
+      onError: e => handleError(e),
       onSuccess: () => queryClient.invalidateQueries('GetNotes'),
     }
   )
@@ -124,10 +117,7 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: removeCategory } = useDeleteCategoryMutation(
     graphqlRequestClient,
     {
-      onError: e => {
-        console.log(e)
-        toast({ type: 'error' })
-      },
+      onError: e => handleError(e),
       onSuccess: (_, variables) => {
         const { categoryId } = variables
         setActiveCategories(

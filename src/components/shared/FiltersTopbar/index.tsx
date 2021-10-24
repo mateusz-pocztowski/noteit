@@ -30,7 +30,6 @@ const Options = styled(Row)`
 const FiltersTopbar: React.FC<Props> = ({ createButton }) => {
   return (
     <Wrapper>
-      <div />
       <Options>
         <Col>
           <Button width="240px" onClick={createButton.callback}>

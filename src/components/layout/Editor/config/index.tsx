@@ -62,8 +62,8 @@ export const KEY_BINDINGS: KeyBinding[] = [
   { bind: ['metaKey', 'shiftKey', 82], command: 'align-right' },
   { bind: ['metaKey', 'shiftKey', 55], command: 'ordered-list-item' },
   { bind: ['metaKey', 'shiftKey', 56], command: 'unordered-list-item' },
-  { bind: ['metaKey', 'ctrlKey', 81], command: 'blockquote' },
-  { bind: ['metaKey', 'ctrlKey', 192], command: 'code-block' },
+  { bind: ['ctrlKey', 81], command: 'blockquote' },
+  { bind: ['ctrlKey', 192], command: 'code-block' },
   { bind: [UL_FULL_REGEX], regexChars: 2, command: 'autolist-unordered' },
   { bind: [OL_FULL_REGEX], command: 'autolist-ordered' },
 ]

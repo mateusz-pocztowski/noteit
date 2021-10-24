@@ -36,7 +36,7 @@ const Overlay = styled.div<{ visible: boolean }>`
     `}
 `
 
-const Wrapper = styled.div<{ visible: boolean }>`
+const Wrapper = styled.div<{ visible: boolean; isRemoval: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -69,6 +69,9 @@ const Wrapper = styled.div<{ visible: boolean }>`
       transform: scale(1) translateX(0) !important;
       will-change: transform;
     `};
+  border-top: 4px solid
+    ${({ theme, isRemoval }) =>
+      isRemoval ? theme.colors.red : theme.colors.blue};
 `
 
 const CloseButton = styled.button`
@@ -140,19 +143,15 @@ const ConfirmModal: React.FC = () => {
 
   return (
     <Overlay visible={visible}>
-      <Wrapper visible={visible} ref={modalRef}>
+      <Wrapper isRemoval={isRemoval} visible={visible} ref={modalRef}>
         <CloseButton onClick={closeModal}>
           <Icon excludeDarkMode src={closeIcon} alt="" full />
         </CloseButton>
         <Heading>{confirmHeading}</Heading>
         {(isRemoval || confirmDescription) && (
           <DescriptionWrapper>
-            <Text size={15} themecolor="textLight100">
-              {confirmDescription || (
-                <>
-                  This action can <b>NOT</b> be undone!
-                </>
-              )}
+            <Text size={15} family="secondary" themecolor="textLight100">
+              {confirmDescription || <>This action can not be undone!</>}
             </Text>
           </DescriptionWrapper>
         )}

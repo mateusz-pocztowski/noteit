@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Icon from 'components/shared/Icon'
 import threeDotsIcon from 'assets/icons/three-dots.svg'
 
@@ -11,10 +11,17 @@ const OptionBtn = styled.button`
   background: transparent;
   cursor: pointer;
   transition: 0.3s;
-  &:hover,
-  &.active {
+  &:hover {
     background: ${({ theme }) => theme.colors.hover100};
   }
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition-delay: 0.2s;
+    `}
 `
 
 type Props = {

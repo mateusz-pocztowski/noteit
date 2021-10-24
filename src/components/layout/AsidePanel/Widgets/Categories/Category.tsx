@@ -177,7 +177,7 @@ const Category: React.FC<Props> = ({
     }
 
     return options
-  }, [])
+  }, [color])
 
   return (
     <Wrapper onClick={() => !editable && onClick()} data-category={index}>

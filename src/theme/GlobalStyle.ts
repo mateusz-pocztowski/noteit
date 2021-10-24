@@ -80,10 +80,6 @@ const GlobalStyle = createGlobalStyle`
     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
     border: 1px solid ${({ theme }) => theme.colors.cardBorder};
   }
-  .Toastify__close-button {
-    color: ${({ theme }) => theme.colors.text};
-    opacity: 0.7;
-  }
   .toast-progress {
     background: ${({ theme }) => theme.gradients.bluePurple};
     height: 3px;

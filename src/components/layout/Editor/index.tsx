@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import ScrollBar from 'simplebar-react'
 
 import DraftEditor from '@draft-js-plugins/editor'
@@ -9,6 +9,9 @@ import {
   getDefaultKeyBinding,
   Modifier,
   RichUtils,
+  convertToRaw,
+  convertFromRaw,
+  RawDraftContentState,
 } from 'draft-js'
 
 import Toolbar from 'components/layout/Editor/layout/Toolbar'
@@ -36,17 +39,30 @@ import { ALIGN_TYPES, BASIC_BLOCKS, KEY_BINDINGS, PLUGINS } from './config'
 import type { Category } from 'generated/graphql'
 import type { AlignType } from 'types/editor'
 
-type Props = {
+type EditorProps = {
   title?: string
+  initialState?: RawDraftContentState | null
   activeCategory: Pick<Category, 'id' | 'color' | 'label' | 'primary'>
+  categories: Pick<Category, 'id' | 'color' | 'label' | 'primary'>[]
+  onSave: (title: string, content: RawDraftContentState) => void
 }
 
-const Editor: React.FC<Props> = ({ title, activeCategory }) => {
+const Editor: React.FC<EditorProps> = ({
+  title,
+  initialState,
+  activeCategory,
+  categories,
+  onSave,
+}) => {
   const editor = useRef<DraftEditor | null>(null)
   const scrollRef = useRef<ScrollBar | null>(null)
 
   const [tempTitle, setTempTitle] = useState(title ?? '')
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [editorState, setEditorState] = useState(
+    initialState
+      ? EditorState.createWithContent(convertFromRaw(initialState))
+      : EditorState.createEmpty()
+  )
   const [keyCharsHistory, setKeyCharsHistory] = useState<string[]>([])
   const [currentAlignment, setCurrentAlignment] = useState<AlignType>('left')
 
@@ -120,13 +136,19 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
     )
   }
 
-  const handleSave = () => {}
+  const handleSave = () => {
+    const contentState = convertToRaw(editorState.getCurrentContent())
+
+    onSave(tempTitle, contentState)
+  }
 
   const handleKeyCommand = (command: string) => {
+    console.log(command)
     switch (command) {
       case 'autolist-ordered':
       case 'autolist-unordered':
         handleListsCommand(command, editorState, setEditorState)
+        return 'handled'
       case 'save-editor':
         handleSave()
         return 'handled'
@@ -184,6 +206,13 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
     return `alignment--${alignment}`
   }
 
+  const handleTitleInputKeyDown = (e: React.KeyboardEvent) => {
+    if (e.keyCode === 83 && e.metaKey) {
+      e.preventDefault()
+      handleSave()
+    }
+  }
+
   const focusEditor = () => {
     editor.current?.focus()
   }
@@ -214,12 +243,7 @@ const Editor: React.FC<Props> = ({ title, activeCategory }) => {
               placeholder="Enter title..."
               value={tempTitle}
               onChange={e => setTempTitle(e.target.value)}
-              // onKeyDown={e => {
-              //   if (e.keyCode === 83 && e.metaKey) {
-              //     e.preventDefault()
-              //     // handleSave()
-              //   }
-              // }}
+              onKeyDown={handleTitleInputKeyDown}
             />
           </TitleWrapper>
         </Header>
