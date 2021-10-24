@@ -3,7 +3,6 @@ import reset from 'styled-reset'
 import 'nprogress/nprogress.css'
 import 'simplebar/src/simplebar.css'
 import 'react-toastify/dist/ReactToastify.css'
-// import 'components/Editor/editorStyles.css'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -74,6 +73,58 @@ const GlobalStyle = createGlobalStyle`
   .simplebar-content {
     height: 100%;
   }
+
+  .Toastify__toast {
+    color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.element100};
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+    border: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  }
+  .Toastify__close-button {
+    color: ${({ theme }) => theme.colors.text};
+    opacity: 0.7;
+  }
+  .toast-progress {
+    background: ${({ theme }) => theme.gradients.bluePurple};
+    height: 3px;
+  }
+  .toast-success .toast-progress {
+    background: ${({ theme }) => theme.gradients.green};
+  }
+  .toast-error .toast-progress {
+    background: ${({ theme }) => theme.gradients.red};
+  }
+
+  @keyframes slide-in-fwd {
+    0% {
+      transform: translateY(-200px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .slide-in-fwd {
+    animation: slide-in-fwd 0.35s cubic-bezier(0.075, 0.82, 0.165, 1) both;
+  }
+
+  @keyframes slide-out-bck {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-200px);
+      opacity: 0;
+    }
+  }
+
+  .slide-out-bck {
+    animation: slide-out-bck 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86) both;
+  }
+
   #nprogress .bar {
     background: ${({ theme }) => theme.colors.blue};
     height: 3px;

@@ -94,7 +94,7 @@ type Props = {
     category: Pick<CategoryType, 'id' | 'label' | 'color'>
   ) => void
   createCategory: (category: Pick<CategoryType, 'label' | 'color'>) => void
-  removeCategory: (categoryID: string) => void
+  removeCategory: (categoryID: string, confirm?: boolean) => void
 }
 
 type ChangeState = {
@@ -179,7 +179,7 @@ const Categories: React.FC<Props> = ({
                 onClick={onClick}
                 onCancel={() => {
                   if (id === tempCategoryID) {
-                    removeCategory(id)
+                    removeCategory(id, false)
                     setTempCategoryID(null)
                   }
                 }}

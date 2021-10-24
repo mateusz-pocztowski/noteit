@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ToastContainer } from 'react-toastify'
 import Link from 'next/link'
 
 import Scrollbar from 'components/shared/Scrollbar'
@@ -9,6 +10,7 @@ import { Text } from 'components/shared/Typography'
 import Menu from 'components/layout/Navigation/Menu'
 
 import noteitLogo from 'assets/icons/logotype.svg'
+import { toastTransition } from 'components/shared/Toast'
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -44,6 +46,15 @@ const LogoText = styled(Text)`
 const Navigation: React.FC = () => {
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        draggable={false}
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        progressClassName="toast-progress"
+        transition={toastTransition}
+      />
       <Wrapper>
         <Link href="/dashboard" passHref>
           <LogoWrapper>

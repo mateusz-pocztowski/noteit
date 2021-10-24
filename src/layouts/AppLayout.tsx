@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { ToastContainer } from 'react-toastify'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useSession } from 'next-auth/client'
@@ -13,7 +14,6 @@ import AsidePanel from 'components/layout/AsidePanel'
 import Topbar from 'components/layout/Navigation/Topbar'
 import Tooltip from 'components/shared/Tooltip/Tooltip'
 import ConfirmModal from 'components/shared/Modals/ConfirmModal'
-// import { ToastContainer } from 'react-toastify';
 
 const Wrapper = styled.div`
   width: 100%;

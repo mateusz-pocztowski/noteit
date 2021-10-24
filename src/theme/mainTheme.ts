@@ -41,6 +41,9 @@ const gradients: Gradients = {
   light: `linear-gradient(147deg, #f5f6f8 0%, #f7faff 80%)`,
   bluePurple:
     'linear-gradient(to right top, #4b95ff, #5389fb, #5e7bf6, #6a6dee, #775de5)',
+  red: 'linear-gradient(to right top, #f04d6b, #f35a75, #f66680, #f8728a, #fa7d94)',
+  green:
+    'linear-gradient(to right top, #20a679, #24b081, #27b988, #2bc390, #2ecd98)',
 }
 
 const shadows: Shadows = {

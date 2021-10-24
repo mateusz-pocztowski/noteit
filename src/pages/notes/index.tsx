@@ -19,6 +19,7 @@ import NoteCard from 'components/layout/Notes/NoteCard'
 import Portal from 'components/shared/Portal'
 import Calendar from 'components/layout/AsidePanel/Widgets/Calendar'
 import Categories from 'components/layout/AsidePanel/Widgets/Categories'
+import toast from 'components/shared/Toast'
 
 import {
   useGetNotesQuery,
@@ -64,7 +65,10 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const [activeCategories, setActiveCategories] = useState<string[]>([])
 
   const { mutate: createNote } = useCreateNoteMutation(graphqlRequestClient, {
-    onError: e => console.log(e),
+    onError: e => {
+      console.log(e)
+      toast({ type: 'error' })
+    },
     onSuccess: data => {
       const noteID = data.createOneNote.id
       setTempNoteID(noteID)
@@ -75,20 +79,29 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: updateNote } = useUpdateNoteWithoutContentMutation(
     graphqlRequestClient,
     {
-      onError: e => console.log(e),
+      onError: e => {
+        console.log(e)
+        toast({ type: 'error' })
+      },
       onSuccess: () => queryClient.invalidateQueries('GetNotes'),
     }
   )
 
   const { mutate: removeNote } = useDeleteNoteMutation(graphqlRequestClient, {
-    onError: e => console.log(e),
+    onError: e => {
+      console.log(e)
+      toast({ type: 'error' })
+    },
     onSuccess: () => queryClient.invalidateQueries('GetNotes'),
   })
 
   const { mutate: createCategory } = useCreateCategoryMutation(
     graphqlRequestClient,
     {
-      onError: e => console.log(e),
+      onError: e => {
+        console.log(e)
+        toast({ type: 'error' })
+      },
       onSuccess: data => {
         const categoryID = data.category.id
         setTempCategoryID(categoryID)
@@ -100,7 +113,10 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: updateCategory } = useUpdateCategoryMutation(
     graphqlRequestClient,
     {
-      onError: e => console.log(e),
+      onError: e => {
+        console.log(e)
+        toast({ type: 'error' })
+      },
       onSuccess: () => queryClient.invalidateQueries('GetNotes'),
     }
   )
@@ -108,7 +124,10 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const { mutate: removeCategory } = useDeleteCategoryMutation(
     graphqlRequestClient,
     {
-      onError: e => console.log(e),
+      onError: e => {
+        console.log(e)
+        toast({ type: 'error' })
+      },
       onSuccess: (_, variables) => {
         const { categoryId } = variables
         setActiveCategories(
@@ -171,14 +190,21 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
               label: category.label,
             })
           }}
-          removeCategory={categoryID => {
-            showModal({
-              isRemoval: true,
-              confirmFn: () =>
-                removeCategory({
-                  categoryId: categoryID,
-                  userId: session.id,
-                }),
+          removeCategory={(categoryID, confirm = true) => {
+            if (confirm) {
+              showModal({
+                isRemoval: true,
+                confirmFn: () =>
+                  removeCategory({
+                    categoryId: categoryID,
+                    userId: session.id,
+                  }),
+              })
+              return
+            }
+            removeCategory({
+              categoryId: categoryID,
+              userId: session.id,
             })
           }}
           categories={categories.map(({ id, label, primary, color }) => ({

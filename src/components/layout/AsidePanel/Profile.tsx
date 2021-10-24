@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import styled from 'styled-components'
+
 import { useSession } from 'next-auth/client'
 import { useQueryClient } from 'react-query'
 
@@ -9,6 +10,7 @@ import graphqlRequestClient from 'lib/client'
 import { toBase64 } from 'utils/toBase64'
 import { resizeImageFixed } from 'utils/resizeImage'
 
+import toast from 'components/shared/Toast'
 import { Text } from 'components/shared/Typography'
 import { Row, Col } from 'components/shared/Grid'
 
@@ -97,8 +99,14 @@ const Profile: React.FC = () => {
   })
 
   const { mutate } = useUpdateUserMutation(graphqlRequestClient, {
-    onError: e => console.log(e),
-    onSuccess: () => queryClient.invalidateQueries('GetUserData'),
+    onError: e => {
+      console.log(e)
+      toast({ type: 'error' })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries('GetUserData')
+      toast({ type: 'success', message: 'Your settings has beed updated!' })
+    },
   })
 
   const inputRef = useRef<HTMLInputElement>(null)

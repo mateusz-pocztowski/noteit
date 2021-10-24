@@ -60,6 +60,8 @@ export type Gradients = {
   dark: CSSProperties['background']
   light: CSSProperties['background']
   bluePurple: CSSProperties['background']
+  red: CSSProperties['background']
+  green: CSSProperties['background']
 }
 
 export type Shadows = {
