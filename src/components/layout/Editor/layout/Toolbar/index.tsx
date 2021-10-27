@@ -25,6 +25,7 @@ import {
 } from 'draft-js'
 
 import type { AlignType, HistoryType } from 'types/editor'
+import type { Category } from 'generated/graphql'
 
 type Props = {
   editorState: EditorState
@@ -32,11 +33,17 @@ type Props = {
   onSave: () => void
   handleChange: (newState: EditorState) => void
   toggleAlignment: (alignment: AlignType) => void
+  activeCategory: Pick<Category, 'id' | 'color' | 'label' | 'primary'>
+  categories: Pick<Category, 'id' | 'color' | 'label' | 'primary'>[]
+  onCategoryChange: (categoryID: string) => void
 }
 
 const Toolbar: React.FC<Props> = ({
   editorState,
   currentAlignment,
+  activeCategory,
+  categories,
+  onCategoryChange,
   onSave,
   handleChange,
   toggleAlignment,
@@ -188,6 +195,16 @@ const Toolbar: React.FC<Props> = ({
         icon={redoIcon}
         label="Redo"
         command="redo"
+      />
+
+      <Select
+        options={categories.map(category => ({
+          id: category.id,
+          label: category.label,
+          color: category.color,
+        }))}
+        active={activeCategory.id}
+        onToggle={onCategoryChange}
       />
     </>
   )

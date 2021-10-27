@@ -10,6 +10,9 @@ const List = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0 20px;
+  ${({ theme }) => theme.mq.max.xxxl} {
+    padding: 0 15px;
+  }
 `
 
 const ActiveBar = styled.span<{ index: number }>`
@@ -24,6 +27,10 @@ const ActiveBar = styled.span<{ index: number }>`
   border-radius: 50px;
   transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
   transform: ${({ index }) => `translateY(${index * 50 + index * 11}px)`};
+  ${({ theme }) => theme.mq.max.xxxl} {
+    height: 50px;
+    transform: ${({ index }) => `translateY(${index * 45 + index * 11}px)`};
+  }
 `
 
 const Menu: React.FC = () => {

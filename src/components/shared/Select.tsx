@@ -8,7 +8,6 @@ import checkIcon from 'assets/icons/checkmark.svg'
 type OptionType<T extends number | string> = {
   id: T
   label: string
-  style?: string
   color?: string
 }
 
@@ -22,7 +21,8 @@ type Props<T extends number | string> = {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  max-width: 170px;
+  max-width: 150px;
+  min-width: 100px;
   z-index: 10;
   margin: 0 15px;
 `
@@ -32,7 +32,7 @@ const Dropdown = styled.div<{ active: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 10px 12px;
   transition: 0.3s;
   background: ${({ active, theme }) =>
     active ? theme.colors.active : theme.colors.hover};
@@ -46,8 +46,12 @@ const Dropdown = styled.div<{ active: boolean }>`
   }
 `
 
-const Name = styled.span`
+const Text = styled.span`
   font-size: 1.4rem;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Options = styled.ul<{ active: boolean }>`
@@ -61,16 +65,18 @@ const Options = styled.ul<{ active: boolean }>`
   border-radius: 0 0 4px 4px;
   box-shadow: ${({ theme }) => theme.colors.cardShadow};
   z-index: -1;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid ${({ theme }) => theme.colors.hover};
   border-top: none;
+  max-height: 200px;
 `
 
 const Option = styled.li`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 15px 35px;
+  padding: 10px 10px 10px 35px;
   cursor: pointer;
   transition: 0.2s;
   &:not(:last-child) {
@@ -83,17 +89,17 @@ const Option = styled.li`
   }
 `
 
-export const Checkmark = styled.span<{ checked: boolean }>`
+export const Checkmark = styled.span<{ checked: boolean; color?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 16px;
   width: 16px;
   border: 1px solid;
-  border-color: ${({ checked, theme }) =>
-    checked ? theme.colors.blue : theme.colors.blue100};
-  background: ${({ checked, theme }) =>
-    checked ? theme.colors.blue : 'trasparent'};
+  border-color: ${({ checked, theme, color }) =>
+    checked ? color || theme.colors.blue : color || theme.colors.blue100};
+  background: ${({ checked, theme, color }) =>
+    checked ? color || theme.colors.blue : 'trasparent'};
   border-radius: 4px;
   transition: 0.2s;
   &:after {
@@ -107,11 +113,15 @@ export const Checkmark = styled.span<{ checked: boolean }>`
 
 const StyledCheckmark = styled(Checkmark)`
   position: absolute;
-  top: 16px;
+  top: 11px;
   left: 10px;
 `
 
-const Arrow = styled.div``
+const Arrow = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+`
 
 const Select = <T extends string | number>({
   placeholder = 'Select...',
@@ -150,9 +160,9 @@ const Select = <T extends string | number>({
         ref={selectRef}
         onMouseDown={toggleOptionsVisibility}
       >
-        <Name>
+        <Text>
           {options.find(option => option.id === active)?.label || placeholder}
-        </Name>
+        </Text>
         <Arrow>
           <Icon size={15} src={dropIcon} />
         </Arrow>
@@ -166,8 +176,8 @@ const Select = <T extends string | number>({
               setOptionsVisibility(false)
             }}
           >
-            <StyledCheckmark checked={item.id === active} />
-            {item.label}
+            <StyledCheckmark color={item.color} checked={item.id === active} />
+            <Text>{item.label}</Text>
           </Option>
         ))}
       </Options>

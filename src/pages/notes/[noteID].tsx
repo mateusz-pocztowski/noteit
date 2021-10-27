@@ -17,7 +17,6 @@ import toast from 'components/shared/Toast'
 import {
   useGetNotesCategoriesQuery,
   useGetSingleNoteQuery,
-  // useUpdateCategoryMutation,
   useUpdateNoteWithContentMutation,
 } from 'generated/graphql'
 import type { RawDraftContentState } from 'draft-js'
@@ -28,7 +27,7 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
 
   const handleFetchError = (e: any) => {
     console.log(e)
-    router.push('/notes')
+    if (router.query.noteID) router.push('/notes')
   }
 
   const handleUpdateError = (e: any) => {
@@ -59,14 +58,6 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
     }
   )
 
-  // const { mutate: updateCategory } = useUpdateCategoryMutation(
-  //   graphqlRequestClient,
-  //   {
-  //     onError: e => handleUpdateError(e),
-  //     onSuccess: () => queryClient.invalidateQueries('GetNotesCategories'),
-  //   }
-  // )
-
   const handleSave = (title: string, content: RawDraftContentState) => {
     if (!data?.note) return
     updateNote({
@@ -75,6 +66,17 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
       categoryId: data.note.category.id,
       noteId: data.note.id,
     })
+  }
+
+  const handleCategoryChange = (categoryID: string) => {
+    if (data?.note) {
+      updateNote({
+        categoryId: categoryID,
+        content: data.note.content!,
+        noteId: data.note.id,
+        title: data.note.title,
+      })
+    }
   }
 
   return (
@@ -102,6 +104,7 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
               }
               categories={categoriesData.categories}
               activeCategory={data.note.category}
+              onCategoryChange={handleCategoryChange}
               onSave={handleSave}
             />
           </motion.div>

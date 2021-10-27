@@ -27,13 +27,13 @@ const fonts: Fonts = {
 }
 
 const navSize: NavSize = {
-  desktop: '340px',
-  mobile: '80px',
+  expanded: '340px',
+  closed: '80px',
 }
 
 const panelSize: PanelSize = {
-  desktop: '380px',
-  mobile: '80px',
+  expanded: '380px',
+  closed: '80px',
 }
 
 const gradients: Gradients = {

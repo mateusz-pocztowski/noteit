@@ -39,9 +39,16 @@ import { sortBy } from 'utils/sorting'
 const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const queryClient = useQueryClient()
 
-  const { data, isFetched } = useGetNotesQuery(graphqlRequestClient, {
-    userId: session.id,
-  })
+  const handleError = (e: any, heading?: string, message?: string) => {
+    console.log(e)
+    toast({ type: 'error', heading, message })
+  }
+
+  const { data, isFetched } = useGetNotesQuery(
+    graphqlRequestClient,
+    { userId: session.id },
+    { onError: e => handleError(e) }
+  )
 
   const categories = useMemo(
     () =>
@@ -63,11 +70,6 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
   const [tempCategoryID, setTempCategoryID] = useState<string | null>(null)
   const [tempNoteID, setTempNoteID] = useState<string | null>(null)
   const [activeCategories, setActiveCategories] = useState<string[]>([])
-
-  const handleError = (e: any, heading?: string, message?: string) => {
-    console.log(e)
-    toast({ type: 'error', heading, message })
-  }
 
   const { mutate: createNote } = useCreateNoteMutation(graphqlRequestClient, {
     onError: e => handleError(e),

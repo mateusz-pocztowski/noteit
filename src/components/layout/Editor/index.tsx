@@ -44,6 +44,7 @@ type EditorProps = {
   initialState?: RawDraftContentState | null
   activeCategory: Pick<Category, 'id' | 'color' | 'label' | 'primary'>
   categories: Pick<Category, 'id' | 'color' | 'label' | 'primary'>[]
+  onCategoryChange: (categoryID: string) => void
   onSave: (title: string, content: RawDraftContentState) => void
 }
 
@@ -51,7 +52,8 @@ const Editor: React.FC<EditorProps> = ({
   title,
   initialState,
   activeCategory,
-  // categories,
+  categories,
+  onCategoryChange,
   onSave,
 }) => {
   const editor = useRef<DraftEditor | null>(null)
@@ -143,7 +145,6 @@ const Editor: React.FC<EditorProps> = ({
   }
 
   const handleKeyCommand = (command: string) => {
-    console.log(command)
     switch (command) {
       case 'autolist-ordered':
       case 'autolist-unordered':
@@ -236,6 +237,9 @@ const Editor: React.FC<EditorProps> = ({
               currentAlignment={currentAlignment}
               toggleAlignment={toggleAlignment}
               onSave={handleSave}
+              activeCategory={activeCategory}
+              categories={categories}
+              onCategoryChange={onCategoryChange}
             />
           </ToolbarWrapper>
           <TitleWrapper>

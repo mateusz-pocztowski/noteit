@@ -55,6 +55,7 @@ const Wrapper = styled.ul`
   box-shadow: ${({ theme }) => theme.colors.cardShadow100};
   z-index: 1;
   border: 1px solid ${({ theme }) => theme.colors.hover};
+  max-height: 200px;
 `
 
 const SecondLayer = styled(Wrapper)<SecondLayerProps>`
@@ -64,13 +65,15 @@ const SecondLayer = styled(Wrapper)<SecondLayerProps>`
   opacity: 0;
   visibility: hidden;
   transition: 0.2s;
+  overflow-y: auto;
+  overflow-x: visible;
 `
 
 const Option = styled.li<OptionProps>`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 15px 8px 10px;
+  padding: 10px 15px 10px 10px;
   height: 45px;
   cursor: pointer;
   transition: 0.2s;

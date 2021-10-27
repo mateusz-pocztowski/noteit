@@ -32,6 +32,9 @@ export const ToolbarWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0 2rem 2rem;
+  & > div:last-child {
+    margin-left: auto;
+  }
 `
 
 export const TitleWrapper = styled.div`

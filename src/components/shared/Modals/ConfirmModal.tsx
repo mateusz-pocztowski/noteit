@@ -40,13 +40,13 @@ const Wrapper = styled.div<{ visible: boolean; isRemoval: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100vw - 20px);
   max-width: 400px;
   margin: 0 auto;
   padding: 30px;
   background: ${({ theme }) => theme.colors.element};
   border-radius: 4px;
-  box-shadow: 2px 2px 45px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 45px rgba(0, 0, 0, 0.4);
   opacity: 0;
   visibility: hidden;
   transition: 0.3s cubic-bezier(0.5, 0.32, 0.11, 1);
@@ -54,12 +54,7 @@ const Wrapper = styled.div<{ visible: boolean; isRemoval: boolean }>`
   max-height: 620px;
   overflow-y: auto;
   ${({ theme }) => theme.mq.max.xs} {
-    max-width: 100vw;
-    padding: 27px 15px 20px;
-    transform: translateX(100vw);
-    height: 100%;
-    transition: 0.4s cubic-bezier(0.5, 0.32, 0.11, 1);
-    max-height: none;
+    padding: 30px 20px;
   }
   ${({ visible }) =>
     visible &&

@@ -12,7 +12,7 @@ const Wrapper = styled.nav`
   top: 0;
   right: 0;
   height: 100vh;
-  width: ${({ theme }) => theme.panelSize.desktop};
+  width: ${({ theme }) => theme.panelSize.expanded};
   background: ${({ theme }) => theme.colors.element};
   font-family: ${({ theme }) => theme.fonts.secondary};
   box-shadow: -10px 0 5px -2px rgba(0, 0, 0, 0.02);

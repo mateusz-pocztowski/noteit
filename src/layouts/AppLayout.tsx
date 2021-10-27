@@ -17,10 +17,13 @@ import ConfirmModal from 'components/shared/Modals/ConfirmModal'
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-  padding-left: ${({ theme }) => theme.navSize.desktop};
-  padding-right: ${({ theme }) => theme.panelSize.desktop};
+  padding-left: ${({ theme }) => theme.navSize.expanded};
+  padding-right: ${({ theme }) => theme.panelSize.expanded};
   overflow: hidden;
   background: ${({ theme }) => theme.colors.backgroundGradient};
+  ${({ theme }) => theme.mq.max.xxxl} {
+    padding-left: ${({ theme }) => theme.navSize.closed};
+  }
 `
 
 const ContentWrapper = styled.main`
@@ -29,6 +32,9 @@ const ContentWrapper = styled.main`
   height: 100%;
   overflow: hidden;
   padding: 30px 50px 0;
+  ${({ theme }) => theme.mq.max.xxxl} {
+    padding: 30px 35px 0;
+  }
 `
 
 const AppLayout: React.FC = ({ children }) => {

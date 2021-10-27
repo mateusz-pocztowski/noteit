@@ -16,13 +16,13 @@ export type Fonts = {
 }
 
 export type NavSize = {
-  desktop: CSSProperties['width']
-  mobile: CSSProperties['width']
+  expanded: CSSProperties['width']
+  closed: CSSProperties['width']
 }
 
 export type PanelSize = {
-  desktop: CSSProperties['width']
-  mobile: CSSProperties['width']
+  expanded: CSSProperties['width']
+  closed: CSSProperties['width']
 }
 
 export type Colors = {

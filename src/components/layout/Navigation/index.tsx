@@ -17,12 +17,21 @@ const Wrapper = styled.nav`
   top: 0;
   left: 0;
   height: 100vh;
-  width: ${({ theme }) => theme.navSize.desktop};
+  width: ${({ theme }) => theme.navSize.expanded};
   background: ${({ theme }) => theme.colors.element};
   font-family: ${({ theme }) => theme.fonts.secondary};
   font-weight: 500;
   box-shadow: 10px 0 5px -2px rgba(0, 0, 0, 0.02);
   z-index: 11;
+  ${({ theme }) => theme.mq.max.xxxl} {
+    width: ${({ theme }) => theme.navSize.closed};
+    & > div,
+    .simplebar-wrapper,
+    .simplebar-mask,
+    .simplebar-content-wrapper {
+      overflow: initial !important;
+    }
+  }
 `
 
 const LogoWrapper = styled.a`
@@ -34,6 +43,9 @@ const LogoWrapper = styled.a`
   height: 100px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.hover};
   margin: 0 20px 20px;
+  ${({ theme }) => theme.mq.max.xxxl} {
+    margin-bottom: 15px;
+  }
 `
 
 const LogoText = styled(Text)`
@@ -41,6 +53,9 @@ const LogoText = styled(Text)`
   font-weight: 800;
   font-family: ${({ theme }) => theme.fonts.primary};
   margin-left: 14px;
+  ${({ theme }) => theme.mq.max.xxxl} {
+    display: none;
+  }
 `
 
 const Navigation: React.FC = () => {

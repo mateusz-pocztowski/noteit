@@ -43,10 +43,10 @@ const Button = styled.button<{ active?: boolean }>`
   position: relative;
   background: ${({ theme, active }) =>
     active ? theme.colors.active : 'transparent'};
-  width: 35px;
-  height: 35px;
+  min-width: 32px;
+  height: 32px;
   transition: 0.2s;
-  margin: 0 2px;
+  margin: 0 1px;
   border-radius: 4px;
   cursor: pointer;
   &:hover {
@@ -65,7 +65,7 @@ export const Spacer = styled.span`
   align-items: center;
   margin: 0 5px;
   width: 2px;
-  height: 35px;
+  height: 32px;
   background: ${({ theme }) => theme.colors.hover};
 `
 

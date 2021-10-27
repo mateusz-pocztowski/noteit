@@ -5,7 +5,7 @@ let timer: NodeJS.Timeout
 let state: 'loading' | 'stop'
 let activeRequests: number = 0
 
-function load() {
+export function load() {
   if (state === 'loading') {
     return
   }
@@ -17,7 +17,7 @@ function load() {
   }, 250)
 }
 
-function stop() {
+export function stop() {
   if (activeRequests > 0) {
     return
   }
