@@ -1,11 +1,13 @@
 import { useMemo } from 'react'
 import styled from 'styled-components'
 
+import translateKeyCode from 'utils/translateKeyCode'
+
 import Icon from 'components/shared/Icon'
 
-import type { Command } from 'types/editor'
-import { KEY_BINDINGS } from '../../config'
-import translateKeyCode from 'utils/translateKeyCode'
+import { KEY_BINDINGS } from 'components/layout/Editor/config'
+
+import type { ToolbarOption } from 'types/editor'
 
 const ButtonTooltip = styled.span`
   position: absolute;
@@ -69,16 +71,7 @@ export const Spacer = styled.span`
   background: ${({ theme }) => theme.colors.hover};
 `
 
-type Props = {
-  callback: any
-  label: string
-  icon: any
-  iconSize?: number
-  active?: boolean
-  command?: Command
-}
-
-const ToolbarButton: React.FC<Props> = ({
+const ToolbarButton: React.FC<ToolbarOption> = ({
   callback,
   label,
   icon,

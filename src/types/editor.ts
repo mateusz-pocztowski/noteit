@@ -13,3 +13,16 @@ export type KeyBinding = {
   command: Command
   regexChars?: 2 | 3
 }
+
+export type ToolbarOptionConfig = {
+  type: 'save' | 'inlineStyle' | 'blockType' | 'history' | 'alignment'
+  label: string
+  icon: any
+  iconSize?: number
+  command?: Command
+}
+
+export type ToolbarOption = Omit<ToolbarOptionConfig, 'type'> & {
+  callback: () => void
+  active?: boolean
+}

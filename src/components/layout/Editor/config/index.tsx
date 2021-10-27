@@ -2,7 +2,21 @@ import createImagePlugin from '@draft-js-plugins/image'
 import createHashtagPlugin from '@draft-js-plugins/hashtag'
 import createLinkifyPlugin from '@draft-js-plugins/linkify'
 
-import type { KeyBinding } from 'types/editor'
+import blockquoteIcon from 'assets/icons/editor/quote.svg'
+import boldIcon from 'assets/icons/editor/bold.svg'
+import italicIcon from 'assets/icons/editor/italic.svg'
+import underlineIcon from 'assets/icons/editor/underline.svg'
+import listIcon from 'assets/icons/editor/list-ol.svg'
+import list2Icon from 'assets/icons/editor/list-ul.svg'
+import codeIcon from 'assets/icons/editor/code.svg'
+import alignLeftIcon from 'assets/icons/editor/left-align.svg'
+import alignCenterIcon from 'assets/icons/editor/center-align.svg'
+import alignRightIcon from 'assets/icons/editor/right-align.svg'
+import undoIcon from 'assets/icons/editor/undo.svg'
+import redoIcon from 'assets/icons/editor/redo.svg'
+import saveIcon from 'assets/icons/editor/save.svg'
+
+import type { KeyBinding, ToolbarOptionConfig } from 'types/editor'
 
 const IMAGE_PLUGIN = createImagePlugin()
 const HASHTAG_PLUGIN = createHashtagPlugin()
@@ -66,4 +80,97 @@ export const KEY_BINDINGS: KeyBinding[] = [
   { bind: ['ctrlKey', 192], command: 'code-block' },
   { bind: [UL_FULL_REGEX], regexChars: 2, command: 'autolist-unordered' },
   { bind: [OL_FULL_REGEX], command: 'autolist-ordered' },
+]
+
+export const EDITOR_TOOLBAR_OPTIONS: ToolbarOptionConfig[][] = [
+  [
+    {
+      type: 'save',
+      icon: saveIcon,
+      label: 'Save',
+      command: 'save-editor',
+    },
+  ],
+  [
+    {
+      type: 'inlineStyle',
+      icon: boldIcon,
+      label: 'Bold',
+      command: 'BOLD',
+    },
+    {
+      type: 'inlineStyle',
+      icon: italicIcon,
+      label: 'Italic',
+      command: 'ITALIC',
+    },
+    {
+      type: 'inlineStyle',
+      icon: underlineIcon,
+      label: 'Underline',
+      command: 'UNDERLINE',
+    },
+  ],
+  [
+    {
+      type: 'blockType',
+      icon: listIcon,
+      label: 'Numbered list',
+      command: 'ordered-list-item',
+    },
+    {
+      type: 'blockType',
+      icon: list2Icon,
+      label: 'Bulleted list',
+      command: 'unordered-list-item',
+    },
+  ],
+  [
+    {
+      type: 'blockType',
+      icon: blockquoteIcon,
+      label: 'Quote',
+      command: 'blockquote',
+    },
+    {
+      type: 'blockType',
+      icon: codeIcon,
+      label: 'Code',
+      command: 'code-block',
+    },
+  ],
+  [
+    {
+      type: 'alignment',
+      icon: alignLeftIcon,
+      label: 'Left align',
+      command: 'align-left',
+    },
+    {
+      type: 'alignment',
+      icon: alignCenterIcon,
+      label: 'Center align',
+      command: 'align-center',
+    },
+    {
+      type: 'alignment',
+      icon: alignRightIcon,
+      label: 'Right align',
+      command: 'align-right',
+    },
+  ],
+  [
+    {
+      type: 'history',
+      icon: undoIcon,
+      label: 'Undo',
+      command: 'undo',
+    },
+    {
+      type: 'history',
+      icon: redoIcon,
+      label: 'Redo',
+      command: 'redo',
+    },
+  ],
 ]

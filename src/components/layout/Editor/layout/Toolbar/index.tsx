@@ -3,20 +3,6 @@ import ToolbarButton, {
   Spacer,
 } from 'components/layout/Editor/layout/Toolbar/ToolbarButton'
 
-import blockquoteIcon from 'assets/icons/editor/quote.svg'
-import boldIcon from 'assets/icons/editor/bold.svg'
-import italicIcon from 'assets/icons/editor/italic.svg'
-import underlineIcon from 'assets/icons/editor/underline.svg'
-import listIcon from 'assets/icons/editor/list-ol.svg'
-import list2Icon from 'assets/icons/editor/list-ul.svg'
-import codeIcon from 'assets/icons/editor/code.svg'
-import alignLeftIcon from 'assets/icons/editor/left-align.svg'
-import alignCenterIcon from 'assets/icons/editor/center-align.svg'
-import alignRightIcon from 'assets/icons/editor/right-align.svg'
-import undoIcon from 'assets/icons/editor/undo.svg'
-import redoIcon from 'assets/icons/editor/redo.svg'
-import saveIcon from 'assets/icons/editor/save.svg'
-
 import {
   DraftBlockType,
   DraftInlineStyleType,
@@ -24,7 +10,9 @@ import {
   RichUtils,
 } from 'draft-js'
 
-import type { AlignType, HistoryType } from 'types/editor'
+import { EDITOR_TOOLBAR_OPTIONS } from 'components/layout/Editor/config'
+
+import type { AlignType, HistoryType, ToolbarOptionConfig } from 'types/editor'
 import type { Category } from 'generated/graphql'
 
 type Props = {
@@ -80,6 +68,42 @@ const Toolbar: React.FC<Props> = ({
     if (option === 'redo') onRedo()
   }
 
+  const getOptionCallback = (
+    type: ToolbarOptionConfig['type'],
+    command: ToolbarOptionConfig['command']
+  ) => {
+    switch (type) {
+      case 'save':
+        return onSave
+      case 'inlineStyle':
+        return () => toggleInlineStyle(command as DraftInlineStyleType)
+      case 'blockType':
+        return () => toggleBlockType(command as DraftBlockType)
+      case 'alignment':
+        return () => toggleAlignment(command as AlignType)
+      case 'history':
+        return () => handleHistoryOption(command as HistoryType)
+      default:
+        return () => null
+    }
+  }
+
+  const getIsOptionActive = (
+    type: ToolbarOptionConfig['type'],
+    command: ToolbarOptionConfig['command']
+  ) => {
+    switch (type) {
+      case 'inlineStyle':
+        return inlineStyle.has(command ?? '')
+      case 'blockType':
+        return command === blockType
+      case 'alignment':
+        return currentAlignment === (command as AlignType)
+      default:
+        return false
+    }
+  }
+
   return (
     <>
       <Select
@@ -93,109 +117,25 @@ const Toolbar: React.FC<Props> = ({
         onToggle={toggleTypography}
       />
 
-      <ToolbarButton
-        callback={onSave}
-        icon={saveIcon}
-        label="Save"
-        command="save-editor"
-      />
-
-      <Spacer />
-
-      <ToolbarButton
-        callback={() => toggleInlineStyle('BOLD')}
-        icon={boldIcon}
-        label="Bold"
-        command="BOLD"
-        active={inlineStyle.has('BOLD')}
-      />
-      <ToolbarButton
-        callback={() => toggleInlineStyle('ITALIC')}
-        icon={italicIcon}
-        label="Italic"
-        command="ITALIC"
-        active={inlineStyle.has('ITALIC')}
-      />
-      <ToolbarButton
-        callback={() => toggleInlineStyle('UNDERLINE')}
-        icon={underlineIcon}
-        label="Underline"
-        command="UNDERLINE"
-        active={inlineStyle.has('UNDERLINE')}
-      />
-
-      <Spacer />
-
-      <ToolbarButton
-        callback={() => toggleBlockType('ordered-list-item')}
-        icon={listIcon}
-        label="Numbered list"
-        command="ordered-list-item"
-        active={'ordered-list-item' === blockType}
-      />
-      <ToolbarButton
-        callback={() => toggleBlockType('unordered-list-item')}
-        icon={list2Icon}
-        label="Bulleted list"
-        command="unordered-list-item"
-        active={'unordered-list-item' === blockType}
-      />
-
-      <Spacer />
-
-      <ToolbarButton
-        callback={() => toggleBlockType('blockquote')}
-        icon={blockquoteIcon}
-        label="Quote"
-        command="blockquote"
-        active={'blockquote' === blockType}
-      />
-      <ToolbarButton
-        callback={() => toggleBlockType('code-block')}
-        icon={codeIcon}
-        label="Code"
-        command="code-block"
-        active={'code-block' === blockType}
-      />
-
-      <Spacer />
-
-      <ToolbarButton
-        callback={() => toggleAlignment('left')}
-        icon={alignLeftIcon}
-        label="Left align"
-        command="align-left"
-        active={currentAlignment === 'left'}
-      />
-      <ToolbarButton
-        callback={() => toggleAlignment('center')}
-        icon={alignCenterIcon}
-        label="Center align"
-        command="align-center"
-        active={currentAlignment === 'center'}
-      />
-      <ToolbarButton
-        callback={() => toggleAlignment('right')}
-        icon={alignRightIcon}
-        label="Right align"
-        command="align-right"
-        active={currentAlignment === 'right'}
-      />
-
-      <Spacer />
-
-      <ToolbarButton
-        callback={() => handleHistoryOption('undo')}
-        icon={undoIcon}
-        label="Undo"
-        command="undo"
-      />
-      <ToolbarButton
-        callback={() => handleHistoryOption('redo')}
-        icon={redoIcon}
-        label="Redo"
-        command="redo"
-      />
+      {EDITOR_TOOLBAR_OPTIONS.map((module, index) => (
+        <>
+          {index !== 0 && <Spacer />}
+          {module.map(option => {
+            const callback = getOptionCallback(option.type, option.command)
+            const active = getIsOptionActive(option.type, option.command)
+            return (
+              <ToolbarButton
+                key={option.command}
+                callback={callback}
+                icon={option.icon}
+                label={option.label}
+                command={option.command}
+                active={active}
+              />
+            )
+          })}
+        </>
+      ))}
 
       <Select
         options={categories.map(category => ({
