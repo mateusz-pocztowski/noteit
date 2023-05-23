@@ -10,8 +10,6 @@ import nextAuthGetServerSideProps from 'lib/auth/getServerSideProps'
 
 import SEO from 'components/shared/SEO'
 import Editor from 'components/layout/Editor'
-import Portal from 'components/shared/Portal'
-import Calendar from 'components/layout/AsidePanel/Widgets/Calendar'
 import toast from 'components/shared/Toast'
 
 import {
@@ -82,9 +80,6 @@ const SingleNote: React.FC<{ session: Session }> = ({ session }) => {
   return (
     <>
       <SEO title={data?.note?.title ?? 'Notes'} />
-      <Portal selector="#aside-panel-content">
-        <Calendar />
-      </Portal>
       <AnimatePresence>
         {data?.note && categoriesData?.categories && (
           <motion.div

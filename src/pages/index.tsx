@@ -16,7 +16,7 @@ const IndexPage = ({
   const { error } = router.query
 
   useEffect(() => {
-    if (session) router.push('/dashboard')
+    if (session) router.push('/notes')
   }, [session])
 
   const PROVIDERS = Object.values(providers || {}).map(({ name, id }) => ({

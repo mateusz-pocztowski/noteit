@@ -17,7 +17,6 @@ import EmptyView from 'components/layout/EmptyView'
 import FiltersTopbar from 'components/shared/FiltersTopbar'
 import NoteCard from 'components/layout/Notes/NoteCard'
 import Portal from 'components/shared/Portal'
-import Calendar from 'components/layout/AsidePanel/Widgets/Calendar'
 import Categories from 'components/layout/AsidePanel/Widgets/Categories'
 import toast from 'components/shared/Toast'
 
@@ -168,7 +167,6 @@ const NotesPage: React.FC<{ session: Session }> = ({ session }) => {
         createButton={{ text: 'Create new note', callback: handleCreateNote }}
       />
       <Portal selector="#aside-panel-content">
-        <Calendar />
         <Categories
           tempCategoryID={tempCategoryID}
           setTempCategoryID={setTempCategoryID}

@@ -1,8 +1,4 @@
-import dashboardIcon from 'assets/icons/dashboard.svg'
-import tasksIcon from 'assets/icons/tasks.svg'
 import notesIcon from 'assets/icons/notes.svg'
-import videosIcon from 'assets/icons/videos.svg'
-import calendarIcon from 'assets/icons/calendar.svg'
 import googleIcon from 'assets/icons/google.svg'
 import githubIcon from 'assets/icons/github.svg'
 import facebookIcon from 'assets/icons/facebook.svg'
@@ -20,29 +16,9 @@ export const DEFAULT_CATEGORY: Pick<Category, 'color' | 'label' | 'primary'> = {
 
 export const MENU_ITEMS: MenuItem[] = [
   {
-    icon: dashboardIcon,
-    label: 'Dashboard',
-    to: '/dashboard',
-  },
-  {
-    icon: tasksIcon,
-    label: 'Tasks',
-    to: '/tasks',
-  },
-  {
     icon: notesIcon,
     label: 'Notes',
     to: '/notes',
-  },
-  {
-    icon: videosIcon,
-    label: 'Videos',
-    to: '/videos',
-  },
-  {
-    icon: calendarIcon,
-    label: 'Calendar',
-    to: '/calendar',
   },
 ]
 

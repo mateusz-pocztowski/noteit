@@ -72,7 +72,7 @@ const Navigation: React.FC = () => {
         closeButton={false}
       />
       <Wrapper>
-        <Link href="/dashboard" passHref>
+        <Link href="/notes" passHref>
           <LogoWrapper>
             <Icon
               size={50}

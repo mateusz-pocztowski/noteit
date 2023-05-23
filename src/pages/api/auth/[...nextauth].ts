@@ -45,7 +45,6 @@ const options: NextAuthOptions = {
     error: '/',
     verifyRequest: '/verify',
   },
-  debug: true,
 }
 
 export default NextAuth(options)
