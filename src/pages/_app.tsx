@@ -16,7 +16,7 @@ const NProgress = dynamic(() => import('components/shared/NProgress'), {
   ssr: false,
 })
 
-const App = ({ Component, pageProps, router }: AppProps) => {
+const App = ({ Component, pageProps, router }: AppProps<any>) => {
   const [queryClient] = useState(() => new QueryClient())
 
   return (

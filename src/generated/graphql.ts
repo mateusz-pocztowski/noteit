@@ -1,6 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -15,25 +16,24 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
 };
 
 export type AccountWhereInput = {
-  AND?: Maybe<Array<AccountWhereInput>>;
-  OR?: Maybe<Array<AccountWhereInput>>;
-  NOT?: Maybe<Array<AccountWhereInput>>;
-  id?: Maybe<IntFilter>;
-  compoundId?: Maybe<StringFilter>;
-  userId?: Maybe<IntFilter>;
-  providerType?: Maybe<StringFilter>;
-  providerId?: Maybe<StringFilter>;
-  providerAccountId?: Maybe<StringFilter>;
-  refreshToken?: Maybe<StringNullableFilter>;
-  accessToken?: Maybe<StringNullableFilter>;
-  accessTokenExpires?: Maybe<DateTimeNullableFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
+  AND?: InputMaybe<Array<AccountWhereInput>>;
+  NOT?: InputMaybe<Array<AccountWhereInput>>;
+  OR?: InputMaybe<Array<AccountWhereInput>>;
+  accessToken?: InputMaybe<StringNullableFilter>;
+  accessTokenExpires?: InputMaybe<DateTimeNullableFilter>;
+  compoundId?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<IntFilter>;
+  providerAccountId?: InputMaybe<StringFilter>;
+  providerId?: InputMaybe<StringFilter>;
+  providerType?: InputMaybe<StringFilter>;
+  refreshToken?: InputMaybe<StringNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<IntFilter>;
 };
 
 export type AffectedRowsOutput = {
@@ -42,282 +42,270 @@ export type AffectedRowsOutput = {
 };
 
 export type BoolFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['Boolean']>;
+  set?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type BoolFilter = {
-  equals?: Maybe<Scalars['Boolean']>;
-  not?: Maybe<NestedBoolFilter>;
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolFilter>;
 };
 
 export type Category = {
   __typename?: 'Category';
-  id: Scalars['String'];
-  createdAt: Scalars['DateTime'];
   color: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
   label: Scalars['String'];
-  primary: Scalars['Boolean'];
   notes: Array<Note>;
+  primary: Scalars['Boolean'];
   userId: Scalars['Int'];
 };
 
 
 export type CategoryNotesArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<NoteWhereUniqueInput>;
-  after?: Maybe<NoteWhereUniqueInput>;
+  after?: InputMaybe<NoteWhereUniqueInput>;
+  before?: InputMaybe<NoteWhereUniqueInput>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 export type CategoryCreateInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
   label: Scalars['String'];
+  notes?: InputMaybe<NoteCreateNestedManyWithoutCategoryInput>;
   primary: Scalars['Boolean'];
-  notes?: Maybe<NoteCreateNestedManyWithoutCategoryInput>;
   user: UserCreateNestedOneWithoutCategoriesInput;
 };
 
 export type CategoryCreateManyUserInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
   label: Scalars['String'];
   primary: Scalars['Boolean'];
 };
 
 export type CategoryCreateManyUserInputEnvelope = {
-  data?: Maybe<Array<CategoryCreateManyUserInput>>;
-  skipDuplicates?: Maybe<Scalars['Boolean']>;
+  data?: InputMaybe<Array<CategoryCreateManyUserInput>>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CategoryCreateNestedManyWithoutUserInput = {
-  create?: Maybe<Array<CategoryCreateWithoutUserInput>>;
-  connectOrCreate?: Maybe<Array<CategoryCreateOrConnectWithoutUserInput>>;
-  createMany?: Maybe<CategoryCreateManyUserInputEnvelope>;
-  connect?: Maybe<Array<CategoryWhereUniqueInput>>;
+  connect?: InputMaybe<Array<CategoryWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CategoryCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<CategoryCreateWithoutUserInput>>;
+  createMany?: InputMaybe<CategoryCreateManyUserInputEnvelope>;
 };
 
 export type CategoryCreateNestedOneWithoutNotesInput = {
-  create?: Maybe<CategoryCreateWithoutNotesInput>;
-  connectOrCreate?: Maybe<CategoryCreateOrConnectWithoutNotesInput>;
-  connect?: Maybe<CategoryWhereUniqueInput>;
+  connect?: InputMaybe<CategoryWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<CategoryCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<CategoryCreateWithoutNotesInput>;
 };
 
 export type CategoryCreateOrConnectWithoutNotesInput = {
-  where: CategoryWhereUniqueInput;
   create: CategoryCreateWithoutNotesInput;
+  where: CategoryWhereUniqueInput;
 };
 
 export type CategoryCreateOrConnectWithoutUserInput = {
-  where: CategoryWhereUniqueInput;
   create: CategoryCreateWithoutUserInput;
+  where: CategoryWhereUniqueInput;
 };
 
 export type CategoryCreateWithoutNotesInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
   label: Scalars['String'];
   primary: Scalars['Boolean'];
   user: UserCreateNestedOneWithoutCategoriesInput;
 };
 
 export type CategoryCreateWithoutUserInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
   color: Scalars['String'];
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
   label: Scalars['String'];
+  notes?: InputMaybe<NoteCreateNestedManyWithoutCategoryInput>;
   primary: Scalars['Boolean'];
-  notes?: Maybe<NoteCreateNestedManyWithoutCategoryInput>;
 };
 
 export type CategoryListRelationFilter = {
-  every?: Maybe<CategoryWhereInput>;
-  some?: Maybe<CategoryWhereInput>;
-  none?: Maybe<CategoryWhereInput>;
+  every?: InputMaybe<CategoryWhereInput>;
+  none?: InputMaybe<CategoryWhereInput>;
+  some?: InputMaybe<CategoryWhereInput>;
 };
 
 export type CategoryScalarWhereInput = {
-  AND?: Maybe<Array<CategoryScalarWhereInput>>;
-  OR?: Maybe<Array<CategoryScalarWhereInput>>;
-  NOT?: Maybe<Array<CategoryScalarWhereInput>>;
-  id?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  color?: Maybe<StringFilter>;
-  label?: Maybe<StringFilter>;
-  primary?: Maybe<BoolFilter>;
-  userId?: Maybe<IntFilter>;
+  AND?: InputMaybe<Array<CategoryScalarWhereInput>>;
+  NOT?: InputMaybe<Array<CategoryScalarWhereInput>>;
+  OR?: InputMaybe<Array<CategoryScalarWhereInput>>;
+  color?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  primary?: InputMaybe<BoolFilter>;
+  userId?: InputMaybe<IntFilter>;
 };
 
 export type CategoryUpdateInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  color?: Maybe<StringFieldUpdateOperationsInput>;
-  label?: Maybe<StringFieldUpdateOperationsInput>;
-  primary?: Maybe<BoolFieldUpdateOperationsInput>;
-  notes?: Maybe<NoteUpdateManyWithoutCategoryInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCategoriesInput>;
+  color?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  label?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notes?: InputMaybe<NoteUpdateManyWithoutCategoryInput>;
+  primary?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutCategoriesInput>;
 };
 
 export type CategoryUpdateManyMutationInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  color?: Maybe<StringFieldUpdateOperationsInput>;
-  label?: Maybe<StringFieldUpdateOperationsInput>;
-  primary?: Maybe<BoolFieldUpdateOperationsInput>;
+  color?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  label?: InputMaybe<StringFieldUpdateOperationsInput>;
+  primary?: InputMaybe<BoolFieldUpdateOperationsInput>;
 };
 
 export type CategoryUpdateManyWithWhereWithoutUserInput = {
-  where: CategoryScalarWhereInput;
   data: CategoryUpdateManyMutationInput;
+  where: CategoryScalarWhereInput;
 };
 
 export type CategoryUpdateManyWithoutUserInput = {
-  create?: Maybe<Array<CategoryCreateWithoutUserInput>>;
-  connectOrCreate?: Maybe<Array<CategoryCreateOrConnectWithoutUserInput>>;
-  upsert?: Maybe<Array<CategoryUpsertWithWhereUniqueWithoutUserInput>>;
-  createMany?: Maybe<CategoryCreateManyUserInputEnvelope>;
-  connect?: Maybe<Array<CategoryWhereUniqueInput>>;
-  set?: Maybe<Array<CategoryWhereUniqueInput>>;
-  disconnect?: Maybe<Array<CategoryWhereUniqueInput>>;
-  delete?: Maybe<Array<CategoryWhereUniqueInput>>;
-  update?: Maybe<Array<CategoryUpdateWithWhereUniqueWithoutUserInput>>;
-  updateMany?: Maybe<Array<CategoryUpdateManyWithWhereWithoutUserInput>>;
-  deleteMany?: Maybe<Array<CategoryScalarWhereInput>>;
+  connect?: InputMaybe<Array<CategoryWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CategoryCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<CategoryCreateWithoutUserInput>>;
+  createMany?: InputMaybe<CategoryCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<CategoryWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<CategoryScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<CategoryWhereUniqueInput>>;
+  set?: InputMaybe<Array<CategoryWhereUniqueInput>>;
+  update?: InputMaybe<Array<CategoryUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<CategoryUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<CategoryUpsertWithWhereUniqueWithoutUserInput>>;
 };
 
 export type CategoryUpdateOneRequiredWithoutNotesInput = {
-  create?: Maybe<CategoryCreateWithoutNotesInput>;
-  connectOrCreate?: Maybe<CategoryCreateOrConnectWithoutNotesInput>;
-  upsert?: Maybe<CategoryUpsertWithoutNotesInput>;
-  connect?: Maybe<CategoryWhereUniqueInput>;
-  update?: Maybe<CategoryUpdateWithoutNotesInput>;
+  connect?: InputMaybe<CategoryWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<CategoryCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<CategoryCreateWithoutNotesInput>;
+  update?: InputMaybe<CategoryUpdateWithoutNotesInput>;
+  upsert?: InputMaybe<CategoryUpsertWithoutNotesInput>;
 };
 
 export type CategoryUpdateWithWhereUniqueWithoutUserInput = {
-  where: CategoryWhereUniqueInput;
   data: CategoryUpdateWithoutUserInput;
+  where: CategoryWhereUniqueInput;
 };
 
 export type CategoryUpdateWithoutNotesInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  color?: Maybe<StringFieldUpdateOperationsInput>;
-  label?: Maybe<StringFieldUpdateOperationsInput>;
-  primary?: Maybe<BoolFieldUpdateOperationsInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCategoriesInput>;
+  color?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  label?: InputMaybe<StringFieldUpdateOperationsInput>;
+  primary?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutCategoriesInput>;
 };
 
 export type CategoryUpdateWithoutUserInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  color?: Maybe<StringFieldUpdateOperationsInput>;
-  label?: Maybe<StringFieldUpdateOperationsInput>;
-  primary?: Maybe<BoolFieldUpdateOperationsInput>;
-  notes?: Maybe<NoteUpdateManyWithoutCategoryInput>;
+  color?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  label?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notes?: InputMaybe<NoteUpdateManyWithoutCategoryInput>;
+  primary?: InputMaybe<BoolFieldUpdateOperationsInput>;
 };
 
 export type CategoryUpsertWithWhereUniqueWithoutUserInput = {
-  where: CategoryWhereUniqueInput;
-  update: CategoryUpdateWithoutUserInput;
   create: CategoryCreateWithoutUserInput;
+  update: CategoryUpdateWithoutUserInput;
+  where: CategoryWhereUniqueInput;
 };
 
 export type CategoryUpsertWithoutNotesInput = {
-  update: CategoryUpdateWithoutNotesInput;
   create: CategoryCreateWithoutNotesInput;
+  update: CategoryUpdateWithoutNotesInput;
 };
 
 export type CategoryWhereInput = {
-  AND?: Maybe<Array<CategoryWhereInput>>;
-  OR?: Maybe<Array<CategoryWhereInput>>;
-  NOT?: Maybe<Array<CategoryWhereInput>>;
-  id?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  color?: Maybe<StringFilter>;
-  label?: Maybe<StringFilter>;
-  primary?: Maybe<BoolFilter>;
-  notes?: Maybe<NoteListRelationFilter>;
-  user?: Maybe<UserWhereInput>;
-  userId?: Maybe<IntFilter>;
+  AND?: InputMaybe<Array<CategoryWhereInput>>;
+  NOT?: InputMaybe<Array<CategoryWhereInput>>;
+  OR?: InputMaybe<Array<CategoryWhereInput>>;
+  color?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  notes?: InputMaybe<NoteListRelationFilter>;
+  primary?: InputMaybe<BoolFilter>;
+  user?: InputMaybe<UserWhereInput>;
+  userId?: InputMaybe<IntFilter>;
 };
 
 export type CategoryWhereUniqueInput = {
-  id?: Maybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
-
 export type DateTimeFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['DateTime']>;
+  set?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type DateTimeFilter = {
-  equals?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<NestedDateTimeFilter>;
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
 export type DateTimeNullableFilter = {
-  equals?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<NestedDateTimeNullableFilter>;
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
 export type IntFilter = {
-  equals?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Scalars['Int']>>;
-  notIn?: Maybe<Array<Scalars['Int']>>;
-  lt?: Maybe<Scalars['Int']>;
-  lte?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  gte?: Maybe<Scalars['Int']>;
-  not?: Maybe<NestedIntFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOneUser: User;
-  updateOneUser?: Maybe<User>;
-  deleteOneUser?: Maybe<User>;
-  createOneNote: Note;
-  updateOneNote?: Maybe<Note>;
-  deleteOneNote?: Maybe<Note>;
   createOneCategory: Category;
-  updateOneCategory?: Maybe<Category>;
-  deleteOneCategory?: Maybe<Mutation>;
-  updateManyNote: AffectedRowsOutput;
-  deleteManyNote: AffectedRowsOutput;
-  deleteManyCategory: AffectedRowsOutput;
-  deleteManySession: AffectedRowsOutput;
+  createOneNote: Note;
+  createOneUser: User;
   deleteManyAccount: AffectedRowsOutput;
+  deleteManyCategory: AffectedRowsOutput;
+  deleteManyNote: AffectedRowsOutput;
+  deleteManySession: AffectedRowsOutput;
+  deleteOneCategory?: Maybe<Mutation>;
+  deleteOneNote?: Maybe<Note>;
+  deleteOneUser?: Maybe<User>;
+  updateManyNote: AffectedRowsOutput;
+  updateOneCategory?: Maybe<Category>;
+  updateOneNote?: Maybe<Note>;
+  updateOneUser?: Maybe<User>;
 };
 
 
-export type MutationCreateOneUserArgs = {
-  data: UserCreateInput;
-};
-
-
-export type MutationUpdateOneUserArgs = {
-  data: UserUpdateInput;
-  where: UserWhereUniqueInput;
-};
-
-
-export type MutationDeleteOneUserArgs = {
-  where: UserWhereUniqueInput;
+export type MutationCreateOneCategoryArgs = {
+  data: CategoryCreateInput;
 };
 
 
@@ -326,9 +314,34 @@ export type MutationCreateOneNoteArgs = {
 };
 
 
-export type MutationUpdateOneNoteArgs = {
-  data: NoteUpdateInput;
-  where: NoteWhereUniqueInput;
+export type MutationCreateOneUserArgs = {
+  data: UserCreateInput;
+};
+
+
+export type MutationDeleteManyAccountArgs = {
+  where?: InputMaybe<AccountWhereInput>;
+};
+
+
+export type MutationDeleteManyCategoryArgs = {
+  where?: InputMaybe<CategoryWhereInput>;
+};
+
+
+export type MutationDeleteManyNoteArgs = {
+  where?: InputMaybe<NoteWhereInput>;
+};
+
+
+export type MutationDeleteManySessionArgs = {
+  where?: InputMaybe<SessionWhereInput>;
+};
+
+
+export type MutationDeleteOneCategoryArgs = {
+  id: Scalars['String'];
+  userId: Scalars['Int'];
 };
 
 
@@ -337,8 +350,14 @@ export type MutationDeleteOneNoteArgs = {
 };
 
 
-export type MutationCreateOneCategoryArgs = {
-  data: CategoryCreateInput;
+export type MutationDeleteOneUserArgs = {
+  where: UserWhereUniqueInput;
+};
+
+
+export type MutationUpdateManyNoteArgs = {
+  data: NoteUpdateManyMutationInput;
+  where?: InputMaybe<NoteWhereInput>;
 };
 
 
@@ -348,370 +367,350 @@ export type MutationUpdateOneCategoryArgs = {
 };
 
 
-export type MutationDeleteOneCategoryArgs = {
-  userId: Scalars['Int'];
-  id: Scalars['String'];
+export type MutationUpdateOneNoteArgs = {
+  data: NoteUpdateInput;
+  where: NoteWhereUniqueInput;
 };
 
 
-export type MutationUpdateManyNoteArgs = {
-  data: NoteUpdateManyMutationInput;
-  where?: Maybe<NoteWhereInput>;
-};
-
-
-export type MutationDeleteManyNoteArgs = {
-  where?: Maybe<NoteWhereInput>;
-};
-
-
-export type MutationDeleteManyCategoryArgs = {
-  where?: Maybe<CategoryWhereInput>;
-};
-
-
-export type MutationDeleteManySessionArgs = {
-  where?: Maybe<SessionWhereInput>;
-};
-
-
-export type MutationDeleteManyAccountArgs = {
-  where?: Maybe<AccountWhereInput>;
+export type MutationUpdateOneUserArgs = {
+  data: UserUpdateInput;
+  where: UserWhereUniqueInput;
 };
 
 export type NestedBoolFilter = {
-  equals?: Maybe<Scalars['Boolean']>;
-  not?: Maybe<NestedBoolFilter>;
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolFilter>;
 };
 
 export type NestedDateTimeFilter = {
-  equals?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<NestedDateTimeFilter>;
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
 export type NestedDateTimeNullableFilter = {
-  equals?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<NestedDateTimeNullableFilter>;
+  equals?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<NestedDateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
 export type NestedIntFilter = {
-  equals?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Scalars['Int']>>;
-  notIn?: Maybe<Array<Scalars['Int']>>;
-  lt?: Maybe<Scalars['Int']>;
-  lte?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  gte?: Maybe<Scalars['Int']>;
-  not?: Maybe<NestedIntFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type NestedStringFilter = {
-  equals?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  contains?: Maybe<Scalars['String']>;
-  startsWith?: Maybe<Scalars['String']>;
-  endsWith?: Maybe<Scalars['String']>;
-  not?: Maybe<NestedStringFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type NestedStringNullableFilter = {
-  equals?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  contains?: Maybe<Scalars['String']>;
-  startsWith?: Maybe<Scalars['String']>;
-  endsWith?: Maybe<Scalars['String']>;
-  not?: Maybe<NestedStringNullableFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type Note = {
   __typename?: 'Note';
-  id: Scalars['String'];
-  title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
   category: Category;
   categoryId: Scalars['String'];
+  content?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
 
 export type NoteCreateInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
   category: CategoryCreateNestedOneWithoutNotesInput;
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
   user: UserCreateNestedOneWithoutNotesInput;
 };
 
 export type NoteCreateManyCategoryInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['Int'];
 };
 
 export type NoteCreateManyCategoryInputEnvelope = {
-  data?: Maybe<Array<NoteCreateManyCategoryInput>>;
-  skipDuplicates?: Maybe<Scalars['Boolean']>;
+  data?: InputMaybe<Array<NoteCreateManyCategoryInput>>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type NoteCreateManyUserInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
   categoryId: Scalars['String'];
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type NoteCreateManyUserInputEnvelope = {
-  data?: Maybe<Array<NoteCreateManyUserInput>>;
-  skipDuplicates?: Maybe<Scalars['Boolean']>;
+  data?: InputMaybe<Array<NoteCreateManyUserInput>>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type NoteCreateNestedManyWithoutCategoryInput = {
-  create?: Maybe<Array<NoteCreateWithoutCategoryInput>>;
-  connectOrCreate?: Maybe<Array<NoteCreateOrConnectWithoutCategoryInput>>;
-  createMany?: Maybe<NoteCreateManyCategoryInputEnvelope>;
-  connect?: Maybe<Array<NoteWhereUniqueInput>>;
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutCategoryInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutCategoryInput>>;
+  createMany?: InputMaybe<NoteCreateManyCategoryInputEnvelope>;
 };
 
 export type NoteCreateNestedManyWithoutUserInput = {
-  create?: Maybe<Array<NoteCreateWithoutUserInput>>;
-  connectOrCreate?: Maybe<Array<NoteCreateOrConnectWithoutUserInput>>;
-  createMany?: Maybe<NoteCreateManyUserInputEnvelope>;
-  connect?: Maybe<Array<NoteWhereUniqueInput>>;
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutUserInput>>;
+  createMany?: InputMaybe<NoteCreateManyUserInputEnvelope>;
 };
 
 export type NoteCreateOrConnectWithoutCategoryInput = {
-  where: NoteWhereUniqueInput;
   create: NoteCreateWithoutCategoryInput;
+  where: NoteWhereUniqueInput;
 };
 
 export type NoteCreateOrConnectWithoutUserInput = {
-  where: NoteWhereUniqueInput;
   create: NoteCreateWithoutUserInput;
+  where: NoteWhereUniqueInput;
 };
 
 export type NoteCreateWithoutCategoryInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
   user: UserCreateNestedOneWithoutNotesInput;
 };
 
 export type NoteCreateWithoutUserInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
   category: CategoryCreateNestedOneWithoutNotesInput;
+  content?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type NoteListRelationFilter = {
-  every?: Maybe<NoteWhereInput>;
-  some?: Maybe<NoteWhereInput>;
-  none?: Maybe<NoteWhereInput>;
+  every?: InputMaybe<NoteWhereInput>;
+  none?: InputMaybe<NoteWhereInput>;
+  some?: InputMaybe<NoteWhereInput>;
 };
 
 export type NoteScalarWhereInput = {
-  AND?: Maybe<Array<NoteScalarWhereInput>>;
-  OR?: Maybe<Array<NoteScalarWhereInput>>;
-  NOT?: Maybe<Array<NoteScalarWhereInput>>;
-  id?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
-  title?: Maybe<StringFilter>;
-  content?: Maybe<StringNullableFilter>;
-  userId?: Maybe<IntFilter>;
-  categoryId?: Maybe<StringFilter>;
+  AND?: InputMaybe<Array<NoteScalarWhereInput>>;
+  NOT?: InputMaybe<Array<NoteScalarWhereInput>>;
+  OR?: InputMaybe<Array<NoteScalarWhereInput>>;
+  categoryId?: InputMaybe<StringFilter>;
+  content?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<IntFilter>;
 };
 
 export type NoteUpdateInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  title?: Maybe<StringFieldUpdateOperationsInput>;
-  content?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  category?: Maybe<CategoryUpdateOneRequiredWithoutNotesInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
+  category?: InputMaybe<CategoryUpdateOneRequiredWithoutNotesInput>;
+  content?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutNotesInput>;
 };
 
 export type NoteUpdateManyMutationInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  title?: Maybe<StringFieldUpdateOperationsInput>;
-  content?: Maybe<NullableStringFieldUpdateOperationsInput>;
+  content?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type NoteUpdateManyWithWhereWithoutCategoryInput = {
-  where: NoteScalarWhereInput;
   data: NoteUpdateManyMutationInput;
+  where: NoteScalarWhereInput;
 };
 
 export type NoteUpdateManyWithWhereWithoutUserInput = {
-  where: NoteScalarWhereInput;
   data: NoteUpdateManyMutationInput;
+  where: NoteScalarWhereInput;
 };
 
 export type NoteUpdateManyWithoutCategoryInput = {
-  create?: Maybe<Array<NoteCreateWithoutCategoryInput>>;
-  connectOrCreate?: Maybe<Array<NoteCreateOrConnectWithoutCategoryInput>>;
-  upsert?: Maybe<Array<NoteUpsertWithWhereUniqueWithoutCategoryInput>>;
-  createMany?: Maybe<NoteCreateManyCategoryInputEnvelope>;
-  connect?: Maybe<Array<NoteWhereUniqueInput>>;
-  set?: Maybe<Array<NoteWhereUniqueInput>>;
-  disconnect?: Maybe<Array<NoteWhereUniqueInput>>;
-  delete?: Maybe<Array<NoteWhereUniqueInput>>;
-  update?: Maybe<Array<NoteUpdateWithWhereUniqueWithoutCategoryInput>>;
-  updateMany?: Maybe<Array<NoteUpdateManyWithWhereWithoutCategoryInput>>;
-  deleteMany?: Maybe<Array<NoteScalarWhereInput>>;
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutCategoryInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutCategoryInput>>;
+  createMany?: InputMaybe<NoteCreateManyCategoryInputEnvelope>;
+  delete?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NoteScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  set?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  update?: InputMaybe<Array<NoteUpdateWithWhereUniqueWithoutCategoryInput>>;
+  updateMany?: InputMaybe<Array<NoteUpdateManyWithWhereWithoutCategoryInput>>;
+  upsert?: InputMaybe<Array<NoteUpsertWithWhereUniqueWithoutCategoryInput>>;
 };
 
 export type NoteUpdateManyWithoutUserInput = {
-  create?: Maybe<Array<NoteCreateWithoutUserInput>>;
-  connectOrCreate?: Maybe<Array<NoteCreateOrConnectWithoutUserInput>>;
-  upsert?: Maybe<Array<NoteUpsertWithWhereUniqueWithoutUserInput>>;
-  createMany?: Maybe<NoteCreateManyUserInputEnvelope>;
-  connect?: Maybe<Array<NoteWhereUniqueInput>>;
-  set?: Maybe<Array<NoteWhereUniqueInput>>;
-  disconnect?: Maybe<Array<NoteWhereUniqueInput>>;
-  delete?: Maybe<Array<NoteWhereUniqueInput>>;
-  update?: Maybe<Array<NoteUpdateWithWhereUniqueWithoutUserInput>>;
-  updateMany?: Maybe<Array<NoteUpdateManyWithWhereWithoutUserInput>>;
-  deleteMany?: Maybe<Array<NoteScalarWhereInput>>;
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutUserInput>>;
+  createMany?: InputMaybe<NoteCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NoteScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  set?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  update?: InputMaybe<Array<NoteUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<NoteUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<NoteUpsertWithWhereUniqueWithoutUserInput>>;
 };
 
 export type NoteUpdateWithWhereUniqueWithoutCategoryInput = {
-  where: NoteWhereUniqueInput;
   data: NoteUpdateWithoutCategoryInput;
+  where: NoteWhereUniqueInput;
 };
 
 export type NoteUpdateWithWhereUniqueWithoutUserInput = {
-  where: NoteWhereUniqueInput;
   data: NoteUpdateWithoutUserInput;
+  where: NoteWhereUniqueInput;
 };
 
 export type NoteUpdateWithoutCategoryInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  title?: Maybe<StringFieldUpdateOperationsInput>;
-  content?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutNotesInput>;
+  content?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutNotesInput>;
 };
 
 export type NoteUpdateWithoutUserInput = {
-  id?: Maybe<StringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  title?: Maybe<StringFieldUpdateOperationsInput>;
-  content?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  category?: Maybe<CategoryUpdateOneRequiredWithoutNotesInput>;
+  category?: InputMaybe<CategoryUpdateOneRequiredWithoutNotesInput>;
+  content?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type NoteUpsertWithWhereUniqueWithoutCategoryInput = {
-  where: NoteWhereUniqueInput;
-  update: NoteUpdateWithoutCategoryInput;
   create: NoteCreateWithoutCategoryInput;
+  update: NoteUpdateWithoutCategoryInput;
+  where: NoteWhereUniqueInput;
 };
 
 export type NoteUpsertWithWhereUniqueWithoutUserInput = {
-  where: NoteWhereUniqueInput;
-  update: NoteUpdateWithoutUserInput;
   create: NoteCreateWithoutUserInput;
+  update: NoteUpdateWithoutUserInput;
+  where: NoteWhereUniqueInput;
 };
 
 export type NoteWhereInput = {
-  AND?: Maybe<Array<NoteWhereInput>>;
-  OR?: Maybe<Array<NoteWhereInput>>;
-  NOT?: Maybe<Array<NoteWhereInput>>;
-  id?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
-  title?: Maybe<StringFilter>;
-  content?: Maybe<StringNullableFilter>;
-  category?: Maybe<CategoryWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  userId?: Maybe<IntFilter>;
-  categoryId?: Maybe<StringFilter>;
+  AND?: InputMaybe<Array<NoteWhereInput>>;
+  NOT?: InputMaybe<Array<NoteWhereInput>>;
+  OR?: InputMaybe<Array<NoteWhereInput>>;
+  category?: InputMaybe<CategoryWhereInput>;
+  categoryId?: InputMaybe<StringFilter>;
+  content?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  user?: InputMaybe<UserWhereInput>;
+  userId?: InputMaybe<IntFilter>;
 };
 
 export type NoteWhereUniqueInput = {
-  id?: Maybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['DateTime']>;
+  set?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type NullableStringFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['String']>;
+  set?: InputMaybe<Scalars['String']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  user?: Maybe<User>;
-  notes: Array<Note>;
   categories: Array<Category>;
   note?: Maybe<Note>;
+  notes: Array<Note>;
+  user?: Maybe<User>;
+};
+
+
+export type QueryCategoriesArgs = {
+  after?: InputMaybe<CategoryWhereUniqueInput>;
+  before?: InputMaybe<CategoryWhereUniqueInput>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<CategoryWhereInput>;
+};
+
+
+export type QueryNoteArgs = {
+  id: Scalars['String'];
+  userId: Scalars['Int'];
+};
+
+
+export type QueryNotesArgs = {
+  after?: InputMaybe<NoteWhereUniqueInput>;
+  before?: InputMaybe<NoteWhereUniqueInput>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
-};
-
-
-export type QueryNotesArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<NoteWhereUniqueInput>;
-  after?: Maybe<NoteWhereUniqueInput>;
-};
-
-
-export type QueryCategoriesArgs = {
-  where?: Maybe<CategoryWhereInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<CategoryWhereUniqueInput>;
-  after?: Maybe<CategoryWhereUniqueInput>;
-};
-
-
-export type QueryNoteArgs = {
-  userId: Scalars['Int'];
-  id: Scalars['String'];
 };
 
 export enum QueryMode {
@@ -720,214 +719,214 @@ export enum QueryMode {
 }
 
 export type SessionWhereInput = {
-  AND?: Maybe<Array<SessionWhereInput>>;
-  OR?: Maybe<Array<SessionWhereInput>>;
-  NOT?: Maybe<Array<SessionWhereInput>>;
-  id?: Maybe<IntFilter>;
-  userId?: Maybe<IntFilter>;
-  expires?: Maybe<DateTimeFilter>;
-  sessionToken?: Maybe<StringFilter>;
-  accessToken?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
+  AND?: InputMaybe<Array<SessionWhereInput>>;
+  NOT?: InputMaybe<Array<SessionWhereInput>>;
+  OR?: InputMaybe<Array<SessionWhereInput>>;
+  accessToken?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  expires?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<IntFilter>;
+  sessionToken?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<IntFilter>;
 };
 
 export type StringFieldUpdateOperationsInput = {
-  set?: Maybe<Scalars['String']>;
+  set?: InputMaybe<Scalars['String']>;
 };
 
 export type StringFilter = {
-  equals?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  contains?: Maybe<Scalars['String']>;
-  startsWith?: Maybe<Scalars['String']>;
-  endsWith?: Maybe<Scalars['String']>;
-  mode?: Maybe<QueryMode>;
-  not?: Maybe<NestedStringFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type StringNullableFilter = {
-  equals?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  contains?: Maybe<Scalars['String']>;
-  startsWith?: Maybe<Scalars['String']>;
-  endsWith?: Maybe<Scalars['String']>;
-  mode?: Maybe<QueryMode>;
-  not?: Maybe<NestedStringNullableFilter>;
+  contains?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  equals?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  startsWith?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
   categories: Array<Category>;
+  createdAt: Scalars['DateTime'];
+  email?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   notes: Array<Note>;
+  updatedAt: Scalars['DateTime'];
 };
 
 
 export type UserCategoriesArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<CategoryWhereUniqueInput>;
-  after?: Maybe<CategoryWhereUniqueInput>;
+  after?: InputMaybe<CategoryWhereUniqueInput>;
+  before?: InputMaybe<CategoryWhereUniqueInput>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 
 export type UserNotesArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<NoteWhereUniqueInput>;
-  after?: Maybe<NoteWhereUniqueInput>;
+  after?: InputMaybe<NoteWhereUniqueInput>;
+  before?: InputMaybe<NoteWhereUniqueInput>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 export type UserCreateInput = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  emailVerified?: Maybe<Scalars['DateTime']>;
-  image?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  categories?: Maybe<CategoryCreateNestedManyWithoutUserInput>;
-  notes?: Maybe<NoteCreateNestedManyWithoutUserInput>;
+  categories?: InputMaybe<CategoryCreateNestedManyWithoutUserInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  email?: InputMaybe<Scalars['String']>;
+  emailVerified?: InputMaybe<Scalars['DateTime']>;
+  image?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<NoteCreateNestedManyWithoutUserInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type UserCreateNestedOneWithoutCategoriesInput = {
-  create?: Maybe<UserCreateWithoutCategoriesInput>;
-  connectOrCreate?: Maybe<UserCreateOrConnectWithoutCategoriesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutCategoriesInput>;
+  create?: InputMaybe<UserCreateWithoutCategoriesInput>;
 };
 
 export type UserCreateNestedOneWithoutNotesInput = {
-  create?: Maybe<UserCreateWithoutNotesInput>;
-  connectOrCreate?: Maybe<UserCreateOrConnectWithoutNotesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<UserCreateWithoutNotesInput>;
 };
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
-  where: UserWhereUniqueInput;
   create: UserCreateWithoutCategoriesInput;
+  where: UserWhereUniqueInput;
 };
 
 export type UserCreateOrConnectWithoutNotesInput = {
-  where: UserWhereUniqueInput;
   create: UserCreateWithoutNotesInput;
+  where: UserWhereUniqueInput;
 };
 
 export type UserCreateWithoutCategoriesInput = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  emailVerified?: Maybe<Scalars['DateTime']>;
-  image?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  notes?: Maybe<NoteCreateNestedManyWithoutUserInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  email?: InputMaybe<Scalars['String']>;
+  emailVerified?: InputMaybe<Scalars['DateTime']>;
+  image?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<NoteCreateNestedManyWithoutUserInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutNotesInput = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  emailVerified?: Maybe<Scalars['DateTime']>;
-  image?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  categories?: Maybe<CategoryCreateNestedManyWithoutUserInput>;
+  categories?: InputMaybe<CategoryCreateNestedManyWithoutUserInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  email?: InputMaybe<Scalars['String']>;
+  emailVerified?: InputMaybe<Scalars['DateTime']>;
+  image?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateInput = {
-  name?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  email?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  emailVerified?: Maybe<NullableDateTimeFieldUpdateOperationsInput>;
-  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutUserInput>;
-  notes?: Maybe<NoteUpdateManyWithoutUserInput>;
+  categories?: InputMaybe<CategoryUpdateManyWithoutUserInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  notes?: InputMaybe<NoteUpdateManyWithoutUserInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateOneRequiredWithoutCategoriesInput = {
-  create?: Maybe<UserCreateWithoutCategoriesInput>;
-  connectOrCreate?: Maybe<UserCreateOrConnectWithoutCategoriesInput>;
-  upsert?: Maybe<UserUpsertWithoutCategoriesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-  update?: Maybe<UserUpdateWithoutCategoriesInput>;
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutCategoriesInput>;
+  create?: InputMaybe<UserCreateWithoutCategoriesInput>;
+  update?: InputMaybe<UserUpdateWithoutCategoriesInput>;
+  upsert?: InputMaybe<UserUpsertWithoutCategoriesInput>;
 };
 
 export type UserUpdateOneRequiredWithoutNotesInput = {
-  create?: Maybe<UserCreateWithoutNotesInput>;
-  connectOrCreate?: Maybe<UserCreateOrConnectWithoutNotesInput>;
-  upsert?: Maybe<UserUpsertWithoutNotesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-  update?: Maybe<UserUpdateWithoutNotesInput>;
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<UserCreateWithoutNotesInput>;
+  update?: InputMaybe<UserUpdateWithoutNotesInput>;
+  upsert?: InputMaybe<UserUpsertWithoutNotesInput>;
 };
 
 export type UserUpdateWithoutCategoriesInput = {
-  name?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  email?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  emailVerified?: Maybe<NullableDateTimeFieldUpdateOperationsInput>;
-  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  notes?: Maybe<NoteUpdateManyWithoutUserInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  notes?: InputMaybe<NoteUpdateManyWithoutUserInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutNotesInput = {
-  name?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  email?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  emailVerified?: Maybe<NullableDateTimeFieldUpdateOperationsInput>;
-  image?: Maybe<NullableStringFieldUpdateOperationsInput>;
-  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutUserInput>;
+  categories?: InputMaybe<CategoryUpdateManyWithoutUserInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  updatedAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type UserUpsertWithoutCategoriesInput = {
-  update: UserUpdateWithoutCategoriesInput;
   create: UserCreateWithoutCategoriesInput;
+  update: UserUpdateWithoutCategoriesInput;
 };
 
 export type UserUpsertWithoutNotesInput = {
-  update: UserUpdateWithoutNotesInput;
   create: UserCreateWithoutNotesInput;
+  update: UserUpdateWithoutNotesInput;
 };
 
 export type UserWhereInput = {
-  AND?: Maybe<Array<UserWhereInput>>;
-  OR?: Maybe<Array<UserWhereInput>>;
-  NOT?: Maybe<Array<UserWhereInput>>;
-  id?: Maybe<IntFilter>;
-  name?: Maybe<StringNullableFilter>;
-  email?: Maybe<StringNullableFilter>;
-  emailVerified?: Maybe<DateTimeNullableFilter>;
-  image?: Maybe<StringNullableFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<DateTimeFilter>;
-  categories?: Maybe<CategoryListRelationFilter>;
-  notes?: Maybe<NoteListRelationFilter>;
+  AND?: InputMaybe<Array<UserWhereInput>>;
+  NOT?: InputMaybe<Array<UserWhereInput>>;
+  OR?: InputMaybe<Array<UserWhereInput>>;
+  categories?: InputMaybe<CategoryListRelationFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  email?: InputMaybe<StringNullableFilter>;
+  emailVerified?: InputMaybe<DateTimeNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  image?: InputMaybe<StringNullableFilter>;
+  name?: InputMaybe<StringNullableFilter>;
+  notes?: InputMaybe<NoteListRelationFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
 export type UserWhereUniqueInput = {
-  id?: Maybe<Scalars['Int']>;
-  email?: Maybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 export type CreateCategoryMutationVariables = Exact<{
   userId: Scalars['Int'];
   label: Scalars['String'];
-  primary?: Maybe<Scalars['Boolean']>;
+  primary?: InputMaybe<Scalars['Boolean']>;
   color: Scalars['String'];
 }>;
 
@@ -938,11 +937,11 @@ export type CreateNoteMutationVariables = Exact<{
   userId: Scalars['Int'];
   categoryId: Scalars['String'];
   title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type CreateNoteMutation = { __typename?: 'Mutation', createOneNote: { __typename?: 'Note', id: string, title: string, content?: Maybe<string>, updatedAt: any, category: { __typename?: 'Category', color: string, label: string, primary: boolean } } };
+export type CreateNoteMutation = { __typename?: 'Mutation', createOneNote: { __typename?: 'Note', id: string, title: string, content?: string | null, updatedAt: any, category: { __typename?: 'Category', color: string, label: string, primary: boolean } } };
 
 export type DeleteCategoryMutationVariables = Exact<{
   categoryId: Scalars['String'];
@@ -950,21 +949,21 @@ export type DeleteCategoryMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteOneCategory?: Maybe<{ __typename: 'Mutation' }> };
+export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteOneCategory?: { __typename: 'Mutation' } | null };
 
 export type DeleteNoteMutationVariables = Exact<{
   noteId: Scalars['String'];
 }>;
 
 
-export type DeleteNoteMutation = { __typename?: 'Mutation', deleteOneNote?: Maybe<{ __typename?: 'Note', id: string }> };
+export type DeleteNoteMutation = { __typename?: 'Mutation', deleteOneNote?: { __typename?: 'Note', id: string } | null };
 
 export type DeleteUserMutationVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type DeleteUserMutation = { __typename?: 'Mutation', deleteManyNote: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyCategory: { __typename?: 'AffectedRowsOutput', count: number }, deleteManySession: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyAccount: { __typename?: 'AffectedRowsOutput', count: number }, deleteOneUser?: Maybe<{ __typename?: 'User', id: number, email?: Maybe<string> }> };
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteManyNote: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyCategory: { __typename?: 'AffectedRowsOutput', count: number }, deleteManySession: { __typename?: 'AffectedRowsOutput', count: number }, deleteManyAccount: { __typename?: 'AffectedRowsOutput', count: number }, deleteOneUser?: { __typename?: 'User', id: number, email?: string | null } | null };
 
 export type UpdateCategoryMutationVariables = Exact<{
   categoryId: Scalars['String'];
@@ -973,7 +972,7 @@ export type UpdateCategoryMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCategoryMutation = { __typename?: 'Mutation', updateOneCategory?: Maybe<{ __typename?: 'Category', id: string, color: string, label: string, primary: boolean }> };
+export type UpdateCategoryMutation = { __typename?: 'Mutation', updateOneCategory?: { __typename?: 'Category', id: string, color: string, label: string, primary: boolean } | null };
 
 export type UpdateNoteWithContentMutationVariables = Exact<{
   noteId: Scalars['String'];
@@ -983,7 +982,7 @@ export type UpdateNoteWithContentMutationVariables = Exact<{
 }>;
 
 
-export type UpdateNoteWithContentMutation = { __typename?: 'Mutation', updateOneNote?: Maybe<{ __typename?: 'Note', id: string, title: string, content?: Maybe<string>, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } }> };
+export type UpdateNoteWithContentMutation = { __typename?: 'Mutation', updateOneNote?: { __typename?: 'Note', id: string, title: string, content?: string | null, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } } | null };
 
 export type UpdateNoteWithoutContentMutationVariables = Exact<{
   noteId: Scalars['String'];
@@ -992,23 +991,23 @@ export type UpdateNoteWithoutContentMutationVariables = Exact<{
 }>;
 
 
-export type UpdateNoteWithoutContentMutation = { __typename?: 'Mutation', updateOneNote?: Maybe<{ __typename?: 'Note', id: string, title: string, content?: Maybe<string>, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } }> };
+export type UpdateNoteWithoutContentMutation = { __typename?: 'Mutation', updateOneNote?: { __typename?: 'Note', id: string, title: string, content?: string | null, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, color: string, primary: boolean } } | null };
 
 export type UpdateUserMutationVariables = Exact<{
-  name?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
   userId: Scalars['Int'];
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateOneUser?: Maybe<{ __typename?: 'User', id: number }> };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateOneUser?: { __typename?: 'User', id: number } | null };
 
 export type GetNotesQueryVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type GetNotesQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, createdAt: any, notes: Array<{ __typename?: 'Note', id: string, title: string, createdAt: any, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, primary: boolean, color: string } }> }> }> };
+export type GetNotesQuery = { __typename?: 'Query', user?: { __typename?: 'User', categories: Array<{ __typename?: 'Category', id: string, label: string, color: string, primary: boolean, createdAt: any, notes: Array<{ __typename?: 'Note', id: string, title: string, createdAt: any, updatedAt: any, category: { __typename?: 'Category', id: string, label: string, primary: boolean, color: string } }> }> } | null };
 
 export type GetNotesCategoriesQueryVariables = Exact<{
   userId: Scalars['Int'];
@@ -1023,14 +1022,14 @@ export type GetSingleNoteQueryVariables = Exact<{
 }>;
 
 
-export type GetSingleNoteQuery = { __typename?: 'Query', note?: Maybe<{ __typename?: 'Note', id: string, title: string, content?: Maybe<string>, category: { __typename?: 'Category', id: string, color: string, label: string, primary: boolean } }> };
+export type GetSingleNoteQuery = { __typename?: 'Query', note?: { __typename?: 'Note', id: string, title: string, content?: string | null, category: { __typename?: 'Category', id: string, color: string, label: string, primary: boolean } } | null };
 
 export type GetUserDataQueryVariables = Exact<{
   userId: Scalars['Int'];
 }>;
 
 
-export type GetUserDataQuery = { __typename?: 'Query', user?: Maybe<{ __typename?: 'User', name?: Maybe<string>, email?: Maybe<string>, image?: Maybe<string> }> };
+export type GetUserDataQuery = { __typename?: 'Query', user?: { __typename?: 'User', name?: string | null, email?: string | null, image?: string | null } | null };
 
 
 export const CreateCategoryDocument = `

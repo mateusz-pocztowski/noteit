@@ -4,8 +4,7 @@
     "dev": "concurrently -r \"npx next\" \"npx graphql-codegen --watch\"",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc",
-    "reinstall": "brew services stop postgresql && brew uninstall --force postgres && rm -rf /usr/local/var/postgres && rm -rf .psql_history .psqlrc .psql.local .pgpass .psqlrc.local && brew cleanup && brew install postgresql && brew services start postgresql && npx prisma migrate dev && npx prisma generate && npm run dev"
+    "type-check": "tsc"
   },
   "dependencies": {
     "@draft-js-plugins/editor": "^4.1.0",
