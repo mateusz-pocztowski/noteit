@@ -114,8 +114,8 @@ const Toolbar: React.FC<Props> = ({
           { id: 'header-three', label: 'Heading' },
           { id: 'unstyled', label: 'Paragraph' },
         ]}
-        active={blockType}
-        onToggle={toggleTypography}
+        value={blockType}
+        onChange={toggleTypography}
       />
 
       {EDITOR_TOOLBAR_OPTIONS.map((module, index) => (
@@ -144,8 +144,8 @@ const Toolbar: React.FC<Props> = ({
           label: category.label,
           color: category.color,
         }))}
-        active={activeCategory.id}
-        onToggle={onCategoryChange}
+        value={activeCategory.id}
+        onChange={onCategoryChange}
       />
     </>
   )

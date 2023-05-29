@@ -5,7 +5,7 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "test": "jest --watch",
+    "test": "jest --silent --watch",
     "test:ci": "jest --silent --ci"
   },
   "dependencies": {

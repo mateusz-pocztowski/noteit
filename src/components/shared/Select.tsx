@@ -12,10 +12,10 @@ type OptionType<T extends number | string> = {
 }
 
 type Props<T extends number | string> = {
-  active: OptionType<T>['id']
+  value?: OptionType<T>['id']
   placeholder?: string
   options: OptionType<T>[]
-  onToggle: (id: OptionType<T>['id']) => void
+  onChange?: (id: OptionType<T>['id']) => void
 }
 
 const Wrapper = styled.div`
@@ -125,9 +125,9 @@ const Arrow = styled.div`
 
 const Select = <T extends string | number>({
   placeholder = 'Select...',
-  active,
+  value,
   options,
-  onToggle,
+  onChange,
 }: Props<T>) => {
   const [visible, setOptionsVisibility] = useState(false)
 
@@ -150,7 +150,7 @@ const Select = <T extends string | number>({
     option: OptionType<T>
   ) => {
     e.preventDefault()
-    onToggle(option.id)
+    onChange?.(option.id)
   }
 
   return (
@@ -160,8 +160,8 @@ const Select = <T extends string | number>({
         ref={selectRef}
         onMouseDown={toggleOptionsVisibility}
       >
-        <Text>
-          {options.find(option => option.id === active)?.label || placeholder}
+        <Text data-testid="active-option">
+          {options.find(option => option.id === value)?.label || placeholder}
         </Text>
         <Arrow>
           <Icon size={15} src={dropIcon} />
@@ -176,7 +176,7 @@ const Select = <T extends string | number>({
               setOptionsVisibility(false)
             }}
           >
-            <StyledCheckmark color={item.color} checked={item.id === active} />
+            <StyledCheckmark color={item.color} checked={item.id === value} />
             <Text>{item.label}</Text>
           </Option>
         ))}
