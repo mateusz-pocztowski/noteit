@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { rgba } from 'polished'
 
@@ -6,7 +5,6 @@ import Button from 'components/shared/Button'
 import Icon from 'components/shared/Icon'
 import { Row, Col } from 'components/shared/Grid'
 import { Heading, Text } from 'components/shared/Typography'
-import Input from 'components/shared/Input'
 import {
   Wrapper,
   InnerWrapper,
@@ -35,28 +33,7 @@ const Error = styled.div`
   background: ${({ theme }) => rgba(String(theme.colors.red), 0.2)};
 `
 
-const Spacer = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 1rem 0;
-  ${Text} {
-    display: block;
-    margin: 0 15px;
-  }
-  &:before,
-  &:after {
-    content: '';
-    width: 100%;
-    height: 1px;
-    background: ${({ theme }) => theme.colors.cardBorder};
-  }
-  & + div {
-    margin-bottom: 2rem;
-  }
-`
-
 const Login: React.FC<Props> = ({ error, providers }) => {
-  const [input, setInput] = useState('')
   return (
     <Wrapper>
       <Topbar />
@@ -68,34 +45,13 @@ const Login: React.FC<Props> = ({ error, providers }) => {
             </Col>
             {providers.map(({ id, name, signIn }) => (
               <Col xs={24} key={name}>
-                {id === 'email' ? (
-                  <>
-                    <Spacer>
-                      <Text size={14} family="secondary">
-                        OR
-                      </Text>
-                    </Spacer>
-                    <Input
-                      name="email"
-                      label="Your email"
-                      placeholder="Type your email..."
-                      value={input}
-                      onChange={e => setInput(e.target.value)}
-                      icon={PROVIDERS_LOGOS.email}
-                    />
-                    <Button onClick={() => signIn(input)} width="100%">
-                      <span>Sign in with {name}</span>
-                    </Button>
-                  </>
-                ) : (
-                  <Button onClick={() => signIn()} secondary width="100%">
-                    <Icon
-                      src={PROVIDERS_LOGOS[id]}
-                      excludeDarkMode={id !== 'github'}
-                    />
-                    <span>Sign in with {name}</span>
-                  </Button>
-                )}
+                <Button onClick={() => signIn()} secondary width="100%">
+                  <Icon
+                    src={PROVIDERS_LOGOS[id]}
+                    excludeDarkMode={id !== 'github'}
+                  />
+                  <span>Sign in with {name}</span>
+                </Button>
               </Col>
             ))}
             {error && (

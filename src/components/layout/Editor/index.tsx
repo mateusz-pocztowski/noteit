@@ -230,7 +230,7 @@ const Editor: React.FC<EditorProps> = ({
     <Wrapper>
       <InnerWrapper color={activeCategory.color}>
         <Header>
-          <ToolbarWrapper>
+          <ToolbarWrapper data-testid="toolbar">
             <Toolbar
               editorState={editorState}
               handleChange={handleChange}
@@ -244,6 +244,7 @@ const Editor: React.FC<EditorProps> = ({
           </ToolbarWrapper>
           <TitleWrapper>
             <TitleInput
+              data-testid="title-input"
               placeholder="Enter title..."
               value={tempTitle}
               onChange={e => setTempTitle(e.target.value)}

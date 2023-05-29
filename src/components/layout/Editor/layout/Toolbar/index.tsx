@@ -14,6 +14,7 @@ import { EDITOR_TOOLBAR_OPTIONS } from 'components/layout/Editor/config'
 
 import type { AlignType, HistoryType, ToolbarOptionConfig } from 'types/editor'
 import type { Category } from 'generated/graphql'
+import { Fragment } from 'react'
 
 type Props = {
   editorState: EditorState
@@ -118,7 +119,7 @@ const Toolbar: React.FC<Props> = ({
       />
 
       {EDITOR_TOOLBAR_OPTIONS.map((module, index) => (
-        <>
+        <Fragment key={index}>
           {index !== 0 && <Spacer />}
           {module.map(option => {
             const callback = getOptionCallback(option.type, option.command)
@@ -134,7 +135,7 @@ const Toolbar: React.FC<Props> = ({
               />
             )
           })}
-        </>
+        </Fragment>
       ))}
 
       <Select
